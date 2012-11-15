@@ -1,0 +1,3 @@
+Compiler: gcc 4.7.2
+Options: -std=c11 -pedantic -Wall -Wextra -Wdouble-promotion -Winit-self -Wunused-local-typedefs -Wfloat-equal -Wshadow -Wbad-function-cast -Wcast-qual -Wcast-align -Wconversion -Wlogical-op -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wpadded -Wredundant-decls -Wnested-externs
+
