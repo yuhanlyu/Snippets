@@ -1,15 +1,14 @@
 #include <stdio.h>
                                                                                 
-/* This function compute the greatest common divisor of two positive 
- * integers p and q */
-unsigned int gcd( unsigned int p, unsigned int q );
-unsigned int gcd( unsigned int p, unsigned int q )
+/* This function computes the greatest common divisor of two positive 
+ * integers num1 and num2 */
+unsigned int gcd( unsigned int num1, unsigned int num2 );
+unsigned int gcd( unsigned int num1, unsigned int num2 )
 {
-    if ( q != 0 ) {
-        while ( ( p %= q ) && ( q %= p ) )
-            ;
-    }		
-    return p + q;
+    /* Euclid's algorithm */
+    while ( ( num1 %= num2 ) && ( num2 %= num1 ) )
+        ;
+    return num1 + num2;
 }
 
 int main( void )
