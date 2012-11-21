@@ -16,5 +16,6 @@ int main( void )
     puts( "Binary representation of 50 should be 000000000000000000000000000110010" );
     printf( "bit_print( 50 ) = " );
     intBitPrint( 50 );
+
     return 0;
 }
