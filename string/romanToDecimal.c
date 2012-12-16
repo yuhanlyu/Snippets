@@ -31,5 +31,6 @@ int main( void )
 
     printf( "Decimal of MCMXC should be 1990: %d\n", 
                                      romanToDecimal( "MCMXC" ) );
+
     return 0;
 }
