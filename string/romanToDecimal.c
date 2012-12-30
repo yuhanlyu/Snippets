@@ -5,9 +5,9 @@
 int romanToDecimal( const char *roman );
 int romanToDecimal( const char *roman )
 {
-    static int     numeralMap[] = { 1, 5, 10, 50, 100, 500, 1000 };
-    static char    romanMap[] = { 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
-    int            decimal = 0, indexOfRoman, indexOfMap, lastIndexOfMap = -1;
+    static const int  numeralMap[] = { 1, 5, 10, 50, 100, 500, 1000 };
+    static const char romanMap[] = { 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
+    int decimal = 0, indexOfRoman, indexOfMap, lastIndexOfMap = -1;
 
     for ( indexOfRoman = 0; roman[ indexOfRoman ] != '\0'; ++indexOfRoman ) {
         /* Find the value of the current numeral */
