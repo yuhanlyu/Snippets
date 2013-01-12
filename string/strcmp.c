@@ -1,9 +1,9 @@
 #include <stdio.h>
 
 /* Compare two strings */
-int strcmp( const char *s1, const char *s2 );
+int strcmp( const char s1[], const char s2[] );
 
-int strcmp( const char *s1, const char *s2 )
+int strcmp( const char s1[], const char s2[] )
 {
     for (; *s1 && ( *s1 == *s2 ); ++s1, ++s2)
         ;
