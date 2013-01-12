@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+/* String comparison for n characters */
 int strncmp( const char s1[], const char s2[], size_t n );
 int strncmp( const char s1[], const char s2[], size_t n )
 {
