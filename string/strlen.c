@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 /* Compute the length of the string */
-size_t strlen( const char *string );
-size_t strlen( const char *string )
+size_t strlen( const char string[] );
+size_t strlen( const char string[] )
 {
     size_t  len;
 
