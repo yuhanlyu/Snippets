@@ -3,14 +3,14 @@
 char *strncat( char * restrict dest, const char * restrict src, size_t n );
 char *strncat( char * restrict dest, const char * restrict src, size_t n )
 {
-    char    *originDest = dest;
+    char    *destP = dest;
 
-    while ( *dest )
-        ++dest;
-    for ( ; n-- && (*dest = *src++); ++dest )
+    while ( *destP )
+        ++destP;
+    for ( ; n-- && (*destP = *src++); ++destP )
         ;
-    *dest = '\0';
-    return originDest;
+    *destP = '\0';
+    return dest;
 }
 
 int main( void )
