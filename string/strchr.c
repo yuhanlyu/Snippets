@@ -8,14 +8,14 @@ char *strchr( const char string[], int c)
     while ( *string != (char)c )
         if (!*string++)
             return NULL;
-    return *string;
+    return (char *)string;
 }
 
 int main( void )
 {
-    printf( "strchr( \"\", '\\0' ) should be empty string: %s\n", 
+    printf( "strchr( \"\", '\\0' ) should be an empty string: %s\n", 
              strchr( "", '\0' ) );
-    printf( "strchr( \"abc\", '\\0' ) should be empty string: %s\n", 
+    printf( "strchr( \"Hello\", '\\0' ) should be an empty string: %s\n", 
              strchr( "", '\0' ) );
     printf( "strchr( \"Hello\", 'H' ) should be Hello: %s\n", 
              strchr( "Hello", 'H' ) );
