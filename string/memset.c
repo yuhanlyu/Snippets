@@ -4,9 +4,7 @@
 void *memset ( void *block, int value, size_t n );
 void *memset ( void *block, int value, size_t n )
 {
-    unsigned char *p = block;
-
-    while ( n-- ) 
+    for ( unsigned char *p = block; n--; )
         *p++ = (unsigned char)value;
     return block;
 }
