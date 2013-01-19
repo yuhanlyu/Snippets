@@ -11,14 +11,14 @@ void *memmove(void *dest, const void *src, size_t n)
     return dest;
 
     /* By standard, comparison between pointers point to 
-     * different array objects are undefined behavior.
+     * different array objects is undefined behavior.
      * Thus, there is no protable way to test
      * dest overlaps with src. 
      * In this implementation, it may fail if n is too large,
      * which will not happen by standard */
 
-    /* Suppose pointer comparison is allowed, we can do the following
-     * way */
+    /* Suppose that pointer comparison is allowed, 
+     * we can do the following way */
     /*
     char *destP = dest;
     const char *srcP = src;
