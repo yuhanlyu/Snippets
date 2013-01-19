@@ -4,18 +4,25 @@
 char *strchr( const char string[], int c);
 char *strchr( const char string[], int c)
 {
-    /* c can be '\0', thus we should compare first */
+    /* Since c can be '\0', thus we cannot test *string first */
     while ( *string != (char)c )
         if (!*string++)
             return NULL;
-    return (char *)string;
+    return *string;
 }
 
 int main( void )
 {
-    char    a[] = "Hello";
-
-    printf( "%c\n", *strchr( a, 'l' ) );
+    printf( "strchr( \"\", '\\0' ) should be empty string: %s\n", 
+             strchr( "", '\0' ) );
+    printf( "strchr( \"abc\", '\\0' ) should be empty string: %s\n", 
+             strchr( "", '\0' ) );
+    printf( "strchr( \"Hello\", 'H' ) should be Hello: %s\n", 
+             strchr( "Hello", 'H' ) );
+    printf( "strchr( \"Hello\", 'e' ) should be ello: %s\n", 
+             strchr( "Hello", 'e' ) );
+    printf( "strchr( \"Hello\", 'x' ) should be null: %p\n", 
+             strchr( "Hello", 'x' ) );
     return 0;
 }
 
