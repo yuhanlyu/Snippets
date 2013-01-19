@@ -4,18 +4,18 @@
 char *strncpy( char * restrict dest, char * restrict src, size_t n );
 char *strncpy( char * restrict dest, char * restrict src, size_t n )
 {
-    char    *originDest = dest;
+    char    *destP = dest;
 
     /* Copy at most n characters or until src is copied */
     do {
         if ( !n-- )
-            return originDest;
-    } while ( (*dest++ = *src++) );
+            return dest;
+    } while ( (*destP++ = *src++) );
 
     /* Fill the remaining characters as null character */
     while( n-- )
-        *dest++ = '\0';
-    return originDest;
+        *destP++ = '\0';
+    return dest;
 }
 
 int main( void )
