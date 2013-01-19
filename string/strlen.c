@@ -4,11 +4,9 @@
 size_t strlen( const char string[] );
 size_t strlen( const char string[] )
 {
-    size_t  len;
-
-    for ( len = 0; *string++ != '\0'; ++len )
-        ;
-    return len;
+    for ( size_t len = 0; ; ++len )
+        if ( !*string++ )
+            return len;
 }
 
 int main( void )
