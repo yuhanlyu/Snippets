@@ -5,15 +5,15 @@ char *strcat( char *dest, const char *src );
 
 char *strcat( char *dest, const char *src )
 {
-    char    *originDest = dest;
+    char    *destP = dest;
 
     /* Move to the end of dest */
-    while ( *dest )
-        ++dest;
+    while ( *destP )
+        ++destP;
     /* Copy src to the end of dest */
-    while ( (*dest++ = *src++) )
+    while ( (*destP++ = *src++) )
         ;
-    return originDest;
+    return dest;
 }
 
 int main( void )
