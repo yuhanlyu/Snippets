@@ -4,10 +4,9 @@
 char *strcpy( char * restrict dest, const char * restrict src );
 char *strcpy( char * restrict dest, const char * restrict src )
 {
-    char    *originDest = dest;
-    while ( (*dest++ = *src++) )
+    for ( char *destP = dest; (*destP++ = *src++); )
         ;
-    return originDest;
+    return dest;
 }
 
 
