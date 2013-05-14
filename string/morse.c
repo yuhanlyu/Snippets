@@ -25,12 +25,10 @@ void printMorse(char c)
 
 int main( void )
 {
-    char    buf[ MAX ];
+    const char *test = "Hello World";
 
-    while ( gets( buf ) != NULL ) {
-        for ( int i = 0; buf[ i ] != '\0'; ++i )
-            printMorse( buf[ i ] );
-        puts( "" );
+    for ( int i = 0; test[ i ] != '\0'; ++i ) {
+        printMorse( test[ i ] );
     }
     return 0;
 }
