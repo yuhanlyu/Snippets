@@ -1,9 +1,10 @@
 #include <stdio.h>
 
-char *itoa( int n, char s[] );
+char *itoa( int n, char s[], int base );
 char *strrev( char s[] );
 
-char *itoa( int n, char s[] )
+/* Convert integer to string */
+char *itoa( int n, char s[], int base )
 {
     char    *p = s;
     int     isNegative = n < 0;
@@ -12,10 +13,13 @@ char *itoa( int n, char s[] )
         *p++ = '-';
         n = -n;
     }
+    /* Generate characters one by one from LSD to MSD, this also works when n = 0 */
     do {
-        *p++ = n % 10 + '0';
-    } while ( ( n /= 10 ) != 0 );
+        int digit = n % base;
+        *p++ = digit <= 9 ? digit + '0' : digit + 'a' - 10;
+    } while ( ( n /= base ) != 0 );
     *p++ = '\0';
+    /* Reverse the string to get order from MSD to LSD */
     strrev( s + isNegative );
     return s;
 }
@@ -40,9 +44,11 @@ int main( void )
 {
     char    buf[ 1000 ];
 
-    printf( "%s\n", itoa( 1234567, buf ) );
-    printf( "%s\n", itoa( -1234567, buf ) );
-    printf( "%s\n", itoa( 0, buf ) );
-    printf( "%s\n", itoa( -0, buf ) );
+    printf( "%s\n", itoa( 1234567, buf, 10 ) );
+    printf( "%s\n", itoa( -1234567, buf, 10 ) );
+    printf( "%s\n", itoa( 0, buf, 10 ) );
+    printf( "%s\n", itoa( -0, buf, 10 ) );
+    printf( "%s\n", itoa( 255, buf, 16 ) );
+    printf( "%s\n", itoa( 255, buf, 2 ) );
     return 0;
 }
