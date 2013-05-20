@@ -15,10 +15,10 @@ void bubble( int a[], int n )
 
 int main( void )
 {
-    int     a[ 5 ] = { 5, 4, 3, 2, 1 }, i;
+    int     a[ 5 ] = { 5, 4, 3, 2, 1 };
 
     bubble( a, 5 );
-    for ( i = 0; i < 5; ++i )
+    for ( int i = 0; i < 5; ++i )
         printf( "%d ", a[ i ] );
     return 0;
 }
