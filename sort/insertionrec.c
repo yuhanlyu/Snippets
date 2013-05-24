@@ -1,6 +1,17 @@
 #include <stdio.h>
 
+/* Insertion sort recursive version */
 void insertion( int a[], int n );
+void insertion( int a[], int n )
+{
+    if ( n != 0 ) {
+        insertion( a, n - 1 );
+        int     i, tmp = a[ n - 1];
+        for ( i = n - 1; i > 0 && a[ i - 1 ] > tmp; --i )
+            a[ i ] = a[ i - 1 ];
+        a[ i ] = tmp;
+    }
+}
 
 int main( void )
 {
@@ -11,16 +22,3 @@ int main( void )
         printf( "%d ", a[ i ] );
     return 0;
 }
-
-void insertion( int a[], int n )
-{
-    int     i, tmp;
-
-    if ( n != 0 ) {
-        insertion( a, n - 1 );
-        for ( tmp = a[ n - 1 ], i = n - 1; i > 0 && a[ i - 1 ] > tmp; --i )
-            a[ i ] = a[ i - 1 ];
-        a[ i ] = tmp;
-    }
-}
-
