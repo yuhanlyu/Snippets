@@ -7,8 +7,8 @@ void mergesort( int a[], int left, int right );
 void mergesort( int a[], int left, int right )
 {
     for ( int half_length = 1; half_length < right - left; half_length *= 2 ) {
-        int length = 2 * half_length;
-        for ( int start = left; start <= right - half_length; start += length ) {
+        for ( int start = left, length = 2 * half_length; 
+                  start <= right - half_length; start += length ) {
             int end = right < start + length ? right : start + length;
             merge( a, start, start + half_length, end );
         }
