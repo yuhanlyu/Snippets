@@ -6,7 +6,6 @@ void mergesort( int a[], int left, int right );
 /* Merge sort: sort the array a from a[left] to a[right - 1] */
 void mergesort( int a[], int left, int right )
 {
-    /* m is the shift of the mid point */
     for ( int half_length = 1; half_length < right - left; half_length *= 2 ) {
         int length = 2 * half_length;
         for ( int start = left; start <= right - half_length; start += length ) {
