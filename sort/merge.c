@@ -3,42 +3,42 @@
 void merge( int a[], int left, int mid, int right );
 void mergesort( int a[], int left, int right );
 
-int main( void )
-{
-    int     a[ 6 ] = { 6, 5, 4, 3, 2, 1 }, i;
-
-    mergesort( a, 0, 5 );
-    for ( i = 0; i < 6; ++i )
-        printf( "%d ", a[ i ] );
-    return 0;
-}
-
+/* Merge sort: sort the array a from a[left] to a[right - 1] */
 void mergesort( int a[], int left, int right )
 {
-    if ( right > left ) {
-        int     mid = ( right + left ) / 2;
-
-        mergesort( a, left, mid );
-        mergesort( a, mid + 1, right );
-        merge( a, left, mid, right );
+    /* m is the shift of the mid point */
+    for ( int half_length = 1; half_length < right - left; half_length *= 2 ) {
+        int length = 2 * half_length;
+        for ( int start = left; start <= right - half_length; start += length ) {
+            int end = right < start + length ? right : start + length;
+            merge( a, start, start + half_length, end );
+        }
     }
 }
 
+/* Merge: Merge two sorted array a[left .. mid - 1], a[mid .. right - 1] */
 void merge( int a[], int left, int mid, int right )
 {
-    int     aux[ right - left + 1 ], i = left, j = mid + 1, k;
+    int     aux[ right - left ];
 
-    for ( k = 0; k <= right - left; ++k ) {
-        if ( i == mid + 1 ) {
+    for ( int i = left, j = mid, k = 0; k < right - left; ++k ) {
+        if ( i == mid ) {
             aux[ k ] = a[ j++ ];
-            continue;
-        } else if ( j == right + 1 ) {
+        } else if ( j == right ) {
             aux[ k ] = a[ i++ ];
-            continue;
         } else
             aux[ k ] = a[ i ] < a[ j ] ? a[ i++ ] : a[ j++ ];
     }
-    for ( i = 0, j = left; j <= right; ++i, ++j )
+    for ( int i = 0, j = left; j < right; ++i, ++j )
         a[ j ] = aux[ i ];
 }
 
+int main( void )
+{
+    int     a[ 6 ] = { 8, 3, 5, 6, 4, 2 };
+
+    mergesort( a, 0, 6 );
+    for ( int i = 0; i < 6; ++i )
+        printf( "%d ", a[ i ] );
+    return 0;
+}
