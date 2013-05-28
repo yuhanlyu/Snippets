@@ -1,16 +1,16 @@
 #include <stdio.h>
 
+void mergesort( int a[], int begin, int end );
 void merge( int a[], int left, int mid, int right );
-void mergesort( int a[], int left, int right );
 
-/* Merge sort: sort the array a from a[left] to a[right - 1] */
-void mergesort( int a[], int left, int right )
+/* Merge sort: sort the array a[begin..end-1] */
+void mergesort( int a[], int begin, int end )
 {
-    for ( int half_length = 1; half_length < right - left; half_length *= 2 ) {
-        for ( int start = left, length = 2 * half_length; 
-                  start <= right - half_length; start += length ) {
-            int end = right < start + length ? right : start + length;
-            merge( a, start, start + half_length, end );
+    for ( int half_length = 1; half_length < end - begin; half_length *= 2 ) {
+        for ( int left = begin, length = 2 * half_length; 
+                  left <= end - half_length; left += length ) {
+            int right = end < left + length ? end : left + length;
+            merge( a, left, left + half_length, right );
         }
     }
 }
