@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-/* Selection sort recursive version, sort the subarray a[start..end-1] */
+/* Selection sort recursive version, sort the subarray a[begin..end-1] */
 void selection( int a[], int begin, int end );
 void selection( int a[], int begin, int end )
 {
