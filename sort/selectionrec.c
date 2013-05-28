@@ -1,19 +1,19 @@
 #include <stdio.h>
 
 /* Selection sort recursive version, sort the subarray a[start..end-1] */
-void selection( int a[], int start, int end );
-void selection( int a[], int start, int end )
+void selection( int a[], int begin, int end );
+void selection( int a[], int begin, int end )
 {
-    if ( start != end - 1 ) {
-        int min = start;
-        for ( int i = start + 1; i < end; ++i ) {
+    if ( begin != end - 1 ) {
+        int min = begin;
+        for ( int i = begin + 1; i < end; ++i ) {
             if ( a[ i ] < a[ min ] )
                 min = i;
         }
-        int tmp = a[ start ];
-        a[ start ] = a[ min ];
+        int tmp = a[ begin ];
+        a[ begin ] = a[ min ];
         a[ min ] = tmp;
-        selection( a, start + 1, end );
+        selection( a, begin + 1, end );
     }
 }
 
