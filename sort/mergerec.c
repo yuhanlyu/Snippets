@@ -3,15 +3,15 @@
 void mergesort( int a[], int left, int right );
 void merge( int a[], int left, int mid, int right );
 
-/* Merge sort: sort the array a from a[left] to a[right - 1] */
-void mergesort( int a[], int left, int right )
+/* Merge sort: sort the array a[begin..end-1] */
+void mergesort( int a[], int begin, int end )
 {
-    if ( left < right - 1 ) {
-        int     mid = left + ( right - left )/2;
+    if ( begin < end - 1 ) {
+        int     mid = begin + ( end - begin )/2;
 
-        mergesort( a, left, mid);
-        mergesort( a, mid, right );
-        merge( a, left, mid, right );
+        mergesort( a, begin, mid);
+        mergesort( a, mid, end );
+        merge( a, begin, mid, end );
     }
 }
 
