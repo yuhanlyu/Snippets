@@ -1,42 +1,45 @@
 #include <stdio.h>
 
-void quick( int a[], int left, int right );
+void quick( int a[], int begin, int end );
 int  partition( int a[], int left, int right );
 
-int main( void )
+/* Quicksort: sort the array a[begin..end-1] */
+void quick( int a[], int begin, int end )
 {
-    int     a[ 5 ] = { 5, 4, 3, 2, 1 }, i;
-
-    quick( a, 0, 4 );
-    for ( i = 0; i < 5; ++i )
-        printf( "%d ", a[ i ] );
-    return 0;
-}
-
-void quick( int a[], int left, int right )
-{
-    int     pivot;
-
-    if ( right > left ) {
-        pivot = partition( a, left, right );
-        quick( a, left, pivot - 1 );
-        quick( a, pivot + 1, right );
+    if ( begin < end - 1 ) {
+        int pivot = partition( a, begin, end );
+        quick( a, begin, pivot );
+        quick( a, pivot + 1, end );
     }
 }
 
+/* In-place partition: partition the array a[left..right-1] with
+ *                     the pivot a[right-1].
+ *                     By using a[right-1] as the pivot, a[right-1]
+ *                     is also a sentinel, such that simplifies the code */
 int  partition( int a[], int left, int right )
 {
-    int     i, pivot = a[ right ], store = left, tmp;
-
-    for ( i = left; i < right; ++i )
-        if ( a[ i ] <= pivot ) {
-            tmp = a[ store ];
-            a[ store ] = a[ i ];
-            a[ i ] = tmp;
-            ++store;
+    for ( int pivot = a[ right - 1 ], store = left; ; ++left ) {
+        /* Termination condition */
+        if ( left == right - 1 ) {
+            a[ right - 1 ] = a[ store ];
+            a[ store ] = pivot;
+            return store;
+        /* Swap element smaller than pivot to a[store] */
+        } else if ( a[ left ] <= pivot ) {
+            int tmp = a[ store ];
+            a[ store++ ] = a[ left ];
+            a[ left ] = tmp;
         }
-    a[ right ] = a[ store ];
-    a[ store ] = pivot;
-    return store;
+    }
 }
 
+int main( void )
+{
+    int     a[ 5 ] = { 1, 3, 5, 2, 4 };
+
+    quick( a, 0, 5 );
+    for ( int i = 0; i < 5; ++i )
+        printf( "%d ", a[ i ] );
+    return 0;
+}
