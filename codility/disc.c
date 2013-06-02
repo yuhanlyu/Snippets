@@ -23,7 +23,7 @@ int solution ( int A[], int N )
 
 int main(void)
 {
-    int A[] = {1, 5, 2, 1, 4, 0};
+    int A[] = { 1, 5, 2, 1, 4, 0 };
     printf( "%d\n", solution(A, 6) );
     return 0;
 }

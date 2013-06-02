@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-/* Converting binary string to integer */
+/* Convert binary string to integer */
 unsigned batoi( const char s[] );
 unsigned batoi( const char s[] )
 {
