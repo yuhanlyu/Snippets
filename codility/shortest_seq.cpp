@@ -42,7 +42,7 @@ int solution ( const std::vector<int> &A )
 
 int main()
 {
-    int arr[] = { 1, 10, 6, 5, 10, 7, 5, 1 };
+    int arr[] = {1, 10, 6, 5, 10, 7, 5, 1};
     std::vector<int> A(arr, arr + 8);
 
     std::cout << solution( A ) << '\n';
