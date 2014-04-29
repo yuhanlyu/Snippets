@@ -1,0 +1,4 @@
+My solution for talentbuddy.
+
+Compiler: ghc 7.6.3 
+Options: -Wall -fwarn-incomplete-record-updates -fwarn-unused-do-bind
