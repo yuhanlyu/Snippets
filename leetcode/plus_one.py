@@ -3,7 +3,7 @@
 # The digits are stored such that the most significant digit is at the 
 # head of the list.
 # Time complexity: O(n)
-# Space complexity: O(1)
+# Space complexity: O(1), if the lengths of input and output are the same
 
 class Solution:
     # @param {integer[]} digits
