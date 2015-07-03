@@ -6,13 +6,12 @@ class Solution:
     # @param {integer} numRows
     # @return {integer[][]}
     def generate(self, numRows):
-        pascal = []
-        for i in xrange(numRows):
-            row = [1] if pascal else []
-            for j in xrange(len(pascal) - 1):
-                row.append(pascal[-1][j] + pascal[-1][j+1])
-            row.append(1) 
-            pascal.append(row)
+        if not numRows:
+            return []
+        pascal = [[1] * (i + 1) for i in xrange(numRows)]
+        for row in xrange(numRows - 1):
+            for index in xrange(1, row + 1):
+                pascal[row+1][index] = pascal[row][index-1] + pascal[row][index]
         return pascal
 
 if __name__ == "__main__":
