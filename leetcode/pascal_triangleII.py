@@ -1,5 +1,5 @@
 # Given an index k, return the kth row of the Pascal's triangle.
-# Time complexity: O(k^2)
+# Time complexity: O(k^2) (without using multiplication/division)
 # Space complexity: O(k) (use only one array)
 
 class Solution:
