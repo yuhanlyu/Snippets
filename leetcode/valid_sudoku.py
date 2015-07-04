@@ -6,18 +6,17 @@ class Solution:
     # @param {character[][]} board
     # @return {boolean}
     def isValidSudoku(self, board):
-        row = [[False] * 9 for _ in xrange(9)]
-        column = [[False] * 9 for _ in xrange(9)]
-        block = [[[False] * 9 for _ in xrange(3)] for _ in xrange(3)]
+        row, column, block = [0] * 9, [0] * 9, [0] * 9
         for i, board_row in enumerate(board):
             for j, e in enumerate(board_row):
                 if e != '.':
-                    e = int(e) - 1
-                    block_i, block_j = i / 3, j / 3
-                    if row[i][e] == True or column[j][e] == True \
-                    or block[block_i][block_j][e] == True:
+                    mask = 1 << int(e)
+                    block_i = (i / 3) * 3 + j / 3
+                    if mask & (row[i] | column[j] | block[block_i]):
                         return False
-                    row[i][e] = column[j][e] = block[block_i][block_j][e] = True
+                    row[i] |= mask
+                    column[j] |= mask
+                    block[block_i] |= mask
         return True
 
 if __name__ == "__main__":
