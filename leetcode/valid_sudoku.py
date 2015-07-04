@@ -1,6 +1,6 @@
 # Determine if a Sudoku is valid
 # Time Complexity: O(n^2)
-# Space Complexity: O(n^2), in this problem n is a constant
+# Space Complexity: O(n), in this problem n is a constant
 
 class Solution:
     # @param {character[][]} board
