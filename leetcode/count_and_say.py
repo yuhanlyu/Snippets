@@ -16,7 +16,7 @@ class Solution:
             tmp, count, index = [], 1, 0
             while index < len(result):
                 if index == len(result) - 1 or result[index+1] != result[index]:
-                    tmp.extend(list(str(count)))
+                    tmp.extend(str(count))
                     tmp.append(result[index])
                     count = 1
                 else:
