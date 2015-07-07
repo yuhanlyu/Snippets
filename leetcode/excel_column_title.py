@@ -9,8 +9,8 @@ class Solution:
      def convertToTitle(self, n):
         result = []
         while n > 0:
-            result.insert(0, chr(ord('A') + (n - 1) % 26))
-            n = (n - 1) / 26
+            n, remainder = divmod(n - 1, 26)
+            result.insert(0, chr(ord('A') + remainder))
         return ''.join(result)
 
 if __name__ == "__main__":
