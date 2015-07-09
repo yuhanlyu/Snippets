@@ -1,5 +1,7 @@
 # Design a stack that supports push, pop, top, and retrieving the 
 # minimum element in constant time.
+# Time Complexity: O(1)
+# Space Complexity: O(n)
 
 class MinStack:
     # initialize your data structure here.
