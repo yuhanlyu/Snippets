@@ -6,23 +6,23 @@
 class Stack:
     # initialize your data structure here.
     def __init__(self):
-        self.first = []
-        self.second = []
+        self.first = collections.deque()
+        self.second = collections.deque()
 
     # @param x, an integer
     # @return nothing
     def push(self, x):
         self.first.append(x)
         for _ in xrange(len(self.first) - 1):
-            self.first.append(self.first.pop(0))
+            self.first.append(self.first.popleft())
         if len(self.first) * len(self.first) > len(self.second):
             while self.second:
-                self.first.append(self.second.pop(0))
+                self.first.append(self.second.popleft())
             self.first, self.second = self.second, self.first
 
     # @return nothing
     def pop(self):
-        return self.first.pop(0) if self.first else self.second.pop(0)
+        return self.first.popleft() if self.first else self.second.popleft()
 
     # @return an integer
     def top(self):
