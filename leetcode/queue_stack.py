@@ -3,11 +3,12 @@
 # Space Complexity: O(n)
 # http://cstheory.stackexchange.com/questions/2562/one-stack-two-queues
 
+from collections import deque
 class Stack:
     # initialize your data structure here.
     def __init__(self):
-        self.first = collections.deque()
-        self.second = collections.deque()
+        self.first = deque()
+        self.second = deque()
 
     # @param x, an integer
     # @return nothing
