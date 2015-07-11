@@ -1,5 +1,5 @@
 # Implement the following operations of a queue using stacks.
-# Time Complexity: amortized O(1) 
+# Time Complexity: amortized O(1) for each operation
 # Space Complexity: O(n)
 
 class Queue:
