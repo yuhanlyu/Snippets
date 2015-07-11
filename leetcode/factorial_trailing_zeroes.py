@@ -1,6 +1,6 @@
 # Given an integer n, return the number of trailing zeroes in n!.
-# Time Complexity: O(n)
-# Space Complexity: O(lg n)
+# Time Complexity: O(lg n)
+# Space Complexity: O(1)
 
 class Solution:
     # @param {integer} n
