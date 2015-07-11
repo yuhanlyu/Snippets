@@ -1,7 +1,7 @@
 # Given a sorted integer array without duplicates, 
 # return the summary of its ranges.
 # Time Complexity: O(n)
-# Space Complexity: O(n)
+# Space Complexity: O(output)
 
 class Solution:
     # @param {integer[]} nums
