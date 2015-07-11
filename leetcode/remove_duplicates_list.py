@@ -1,5 +1,7 @@
 # Given a sorted linked list, delete all duplicates such that 
 # each element appear only once.
+# Time Complexity: O(n)
+# Space Complexity: O(1)
 class ListNode:
     def __init__(self, x):
         self.val = x
