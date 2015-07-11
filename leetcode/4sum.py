@@ -19,7 +19,7 @@ class Solution:
                 solutions |= set((tuple(sorted([nums[i] for i in candidate])) \
                                   for candidate in \
                                   (index1 + index2 for index1 in indices \
-                                      for index2 in all_pairs[target-key]) \
+                                      for index2 in all_pairs[target - key]) \
                                   if len(set(candidate)) == 4))
         return [list(solution) for solution in solutions]
                     
