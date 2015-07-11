@@ -1,6 +1,6 @@
 # Design a stack that supports push, pop, top, and retrieving the 
 # minimum element in constant time.
-# Time Complexity: O(1)
+# Time Complexity: O(1) for each operation
 # Space Complexity: O(n)
 
 class MinStack:
