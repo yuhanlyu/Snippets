@@ -7,18 +7,16 @@ class Solution:
     # @param {integer} target
     # @return {integer[][]}
     def fourSum(self, nums, target):
-        all_pairs, solutions = {}, set()
+        all_pairs = {}
         nums.sort()
         for j, i in ((a, b) for a in xrange(len(nums)) for b in xrange(a)):
             if nums[i] + nums[j] not in all_pairs:
                 all_pairs[nums[i] + nums[j]] = []
             all_pairs[nums[i] + nums[j]].append((i, j))
-        for j, i in ((a, b) for a in xrange(len(nums)) for b in xrange(a)):
-            key = target - nums[i] - nums[j]
-            if key in all_pairs:
-                solutions |= set(((nums[i], nums[j], nums[k], nums[l])
-                                   for k, l in all_pairs[key] if k > j))
-        return [list(solution) for solution in solutions]
+        return [list(solution) for solution in
+          set(((nums[i], nums[j], nums[k], nums[l])
+          for j in xrange(len(nums)) for i in xrange(j)
+          for (k, l) in all_pairs.get(target-nums[i]-nums[j], []) if k > j))]
                     
 if __name__ == "__main__":
     solution = Solution()
