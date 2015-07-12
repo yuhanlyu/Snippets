@@ -16,7 +16,7 @@ class Solution:
         return [list(solution) for solution in
           set(((nums[i], nums[j], nums[k], nums[l])
           for j in xrange(len(nums)) for i in xrange(j)
-          for (k, l) in all_pairs.get(target-nums[i]-nums[j], []) if k > j))]
+          for k, l in all_pairs.get(target - nums[i] - nums[j], []) if k > j))]
                     
 if __name__ == "__main__":
     solution = Solution()
