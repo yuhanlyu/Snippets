@@ -9,7 +9,7 @@ class Solution:
     def fourSum(self, nums, target):
         all_pairs = {}
         nums.sort()
-        for j, i in ((a, b) for a in xrange(len(nums)) for b in xrange(a)):
+        for i, j in ((s, l) for l in xrange(len(nums)) for s in xrange(l)):
             if nums[i] + nums[j] not in all_pairs:
                 all_pairs[nums[i] + nums[j]] = []
             all_pairs[nums[i] + nums[j]].append((i, j))
