@@ -13,14 +13,12 @@ class Solution:
     # @param {integer[]} nums
     # @return {integer}
     def removeDuplicates(self, nums):
-        if not nums:
-            return 0
         current = 0
-        for index in xrange(1, len(nums), 1):
-            if nums[current] != nums[index]:
+        for num in nums:
+            if current == 0 or num > nums[current - 1]:
+                nums[current] = num
                 current += 1
-                nums[current] = nums[index]
-        return current + 1
+        return current
 
 if __name__ == "__main__":
     solution = Solution()
