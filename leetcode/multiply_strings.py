@@ -8,19 +8,17 @@ class Solution:
     # @param {string} num2
     # @return {string}
     def multiply(self, num1, num2):
-        num1, num2 = map(int, num1), map(int, num2)
         result = [0] * (len(num1) + len(num2))
-        for i in xrange(len(num1)):
-            for j in xrange(len(num2)):
-                result[~(i + j)] += num1[~i] * num2[~j]
-        index = len(result) - 1
-        for i in xrange(len(result) - 1, -1, -1):
-            if result[i] >= 10:
-                result[i - 1] += result[i] / 10
-                result[i] %= 10
-            if result[i] != 0: index = i
-        return ''.join(str(result[i]) for i in xrange(index, len(result)))
+        num1, num2, begin = map(int, num1), map(int, num2), len(result) - 1
+        for k in xrange(len(result)):
+            for i in xrange(max(0, k + 1 - len(num2)), min(len(num1), k + 1)):
+                result[~k] += num1[~i] * num2[~(k - i)]
+            if result[~k] >= 10:
+                result[~(k + 1)], result[~k] = divmod(result[~k], 10)
+            if result[~k] != 0: begin = len(result) - k - 1
+        return ''.join(str(result[i]) for i in xrange(begin, len(result)))
 
 if __name__ == "__main__":
     solution = Solution()
     print solution.multiply("0", "0")
+    print solution.multiply("1", "1")
