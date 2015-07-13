@@ -49,6 +49,3 @@ if __name__ == "__main__":
     print solution.fractionToDecimal(1, 2)
     print solution.fractionToDecimal(2, 1)
     print solution.fractionToDecimal(2, 3)
-    print solution.fractionToDecimal(1, 28)
-    print solution.fractionToDecimal(50, 8)
-    print solution.fractionToDecimal(7, -12)
