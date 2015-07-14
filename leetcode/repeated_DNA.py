@@ -3,7 +3,7 @@
 # identify repeated sequences within the DNA.
 # Write a function to find all the 10-letter-long sequences (substrings) that 
 # occur more than once in a DNA molecule.
-# Time Complexity: O(n)
+# Time Complexity: O(n) in average
 # Space Complexity: O(n)
 
 class Solution:
