@@ -10,9 +10,7 @@ class Solution:
         all_pairs = {}
         nums.sort()
         for i, j in ((s, l) for l in xrange(len(nums)) for s in xrange(l)):
-            if nums[i] + nums[j] not in all_pairs:
-                all_pairs[nums[i] + nums[j]] = []
-            all_pairs[nums[i] + nums[j]].append((i, j))
+            all_pairs.setdefault(nums[i] + nums[j], []).append((i, j))
         return [list(solution) for solution in
           set(((nums[i], nums[j], nums[k], nums[l])
           for j in xrange(len(nums)) for i in xrange(j)
