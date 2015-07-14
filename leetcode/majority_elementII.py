@@ -1,5 +1,5 @@
 # Given an integer array of size n, find all elements that appear more than n/3 # times.
-# Time complexity: O(n)
+# Time complexity: O(n) in average
 # Space complexity: O(1)
 
 class Solution:
