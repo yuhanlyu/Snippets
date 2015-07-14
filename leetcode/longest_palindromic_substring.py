@@ -12,7 +12,7 @@ class Solution:
         T = '#'.join('^{}$'.format(s))
         P, C, R, max, center = [0] * len(T), 0, 0, 0, 0
         for i in xrange(1, len(T) - 1):
-            P[i] = (R > i) and min(R - i, P[2 * C - i]) 
+            P[i] = min(R - i, P[2 * C - i]) if R >= i else 1
             while T[i + 1 + P[i]] == T[i - 1 - P[i]]:
                 P[i] += 1
             if P[i] > max: max, center = P[i], i
