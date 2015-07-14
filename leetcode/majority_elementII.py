@@ -8,9 +8,7 @@ class Solution:
     def majorityElement(self, nums):
         K = {}
         for num in nums:
-            if num not in K:
-                K[num] = 0
-            K[num] += 1
+            K[num] = K.get(num, 0) + 1
             if len(K) >= 3:
                 K = dict([(a, c - 1) for (a, c) in K.iteritems() if c > 1])
         return [num for num in K if nums.count(num) > len(nums) / 3]
@@ -18,4 +16,4 @@ class Solution:
 if __name__ == "__main__":
     solution = Solution()
     print solution.majorityElement([1, 2, 3, 4])
-    print solution.majorityElement([1, 1, 1, 2, 2, 2, 3, 3, 3])
+    print solution.majorityElement([1, 1, 1, 2, 2, 2, 3, 3, 3, 1])
