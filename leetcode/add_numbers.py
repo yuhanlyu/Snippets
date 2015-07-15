@@ -32,10 +32,6 @@ if __name__ == "__main__":
     list2 = ListNode(5)
     list2.next = ListNode(6)
     list2.next.next = ListNode(4)
-    list1 = ListNode(1)
-    list2 = ListNode(9)
-    list2.next = ListNode(9)
-    list2.next.next = ListNode(9)
     solution = Solution()
     list = solution.addTwoNumbers(list1, list2)
-    print list.val, list.next.val, list.next.next.val, list.next.next.next.val
+    print list.val, list.next.val, list.next.next.val
