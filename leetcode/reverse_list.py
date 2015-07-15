@@ -12,8 +12,7 @@ class Solution:
     def reverseList(self, head):
         prev = None
         while head:
-            tmp, head = head, head.next
-            prev, tmp.next = tmp, prev
+            prev, head.next, head = head, prev, head.next
         return prev
 
 if __name__ == "__main__":
