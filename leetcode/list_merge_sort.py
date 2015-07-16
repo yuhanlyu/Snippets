@@ -22,9 +22,9 @@ class Solution:
                 second_list = first_list = pf = ps = slow = fast =run_start.next
                 for _ in xrange(merge_size):
                     pf, slow = slow, slow.next
-                    if fast: ps, fast = fast, fast.next
-                    if fast: ps, fast = fast, fast.next
                     if not slow: break
+                    if fast: ps, fast = fast, fast.next
+                    if fast: ps, fast = fast, fast.next
                 if not slow: break
                 pf.next, ps.next, second_list = None, None, slow
                 while first_list or second_list: # merge two lists
