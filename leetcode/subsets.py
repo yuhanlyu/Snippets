@@ -9,9 +9,8 @@ class Solution:
         nums.sort()
         result = [[]]
         for num in nums:
-            tmp = [set + [num] for set in result]
-            while tmp:
-                result.append(tmp.pop())
+            for i in xrange(len(result)):
+                result.append(result[i] + [num])
         return result
 
 if __name__ == "__main__":
