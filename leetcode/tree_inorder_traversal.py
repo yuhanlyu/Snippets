@@ -13,14 +13,15 @@ class Solution:
     # @param {TreeNode} root
     # @return {integer[]}
     def inorderTraversal(self, root):
-        stack, result, current = [], [], root
-        while stack or current:
-            while current:
-                stack.append(current)
-                current = current.left
-            current = stack.pop()
-            result.append(current.val)
-            current = current.right
+        stack, result, node = [], [], root
+        while stack or node:
+            if node:
+                stack.append(node)
+                node = node.left
+            else:
+                node = stack.pop()
+                result.append(node.val)
+                node = node.right
         return result
 
 if __name__ == "__main__":
