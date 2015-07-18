@@ -1,6 +1,6 @@
 # Given preorder and inorder traversal of a tree, construct the binary tree.
 # Time Complexity: O(n)
-# Space Complexity: O(n)
+# Space Complexity: O(n), O(h) is achievable assuming partition in-place
 
 # Definition for a binary tree node.
 class TreeNode:
