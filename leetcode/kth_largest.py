@@ -1,6 +1,6 @@
 # Kth Largest Element in an Array 
 # Time Complexity: O(n) in average
-# Space Complexity: O(n) (this can be reduced to O(1) by in-place partition)
+# Space Complexity: O(1)
 # O(n + k lg n ) solution
 # return heapq.nlargest(k, nums)[-1]
 
@@ -10,15 +10,15 @@ class Solution:
     # @return {integer}
     def findKthLargest(self, nums, k):
         while True:
-            larger = [num for num in nums if num > nums[0]]
+            larger = sum(num > nums[0] for num in nums)
             eq = nums.count(nums[0])
-            if len(larger) < k <= len(larger) + eq:
+            if larger < k <= larger + eq:
                 return nums[0]
-            if len(larger) >= k:
-                nums = larger
+            if larger >= k:
+                nums[:] = (num for num in nums if num > nums[0])
             else:
-                k -= len(larger) + eq
-                nums = [num for num in nums if num < nums[0]]
+                k -= larger + eq
+                nums[:] = (num for num in nums if num < nums[0])
 
 if __name__ == "__main__":
     solution = Solution()
