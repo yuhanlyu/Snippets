@@ -1,6 +1,6 @@
 # Given a binary tree, return the inorder traversal of its nodes' values.
 # Time Complexity: O(n)
-# Space Complexity: O(n)
+# Space Complexity: O(h), h is the height of the tree
 
 # Definition for a binary tree node.
 class TreeNode:
