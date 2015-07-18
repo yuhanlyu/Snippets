@@ -1,5 +1,6 @@
-# Given a binary tree, return the level order traversal of its nodes' values. 
-# (ie, from left to right, level by level).
+# Given a binary tree, return the zigzag level order traversal of its nodes' 
+# values. (ie, from left to right, then right to left for the next level and 
+# alternate between).
 # Time Complexity: O(n)
 # Space Complexity: O(n)
 
@@ -16,18 +17,21 @@ class Solution:
     # @param {TreeNode} root
     # @return {integer[][]}
     def levelOrder(self, root):
-        def helper(root, level, levels):
-            if root is not None:
-                if len(levels) <= level:
-                    levels.append(deque())
-                if level % 2 == 0:
-                    levels[level].append(root.val)
-                else:
-                    levels[level].appendleft(root.val)
-                helper(root.left, level + 1, levels)
-                helper(root.right, level + 1, levels)
-            return levels
-        return [list(item) for item in helper(root, 0, [])]
+        if not root: return []
+        queue, result, level = deque([root, None]), [deque()], 0
+        ops = [deque.append, deque.appendleft]
+        while queue:
+            node = queue.popleft()
+            if not node:
+                level += 1
+                if queue: 
+                    result.append(deque())
+                    queue.append(None)
+            else:
+                ops[level % 2](result[level], node.val)
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
+        return [list(item) for item in result]
 
 if __name__ == "__main__":
     root = TreeNode(3)
