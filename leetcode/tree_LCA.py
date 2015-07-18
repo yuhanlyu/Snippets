@@ -1,7 +1,7 @@
-# Given a binary search tree (BST), find the lowest common ancestor (LCA) of 
-# two given nodes in the BST.
+# Given a binary tree, find the lowest common ancestor (LCA) of two given 
+# nodes in the tree.
 # Time Complexity: O(n)
-# Space Complexity: O(1)
+# Space Complexity: O(h), h is the height of tree
 
 # Definition for a binary tree node.
 class TreeNode:
