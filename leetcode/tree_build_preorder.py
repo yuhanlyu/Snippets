@@ -26,5 +26,3 @@ if __name__ == "__main__":
     solution = Solution()
     node = solution.buildTree([1,2,3], [2, 1, 3])
     print node.val, node.left.val, node.right.val
-    node = solution.buildTree([-1], [-1])
-    print node.val
