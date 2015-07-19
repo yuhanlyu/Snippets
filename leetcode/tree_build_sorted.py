@@ -1,7 +1,7 @@
 # Given an array where elements are sorted in ascending order, 
 # convert it to a height balanced BST.
 # Time Complexity: O(n)
-# Space Complexity: O(lg n)
+# Space Complexity: O(n)
 
 # Definition for a binary tree node.
 class TreeNode:
