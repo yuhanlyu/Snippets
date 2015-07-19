@@ -4,7 +4,8 @@
 # next() and hasNext() should run in average O(1) time and uses O(h) memory, 
 # where h is the height of the tree.
 # Time Complexity: O(n)
-# Space Complexity: O(h), h is the height of the tree
+# Space Complexity: O(h), h is the height of the tree, O(1) is doable using
+# Morris traversal
 
 # Definition for a binary tree node.
 class TreeNode:
