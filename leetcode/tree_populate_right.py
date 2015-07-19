@@ -16,15 +16,14 @@ class Solution:
     # @param root, a tree link node
     # @return nothing
     def connect(self, root):
-        if not root: return
-        pre, cur = root, None
-        while pre.left:
-            cur = pre
+        dummy, dummy.next = TreeLinkNode(0), root
+        while dummy.next:
+            tail, cur, dummy.next = dummy, dummy.next, None
             while cur:
-                cur.left.next = cur.right
-                if cur.next: cur.right.next = cur.next.left
+                if cur.left:
+                    tail.next, tail = cur.left, cur.left
+                    tail.next, tail = cur.right, cur.right
                 cur = cur.next
-            pre = pre.left
 
 if __name__ == "__main__":
     node = TreeLinkNode(2)
