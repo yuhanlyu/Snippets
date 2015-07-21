@@ -9,7 +9,7 @@ class Solution:
     # @param {integer} target
     # @return {integer[][]}
     def combinationSum(self, candidates, target):
-        cnt, items, DP = {}, [], [[] for _ in xrange(target + 1)]
+        items, DP = [], [[] for _ in xrange(target + 1)]
         for key in sorted(candidates):
             cur = 1
             while cur * key <= target:
