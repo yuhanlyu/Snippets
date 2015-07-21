@@ -17,10 +17,10 @@ class Solution:
         wordDict.add(endWord)
         while queue:
             str, length = queue.popleft()
-            for i in xrange(len(str)):
-                for new in (str[:i] + c + str[i + 1:] 
-                            for c in "abcdefghijklmnopqrstuvwxyz" 
-                            if c != str[i] and str[:i]+c+str[i+1:] in wordDict):
+            for new in (str[:i] + c + str[i + 1:] 
+                        for i in xrange(len(str)) 
+                        for c in "abcdefghijklmnopqrstuvwxyz" 
+                        if c != str[i] and str[:i]+c+str[i+1:] in wordDict):
                     if new == endWord: return length + 1
                     queue.append((new, length + 1))
                     wordDict.remove(new)
