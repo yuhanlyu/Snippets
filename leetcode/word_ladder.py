@@ -2,7 +2,7 @@
 # of shortest transformation sequence from beginWord to endWord, such that:
 # Only one letter can be changed at a time
 # Each intermediate word must exist in the dictionary
-# Time Complexity: O(n)
+# Time Complexity: O(n 26^l), l is the length of each word
 # Space Complexity: O(n)
 
 from collections import deque
