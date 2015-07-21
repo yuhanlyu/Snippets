@@ -13,19 +13,20 @@ class Solution:
     # @param {set<string>} wordDict
     # @return {integer}
     def ladderLength(self, beginWord, endWord, wordDict):
-        words, queue = set(wordDict), deque([(beginWord, 1)])
+        queue = deque([(beginWord, 1)])
+        wordDict.add(endWord)
         while queue:
             str, length = queue.popleft()
             for i in xrange(len(str)):
-                for c in "abcdefghijklmnopqrstuvwxyz":
-                    if c == str[i]: continue
-                    new_str = str[:i] + c + str[i + 1:]
-                    if new_str == endWord: return length + 1
-                    if new_str in words:
-                        queue.append((new_str, length + 1))
-                        words.remove(new_str)
+                for new in (str[:i] + c + str[i + 1:] 
+                            for c in "abcdefghijklmnopqrstuvwxyz" 
+                            if c != str[i] and str[:i]+c+str[i+1:] in wordDict):
+                    if new == endWord: return length + 1
+                    queue.append((new, length + 1))
+                    wordDict.remove(new)
         return 0
 
 if __name__ == "__main__":
     solution = Solution()
-    print solution.ladderLength("hit", "cog", ["hot","dot","dog","lot","log"])
+    print solution.ladderLength("hit", "cog", 
+                                set(["hot","dot","dog","lot","log"]))
