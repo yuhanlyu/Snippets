@@ -9,21 +9,14 @@ class Solution:
     # @param {integer} target
     # @return {integer[][]}
     def combinationSum(self, candidates, target):
-        items, DP = [], [[] for _ in xrange(target + 1)]
-        for key in sorted(candidates):
-            cur = 1
-            while cur * key <= target:
-                items.append((cur * key, key, cur))
-                cur *= 2
-        for key, ori, ct in items:
-            for i in xrange(target, key - 1, -1):
-                DP[i].extend((p + [(key, ori, ct)] for p in DP[i - key]))
-            DP[key].append([(key, ori, ct)])
-        for i in xrange(len(DP[target])):
-            DP[target][i] =  \
-                  sum(([key] * count for (_, key, count) in DP[target][i]), [])
+        DP = [[] for _ in xrange(target + 1)]
+        for candidate in sorted(x for x in candidates if x <= target):
+            DP[candidate].append([candidate])
+            for key in xrange(candidate, target + 1):
+                DP[key].extend(p + [candidate] for p in DP[key - candidate])
         return DP[target]
 
 if __name__ == "__main__":
     solution = Solution()
+    print solution.combinationSum([2], 1)
     print solution.combinationSum([2, 3, 6, 7], 7)
