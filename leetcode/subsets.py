@@ -6,11 +6,18 @@ class Solution:
     # @param {integer[]} nums
     # @return {integer[][]}
     def subsets(self, nums):
+        if not nums: return []
         nums.sort()
-        result = [[]]
-        for num in nums:
-            for i in xrange(len(result)):
-                result.append(result[i] + [num])
+        result, x, k = [[]], [0] * (len(nums)), 0
+        while True:
+            result.append([nums[i] for i in x[0:k + 1]])
+            if x[k] == len(nums) - 1:
+                if k == 0: break
+                k -= 1
+                x[k] += 1
+            else:
+                k += 1
+                x[k] = x[k - 1] + 1
         return result
 
 if __name__ == "__main__":
