@@ -7,20 +7,18 @@ class Solution:
     # @param {string} s
     # @return {string[]}
     def restoreIpAddresses(self, s):
-        def helper(s, index, level, cur, result):
-            if level == 4:
-                if index == len(s):
-                    result.append('.'.join(cur))
-                return
-            for i in xrange(1, 4):
-                if index + i <= len(s):
-                    if (i == 1 or s[index] != '0') \
-                    and int(s[index:index + i]) <= 255:
-                        cur[level] = s[index:index + i]
-                        helper(s, index + i, level + 1, cur, result)
-                        cur[level] = ""
-            return result
-        return helper(s, 0, 0, [""] * 4, [])
+        if not s or len(s) > 12: return []
+        DP1 = [[] for _ in xrange(len(s))]
+        for i in xrange(len(s)):
+            DP1[i] = [s[i:i + 1]]
+            if s[i] != '0' and i + 2 <= len(s): DP1[i].append(s[i:i + 2])
+            if s[i] != '0' and i + 3 <= len(s) \
+            and int(s[i:i + 3]) <= 255: DP1[i].append(s[i:i + 3])
+        DP2 = [[[p, q] for p in DP1[i] if i + len(p) < len(s) 
+                       for q in DP1[i + len(p)]] for i in xrange(len(s))]
+        return ['.'.join(p + q) for p in DP2[0] if len(''.join(p)) < len(s)
+                                for q in DP2[len(''.join(p))]
+                                if len(''.join(p + q)) == len(s)]
 
 if __name__ == "__main__":
     solution = Solution()
