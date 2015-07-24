@@ -13,7 +13,7 @@ class Solution:
             result.append([i + 1 for i in xrange(n) if ((x >> i) & 1)])
             u = x & -x
             v = u + x
-            x = v + (((v^x) / u) >> 2)
+            x = v | (((v^x) / u) >> 2)
         return result
 
 if __name__ == "__main__":
