@@ -2,8 +2,6 @@
 # The word can be constructed from letters of sequentially adjacent cell, 
 # where "adjacent" cells are those horizontally or vertically neighboring. 
 # The same letter cell may not be used more than once.
-# Time Complexity: O(n)
-# Space Complexity: O(n)
 
 class Solution:
     # @param {character[][]} board
