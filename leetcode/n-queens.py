@@ -11,7 +11,7 @@ class Solution:
         stack, solution, result = [(0, 0, False)], [0] * n, []
         while stack:
             y, x, flag = stack.pop()
-            if y == n and flag == False:
+            if y == n:
                 board = [["Q" if solution[i] == j else "." for j in xrange(n)]
                          for i in xrange(n)]
                 result.append([''.join(item) for item in board])
