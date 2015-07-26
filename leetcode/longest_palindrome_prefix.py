@@ -14,7 +14,7 @@ class Solution:
             while pos > 0 and t[pos] != t[index]:
                 pos = F[pos - 1]
             F[index] = pos if t[pos] != t[index] else pos + 1
-        return s[::-1][:len(s) - F[-1]] + s
+        return s[-1:-1 - len(s) + F[-1]:-1] + s
 
 if __name__ == "__main__":
     solution = Solution()
