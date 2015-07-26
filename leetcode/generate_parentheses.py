@@ -7,11 +7,15 @@ class Solution:
     # @param {integer} n
     # @return {string[]}
     def generateParenthesis(self, n):
-        result = [[""]]
-        for i in xrange(1, n + 1):
-            result.append(["(" + p + ")" + q for j in xrange(i)
-                           for p in result[j] for q in result[i - j - 1]])
-        return result[n]
+        cur, result, x, y = ["("] * (n + 1) + [")"] * n, [], n, n
+        while True:
+            result.append(''.join(cur[1:]))
+            if x >= 2 * n - 1: break
+            cur[x], cur[y], x, y = ")", "(", x + 1, y + 1
+            if cur[x] == ")":
+                if x == 2 * y - 2: x += 1
+                else: cur[x], cur[2], x, y = "(", ")", 3, 2
+        return result
 
 if __name__ == "__main__":
     solution = Solution()
