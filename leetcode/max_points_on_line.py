@@ -1,6 +1,6 @@
 # Given n points on a 2D plane, find the maximum number of points that lie on 
 # the same straight line.
-# Time Complexity: O(n^2)
+# Time Complexity: O(n^2) in average
 # Space Complexity: O(n)
 
 # Definition for a point.
