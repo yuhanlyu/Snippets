@@ -11,7 +11,6 @@ class Solution:
     def findMin(self, nums):
         left, right = 0, len(nums) - 1
         while left <= right:
-            print nums[left], nums[right]
             if nums[left] <= nums[right]: return nums[left]
             mid = left + (right - left) / 2
             if nums[left] <= nums[mid]:
@@ -21,5 +20,4 @@ class Solution:
 
 if __name__ == "__main__":
     solution = Solution()
-    print solution.findMin([3, 1, 2])
-    #print solution.findMin([4, 5, 6, 7, 0, 1, 2])
+    print solution.findMin([4, 5, 6, 7, 0, 1, 2])
