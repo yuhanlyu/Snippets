@@ -13,25 +13,16 @@ class Solution:
         result, need = [], {}
         for word in words:
             need[word] = need.get(word, 0) + 1
-        for start in xrange(len(words[0])):
-            begin, histogram, remain = start, {}, len(words)
-            for i in xrange(start, len(s) - len(words[0]) + 1, len(words[0])):
-                str = s[i:i + len(words[0])]
-                if str in need:
-                    histogram[str] = histogram.get(str, 0) + 1
-                    if histogram[str] <= need[str]: 
-                        remain -= 1
-                        if not remain:
-                            result.append(begin)
-                            histogram[s[begin:begin + len(words[0])]] -= 1
-                            remain, begin = remain + 1, begin + len(words[0])
-                    while histogram[str] > need[str]:
-                        tmp = s[begin:begin + len(words[0])]
-                        if histogram[tmp] <= need[tmp]: remain += 1
-                        histogram[tmp] -= 1
-                        begin += len(words[0])
-                else:
-                    remain, histogram, begin = len(words), {}, i + len(words[0])
+        for i in xrange(len(words[0])):
+            begin, remain = i, dict(need)
+            for j in xrange(i, len(s) - len(words[0]) + 1, len(words[0])):
+                str = s[j: j + len(words[0])]
+                remain[str] = remain.get(str, 0) - 1
+                while remain.get(str, -1) < 0:
+                    remain[s[begin:begin + len(words[0])]] += 1
+                    begin += len(words[0])
+                if j + len(words[0]) - begin == len(words[0]) * len(words):
+                    result.append(begin)
         return result
 
 if __name__ == "__main__":
