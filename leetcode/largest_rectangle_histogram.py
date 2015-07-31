@@ -2,7 +2,7 @@
 # the width of each bar is 1, find the area of largest rectangle in the 
 # histogram
 # Time Complexity: O(n)
-# Space Complexity: O(1)
+# Space Complexity: O(n)
 
 class Solution:
     # @param {integer[]} height
@@ -10,11 +10,11 @@ class Solution:
     def largestRectangleArea(self, height):
         stack, result = [], 0
         height.append(0)
-        for i in xrange(len(height)):
-            j = i - 1
-            while j >= 0 and height[j] > height[i]:
-                result = max(result, height[j] * (i - j))
-                height[j], j = height[i], j - 1
+        for i, h in enumerate(height):
+            while stack and h < height[stack[-1]]:
+                start = stack[-2] if len(stack) > 1 else -1
+                result = max(result, height[stack.pop()] * (i - start - 1))
+            stack.append(i)
         return result
 
 if __name__ == "__main__":
