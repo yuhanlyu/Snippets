@@ -17,9 +17,7 @@ class Trie:
     def insert(self, word):
         node = self.root
         for c in word:
-            if c not in node.map:
-                node.map[c] = TrieNode()
-            node = node.map[c]
+            node = node.map.setdefault(c, TrieNode())
         node.map[None] = None
 
     # @param {string} word
@@ -28,8 +26,7 @@ class Trie:
     def search(self, word):
         node = self.root
         for c in word:
-            if c in node.map:
-                node = node.map[c]
+            if c in node.map: node = node.map[c]
             else: return False
         return None in node.map
     
@@ -40,8 +37,7 @@ class Trie:
     def startsWith(self, prefix):
         node = self.root
         for c in prefix:
-            if c in node.map:
-                node = node.map[c]
+            if c in node.map: node = node.map[c]
             else: return False
         return True
 
