@@ -1,34 +1,39 @@
-# Given a 2D board and a word, find if the word exists in the grid.
-# The word can be constructed from letters of sequentially adjacent cell, 
-# where "adjacent" cells are those horizontally or vertically neighboring. 
-# The same letter cell may not be used more than once.
+# Design a data structure that supports the following two operations:
+# void addWord(word)
+# bool search(word)
+# search(word) can search a literal word or a regular expression string 
+# containing only letters a-z or .. A . means it can represent any one letter.
+# Time Complexity: O(n)
+# Space Complexity: O(n)
 
-class Solution:
-    # @param {character[][]} board
+class WordDictionary:
+    # initialize your data structure here.
+    def __init__(self):
+        self.root = {}
+
+    # @param {string} word
+    # @return {void}
+    # Adds a word into the data structure.
+    def addWord(self, word):
+        node = self.root
+        for c in word:
+            node = node.setdefault(c, {})
+        node[None] = None
+
     # @param {string} word
     # @return {boolean}
-    def exist(self, board, word):
-        def helper(row, col, visited, word, level):
-            if row < 0 or row >= len(board) or col < 0 \
-            or col >= len(board[row]) or visited[row][col] \
-            or level >= len(word) or board[row][col] != word[level]: 
-                return False
-            if level == len(word) - 1: return True
-            visited[row][col] = True
-            for drow, dcol in ((0, 1), (0, -1), (1, 0), (-1, 0)):
-                if helper(row + drow, col + dcol, visited, word, level + 1):
-                    return True
-            visited[row][col] = False
-            return False
-        visited = [[False] * len(board[0]) for _ in xrange(len(board))]
-        for i in xrange(len(board)):
-            for j in xrange(len(board[i])):
-                if helper(i, j, visited, word, 0): return True
-        return False
+    # Returns if the word is in the data structure. A word could
+    # contain the dot character '.' to represent any one letter.
+    def search(self, word):
+        l = [self.root]
+        for c in word:
+            l = [x for node in l for k, x in node.items() 
+                 if c in (k, ".") and x]
+        return any(None in node for node in l)
 
 if __name__ == "__main__":
-    solution = Solution()
-    board = ["ABCE", "SFCS", "ADEE"]
-    print solution.exist(board, "ABCCED")
-    print solution.exist(board, "SEE")
-    print solution.exist(board, "ABCB")
+    wordDictionary = WordDictionary()
+    wordDictionary.addWord("word")
+    print wordDictionary.search("pattern")
+    print wordDictionary.search("word")
+    print wordDictionary.search("wo.xx")
