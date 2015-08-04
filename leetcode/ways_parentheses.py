@@ -2,7 +2,7 @@
 # computing all the different possible ways to group numbers and operators. 
 # The valid operators are +, - and *.
 # Time Complexity: O(n^3)
-# Space Complexity: O(n^2)
+# Space Complexity: O(n^3)
 
 import re, operator
 
