@@ -17,9 +17,8 @@ class Solution:
         def epsilon(p, state):
             result = set([state])
             while state < len(p) - 1 and p[state + 1] == '*':
-                result.add(state)
                 state += 2
-            result.add(state)
+                result.add(state)
             return result
         states = epsilon(p, 0)
         for c in s:
