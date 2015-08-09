@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 /* Codility Beta 2010 */
+/* This is a linear time solution */
 int solution ( int A[], int N );
 int solution ( int A[], int N ) 
 {
