@@ -2,19 +2,12 @@
 
 int solution(int A[], int N)
 {
-    int flag = 0;
-    for (int i = 0; i < N; ++i) {
-        int index = A[i] > 0 ? A[i] - 1 : -(A[i]) - 1;
-        if (index < N)
-            A[index] = -A[index];
-        else
-            flag = 1;
-    }
-    if (flag == 0)
-        return N + 1;
+    int xor = 0;
+    for (int i = 1; i <= N + 1; ++i)
+        xor ^= i;
     for (int i = 0; i < N; ++i)
-        if (A[i] > 0)
-            return i + 1;
+        xor ^= A[i];
+    return xor;
 }
 
 int main(void)
