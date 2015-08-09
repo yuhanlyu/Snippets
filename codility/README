@@ -1,8 +1,0 @@
-My solution for Codility programming challenges.
-All solutions receives perfect score and satisy the complexity requirement.
-
-For some problems, it is not necessary to satisfy the complexity requirement
-to obtain perfect score.
-
-Beta 2010: Don't need to reduce the space complexity to linear.
-Theta 2011: Don't need to precompute lower and farthest to get linear time.

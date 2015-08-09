@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 /* Extended GCD */
 int egcd( int a, int b, int *x, int *y );
 int egcd( int a, int b, int *x, int *y )
