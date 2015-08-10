@@ -7,9 +7,9 @@ class Solution:
     # @return {integer}
     def firstMissingPositive(self, nums):
         for i in xrange(len(nums)):
-            num = nums[i]
-            while num <= len(nums) and num > 0 and nums[num - 1] != num:
-                nums[num-1], nums[i], num = nums[i], nums[num-1], nums[num-1]
+            num = nums[i] - 1
+            while 0 <= num < len(nums) and nums[num] != num + 1:
+                nums[num], nums[i], num = nums[i], nums[num], nums[num] - 1
         for i, num in enumerate(nums):
             if num != i + 1:
                 return i + 1
