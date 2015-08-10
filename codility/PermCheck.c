@@ -2,17 +2,16 @@
 
 int solution(int A[], int N)
 {
-    int visited[N];
-
     for (int i = 0; i < N; ++i) {
-        visited[i] = 0;
-        if (A[i] <= 0 || A[i] > N)
-            return 0;
+        for (int num = A[i] - 1; 0 <= num && num < N && A[num] != num + 1;
+                num = A[i] - 1) {
+            int tmp = A[num];
+            A[num] = A[i];
+            A[i] = tmp;
+        }
     }
     for (int i = 0; i < N; ++i) {
-        if (visited[A[i] - 1] == 0)
-            visited[A[i] - 1] = 1;
-        else
+        if (A[i] != i + 1)
             return 0;
     }
     return 1;
