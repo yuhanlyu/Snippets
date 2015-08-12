@@ -1,7 +1,11 @@
 #include <stdio.h>
                                                                                 
 /* This function computes the n-th fibonacci number, where n should be a 
- * non-negative number */
+ * non-negative number
+ * This algorithm is from L.F. Johnsonn's paper:
+ * "Tumble, a fast simple iteration algorithm for Fibonacci,"
+ * Information Processing Letters Volume 89, Issue 4, 28 February 2004, 
+ * Pages 187–189 */
 unsigned int fibonacci( unsigned int n );
 unsigned int fibonacci( unsigned int n )
 {
