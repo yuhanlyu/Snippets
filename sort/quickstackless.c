@@ -1,18 +1,17 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <time.h>
-#include <assert.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+#include<time.h>
+#include<assert.h>
 
-void quick(int a[], int begin, int end);
+void quick(int a[], int end);
 
-/* Quicksort: sort the array a[begin..end-1], where begin >= 2 
- *                                            and end < length of A - 1
+/* Quicksort: sort the array a[2..end-1], where end < length of A - 1
  * This algorithm is from Lutz M. Wegner's paper 
  * "A generalized, one-way, stackless quicksort," 
  * BIT Numerical Mathematics 1987, Volume 27, Issue 1, pp 44-48
  */
-void quick( int A[], int begin, int end )
+void quick( int A[], int end )
 {
     A[1] = A[end + 1] = INT_MIN;
     for (int left = 2; left <= end + 1;) {
