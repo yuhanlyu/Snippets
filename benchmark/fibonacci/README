@@ -1,0 +1,2 @@
+Tumble method is always faster than the naive iterative method.
+When n is large, qmatrix method is faster than tumble method.
