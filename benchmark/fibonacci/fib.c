@@ -6,6 +6,33 @@
 #include <sys/resource.h>
 #define TEST_LENGTH 500000U
 
+/* Computing Fibonacci number by using 
+ * F(2n) = F(n)^2 + F(n+1)^2 and F(2n+1) = 2F(n)F(n+1) + F(n+1)^2
+ * This algorithm is from Joseph Shortt's paper
+ * "An interative program to calculate fibonacci numbers in O(log n) arithmetic 
+ * operations," Information Processing Letters Volume 7, Issue 6, 
+ * October 1978, Pages 299-303 */
+unsigned int doubling(unsigned int n);
+unsigned int doubling(unsigned int n)
+{
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    unsigned int j, nn = n;
+    for (j = 0; nn > 0; nn >>= 1, ++j) ;
+    unsigned int s1 = 0, s2 = 1;
+    for (int k = j - 2; k >= 0; --k) {
+        unsigned t = s2 * s2, s2k = s1 * s1 + t, s2k1 = t + ((s1 * s2) << 1);
+        if ((n >> k) & 1) {
+            s1 = s2k1;
+            s2 = s2k + s2k1;
+        } else {
+            s1 = s2k;
+            s2 = s2k1;
+        }
+    }
+    return s2;
+}
+
 /* This function computes the n-th fibonacci number, where n should be a 
  * non-negative number
  * This algorithm is from L.F. Johnsonn's paper:
@@ -69,7 +96,7 @@ void time_used(struct timeval *t)
 int main(void)
 {
     unsigned max = 47;  // Maximum parameter for unsigned 32-bit integer
-    unsigned shift = 40; // The range of testing is [shift, max]
+    unsigned shift = 3; // The range of testing is [shift, max]
     unsigned test[TEST_LENGTH] = {0};
     unsigned answer[TEST_LENGTH] = {0};
     unsigned result[TEST_LENGTH] = {0};
@@ -79,7 +106,7 @@ int main(void)
         test[i] = shift + 1 + rand() % (max - shift);
         assert(shift <= test[i] && test[i] <= max);
     }
-    struct timeval t0, t1, t2, t3, dt;
+    struct timeval t0, t1, t2, t3, t4, dt;
     time_used(&t0);
     for (unsigned int j = 0; j < 100; ++j) {
         for (unsigned int i = 0; i < TEST_LENGTH; ++i) {
@@ -105,7 +132,14 @@ int main(void)
     time_used(&t3);
     timersub(&t3, &t2, &dt);
     printf("Qmatrix method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
-    /*
+    for (unsigned int j = 0; j < 100; ++j) {
+        for (unsigned int i = 0; i < TEST_LENGTH; ++i) {
+            ans = doubling(test[i]);
+        }
+    }
+    time_used(&t4);
+    timersub(&t4, &t3, &dt);
+    printf("Doubling method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
     for (unsigned int i = 0; i < TEST_LENGTH; ++i) {
         answer[i] = iterative(test[i]);
     }
@@ -114,8 +148,8 @@ int main(void)
         assert(result[i] == answer[i]);
         result[i] = qmatrix(test[i]);
         assert(result[i] == answer[i]);
-        result[i] = qmatrix2(test[i]);
+        result[i] = doubling(test[i]);
         assert(result[i] == answer[i]);
-    }*/
+    }
     return 0;
 }
