@@ -4,8 +4,8 @@ int solution(int A[], int B[], int N);
 int solution(int A[], int B[], int N) 
 {
     int stack[N], top = 0, result = 0;
-    for (int i = N - 1; i >= 0; --i) {
-        if (B[i] == 0) {
+    for (int i = 0; i < N; ++i) {
+        if (B[i] == 1) {
             stack[top++] = A[i];
         } else {
             for ( ; top > 0 && stack[top - 1] < A[i]; --top) ;
