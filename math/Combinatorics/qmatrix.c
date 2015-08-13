@@ -1,40 +1,28 @@
 #include <stdio.h>
-#define MAX 7
 
-void mult( int a[][2], int b[][2], int c[][2] );
+// Using Qmatrix method to compute fibonacci number
+unsigned int qmatrix(unsigned int n);
+unsigned int qmatrix(unsigned int n)
+{
+    unsigned int a = 1, b = 0, c = 0, d = 1;
+    for (--n; n > 0; n >>= 1) {
+        if (n & 1){
+            unsigned int t = d * (b + a) + c * b;
+            a = d * b + c * a;
+            b = t;
+        }
+        unsigned int t = d *((c << 1) + d);
+        c = c * c + d * d;
+        d = t;
+    }
+    return a + b;
+}
+
 
 int main( void )
 {
-    int     qmatrix[ MAX ][ 2 ][ 2 ] = { { { 0 } } };
-    int     i, n;
+    printf( "F20 should be 6765. fibonacci( 20 ) = %u\n", qmatrix(20) );
+    printf( "F31 should be 1346269. fibonacci( 31 ) = %u\n", qmatrix(31) );
 
-    qmatrix[0][1][1] = 0;
-    qmatrix[0][1][0] = qmatrix[0][0][1] = qmatrix[0][0][0] = 1;
-    for ( i = 1; i < MAX; ++i )
-        mult( qmatrix[i], qmatrix[i-1], qmatrix[i-1] );
-
-    while ( scanf( "%d", &n ) == 1 ) {
-        int     tmp[2][2] = { { 1, 0 }, { 0, 1 } };
-
-        for ( i = 0; n != 0; ++i, n >>= 1 )
-            if ( ( n & 1 ) > 0 )
-                mult( tmp, tmp, qmatrix[ i ] );
-        printf( "%d\n", tmp[0][1] );
-    }
     return 0;
 }
-
-void mult( int a[][2], int b[][2], int c[][2] )
-{
-    int     t[4];
-
-    t[0] = b[0][0] * c[0][0] + b[0][1] * c[1][0];
-    t[1] = b[0][0] * c[1][0] + b[0][1] * c[1][1];
-    t[2] = b[1][0] * c[0][0] + b[1][1] * c[1][0];
-    t[3] = b[1][0] * c[1][0] + b[1][1] * c[1][1];
-    a[0][0] = t[0];
-    a[0][1] = t[1];
-    a[1][0] = t[2];
-    a[1][1] = t[3];
-}
-
