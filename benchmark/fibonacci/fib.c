@@ -96,7 +96,7 @@ void time_used(struct timeval *t)
 int main(void)
 {
     unsigned max = 47;  // Maximum parameter for unsigned 32-bit integer
-    unsigned shift = 3; // The range of testing is [shift, max]
+    unsigned shift = 40; // The range of testing is [shift, max]
     unsigned test[TEST_LENGTH] = {0};
     unsigned answer[TEST_LENGTH] = {0};
     unsigned result[TEST_LENGTH] = {0};
@@ -140,6 +140,7 @@ int main(void)
     time_used(&t4);
     timersub(&t4, &t3, &dt);
     printf("Doubling method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
+
     for (unsigned int i = 0; i < TEST_LENGTH; ++i) {
         answer[i] = iterative(test[i]);
     }
