@@ -4,7 +4,14 @@
 #include <assert.h>
 #define TEST_LENGTH 500000U
 
-/* Computing Fibonacci number by using 
+/**
+ * Here are four programs computing Fibonacci number
+ * Tumble method is always faster than the naive iterative method.
+ * When n is large, doubling method is faster than all other methods.
+ */
+
+/* *
+ * Computing Fibonacci number by using 
  * F(2n) = F(n)^2 + F(n+1)^2 and F(2n+1) = 2F(n)F(n+1) + F(n+1)^2
  * This algorithm is from Joseph Shortt's paper
  * "An interative program to calculate fibonacci numbers in O(log n) arithmetic 
@@ -31,7 +38,8 @@ unsigned int doubling(unsigned int n)
     return s2;
 }
 
-/* This function computes the n-th fibonacci number, where n should be a 
+/**
+ * This function computes the n-th fibonacci number, where n should be a 
  * non-negative number
  * This algorithm is from L.F. Johnsonn's paper:
  * "Tumble, a fast simple iteration algorithm for Fibonacci,"
