@@ -2,10 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
-#include <sys/time.h>
-#include <sys/resource.h>
 
-/* Computing Ackermann function
+/** 
+ *Computing Ackermann function
  * The following algoirthm is from this paper:
  * Jerrold W. Grossman and R.Suzanne Zeitman
  * "An inherently iterative computation of ackermann's function,"
@@ -16,28 +15,23 @@
  * "Optimizing Ackermann's function by incrementalization,"
  * PEPM '03 Proceedings of the 2003 ACM SIGPLAN workshop on Partial 
  * evaluation and semantics-based program manipulation Pages 85 - 91 
+ * But this algorithm is more complicated.
+ * Since when m is large, the value of Ackermann function will be extremely 
+ * large and is infeasible to compute within reasonable time, the difference 
+ * between O(mA(m, n)) and O(A(m, n)) will be small in practice.
  */
 int Ackermann(int m, int n);
 int Ackermann(int m, int n)
 {
-    int next[m + 1], goal[m + 1], value;
-    for (int i = 0; i <= m; ++i) {
+    int next[m + 1], goal[m + 1], value, i;
+    for (i = 0; i <= m; ++i) {
         next[i] = 0;
         goal[i] = 1;
     }
-    goal[m] = -1;
-    do {
-        value = next[0] + 1;
-        int transfer = 1;
-        for (int i = 0; transfer; ++i) {
-            if (next[i] == goal[i]) {
-                goal[i] = value;
-            } else {
-                transfer = 0;
-            }
-            ++next[i];
-        }
-    } while (next[m] != n + 1);
+    for (goal[m] = -1; next[m] != n + 1; ++next[i]) {
+        for (value = next[i = 0] + 1; next[i] == goal[i]; ++next[i++])
+            goal[i] = value;
+    }
     return value;
 }
 
