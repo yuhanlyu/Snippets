@@ -1,6 +1,6 @@
 # Given a binary tree and a sum, find all root-to-leaf paths where each 
 # path's sum equals the given sum.
-# Time Complexity: O(n)
+# Time Complexity: O(n + output)
 # Space Complexity: O(h + output), h is the height of the tree
 
 # Definition for a binary tree node.
