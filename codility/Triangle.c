@@ -26,4 +26,5 @@ int main(void)
 
     printf("%d\n", solution(A, 6));
     printf("%d\n", solution(B, 4));
+    return 0;
 }
