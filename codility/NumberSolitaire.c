@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <limits.h>
 
+// Space complexity is O(1)
 int solution(int A[], int N);
 int solution(int A[], int N)
 {
