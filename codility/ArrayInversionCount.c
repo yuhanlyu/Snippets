@@ -4,30 +4,31 @@
 int solution(int A[], int N);
 int solution(int A[], int N)
 {
-    if (N <= 1)
-        return 0;
-    int left = solution(A, N / 2), right = solution(A + N / 2, N - N / 2);
-    if (left == -1 || right == -1)
-        return -1;
-    int inversion = left + right, temp[N];
-    for (int i = 0, first = 0, last = N / 2; i < N; ) {
-        if (A[first] <= A[last])
-            temp[i++] = A[first++];
-        else {
-            inversion += N / 2 - first;
-            if (inversion >= 1000000000)
-                return -1;
-            temp[i++] = A[last++];
-        }
-        if (first == N / 2) {
-            while (i < N)
-                temp[i++] = A[last++];
-        } else if (last == N) {
-            while (i < N)
-                temp[i++] = A[first++];
+    int inversion = 0;
+    for (int size = 1; size < N; size *= 2) {
+        for (int start = 0; start < N - size; start += 2 * size) {
+            int end = (start + 2*size - 1) >= N ? N - 1 : start + 2 * size - 1;
+            int mid = start + size - 1, temp[end - start + 1];
+            for (int i = 0, first = start, last = mid + 1; i <= end - start;) {
+                if (A[first] <= A[last])
+                    temp[i++] = A[first++];
+                else {
+                    inversion += mid - first + 1;
+                    if (inversion >= 1000000000)
+                        return -1;
+                    temp[i++] = A[last++];
+                }
+                if (first == mid + 1) {
+                    while (i <= end - start)
+                        temp[i++] = A[last++];
+                } else if (last == end + 1) {
+                    while (i <= end - start)
+                        temp[i++] = A[first++];
+                }
+            }
+            memcpy(A + start, temp, (end - start + 1) * sizeof(int));
         }
     }
-    memcpy(A, temp, N * sizeof(int));
     return inversion;
 }
 
