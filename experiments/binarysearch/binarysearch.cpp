@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <algorithm>
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
@@ -9,12 +10,12 @@
 
 /* Find the index of leftmost insertion x in a sorted array a 
  * with length n > 0 */
-int binarysearch(int a[], int n, int x);
-int binarysearch(int a[], int n, int x)
+long binarysearch(int a[], long n, int x);
+long binarysearch(int a[], long n, int x)
 {
-    int low = 0;
-    for (int high = n - 1; low <= high; ) {
-        int mid = low + ((high - low) >> 1);
+    long low = 0;
+    for (long high = n - 1; low <= high; ) {
+        long mid = low + ((high - low) >> 1);
         if (a[mid] >= x)
             high = mid - 1;
         else
@@ -24,12 +25,12 @@ int binarysearch(int a[], int n, int x)
 }
 
 // Not use middle value
-int biasedsearch(int a[], int n, int x);
-int biasedsearch(int a[], int n, int x)
+long biasedsearch(int a[], long n, int x);
+long biasedsearch(int a[], long n, int x)
 {
-    int low = 0;
-    for (int high = n - 1; low <= high; ) {
-        int mid = low + ((high - low) >> 2);
+    long low = 0;
+    for (long high = n - 1; low <= high; ) {
+        long mid = low + ((high - low) >> 2);
         if (a[mid] >= x)
             high = mid - 1;
         else
@@ -54,12 +55,12 @@ void time_used(struct timeval *t)
     *t = ru.ru_utime;
 }
 
-int main( void )
+int main(void)
 {
     int n = TEST_LENGTH, qn = QUERY_LENGTH;
     int a[TEST_LENGTH] = {0};
     int q[QUERY_LENGTH] = {0};
-    volatile int ans = 0;
+    volatile long ans = 0;
 
     srand(time(NULL));
     for (int i = 0; i < n; ++i)
@@ -68,8 +69,10 @@ int main( void )
     for (int i = 0; i < qn; ++i) {
         q[i] = rand() % (2 * n);
         assert(binarysearch(a, n, q[i]) == biasedsearch(a, n, q[i]));
+        auto low = std::lower_bound(a, a + n, q[i]);
+        assert(binarysearch(a, n, q[i]) == low - a);
     }
-    struct timeval t0, t1, t2, dt;
+    struct timeval t0, t1, t2, t3, dt;
     time_used(&t0);
     for (int k = 0; k < 100; ++k) {
         for (int i = 0; i < qn; ++i)
@@ -85,5 +88,12 @@ int main( void )
     time_used(&t2);
     timersub(&t2, &t1, &dt);
     printf("Biased method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
+    for (int k = 0; k < 100; ++k) {
+        for (int i = 0; i < qn; ++i)
+            ans = std::lower_bound(a, a + n, q[i]) - a;
+    }
+    time_used(&t3);
+    timersub(&t3, &t2, &dt);
+    printf("C++ lower_bound used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
     return 0;
 }
