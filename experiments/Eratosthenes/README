@@ -1,0 +1,5 @@
+Sieve of Eratosthenes
+The algorithm is from Chapter 13 in Algorithms Unplugged.
+I tested two methods. The first one is an ordinary implementation.
+The second method improves the ordinary method by reducing memory write.
+The modified version is 3 times faster than the ordinary method.
