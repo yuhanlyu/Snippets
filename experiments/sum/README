@@ -1,0 +1,3 @@
+Summing an array of floating point numbers.
+I tested four methods: naive, loop-unroll, std::accumulate, and std::valarray.sum.
+Among them, loop-unroll is the fastest one.
