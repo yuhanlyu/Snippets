@@ -23,7 +23,7 @@ class Solution:
                 low = mid + 1
             else:
                 high = mid - 1
-            return low
+        return low
 
 if __name__ == "__main__":
     solution = Solution()
