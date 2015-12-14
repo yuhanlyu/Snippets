@@ -1,6 +1,6 @@
 File.open(ARGV[0]).each_line do |line|
     result = ""
-    line.chars.each do |c|
+    line.each_char do |c|
         if c =~ /[0-9]/
             result << c
         elsif c =~ /[a-j]/
