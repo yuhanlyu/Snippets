@@ -1,1 +1,1 @@
-(1..100).step(2) { |i| puts i }
+(1..100).step(2).map(&method(:puts))
