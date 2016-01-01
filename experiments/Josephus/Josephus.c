@@ -4,6 +4,7 @@
 #include <sys/resource.h>
 
 // Armin Shams-Baragh's method
+int josephus(long long n, int m);
 int josephus(long long n, int m)
 {
     long long d = 1;
@@ -13,12 +14,23 @@ int josephus(long long n, int m)
     return m * n + 1 - d;
 }
 
+// O(n) algorithm
+int josephus0(int n, int m);
+int josephus0(int n, int m)
+{
+    int ans = 0;
+    for (int i = 1; i <= n; ++i)
+        ans = (ans + m) % i;
+    return ans + 1;
+}
+
 // Fatih Gelgi's method in "Time Improvement on Josephus Problem"
 // Since this is a recursive algorith, stack may overflow.
+int josephus1(int n, int m);
 int josephus1(int n, int m)
 {
     if (n <= m)
-        return josephus2(n, m);
+        return josephus0(n, m);
     int jn = josephus1(n - n / m, m);
     if (jn <= n % m)
         return jn + (n / m) * m;
@@ -28,6 +40,7 @@ int josephus1(int n, int m)
 }
 
 // Method from TAOCP
+int josephus2(int n, int m);
 int josephus2(int n, int m)
 {
     long long answer = (long long)n * m;
@@ -37,6 +50,7 @@ int josephus2(int n, int m)
 }
 
 // Method from TAOCP
+int josephus2k(int n, int m, int k);
 int josephus2k(int n, int m, int k)
 {
     long long answer = (long long)k * m;
