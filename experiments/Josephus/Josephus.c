@@ -15,6 +15,8 @@ int josephus(long long n, int m)
 }
 
 // O(n) algorithm
+// D. Woodhousea, "Programming the Josephus problem," 
+// ACM SIGCSE Bulletin, Volume 10 Issue 4, December 1978 Pages 56-58 
 int josephus0(int n, int m);
 int josephus0(int n, int m)
 {
