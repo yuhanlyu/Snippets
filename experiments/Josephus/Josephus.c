@@ -19,7 +19,7 @@ int josephus0(int n, int m);
 int josephus0(int n, int m)
 {
     int ans = 0;
-    for (int i = 1; i <= n; ++i)
+    for (int i = 2; i <= n; ++i)
         ans = (ans + m) % i;
     return ans + 1;
 }
