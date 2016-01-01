@@ -1,0 +1,12 @@
+This is a comparison between a standard binary search and a biased binary search
+that instead of picking mid = low + (high - low) / 2, pick mid = low + (high - low) / 4.
+The biased method is motivated by the following paper:
+    Gerth Stølting Brodal and Gabriel Moruz
+    "Skewed Binary Search Trees" 
+    Lecture Notes in Computer Science Volume 4168, 2006, pp 708-719
+
+For integer arrays, biased binary search is more efficient than binary search.
+This is due to the misprediction penalty in standard binary search.
+However, if the comparison between elements is expensive, then comparison will dominate the time cost.
+Or, if the size of element is larger, than cache miss penalty will dominate the time cost.
+Thus, biased binary search may only be useful in some limited scenarios.
