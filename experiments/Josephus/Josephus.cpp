@@ -41,9 +41,11 @@ int josephus1(int n, int m)
         n = std::get<0>(r); 
         m = std::get<1>(r); 
         if (std::get<2>(r) == 0) {
-            if (n <= m)
-                value = josephus0(n, m);
-            else {
+            if (n <= m) {
+                for (int i = 2; i <= n; ++i)
+                    value = (value + m) % i;
+                ++value;
+            } else {
                 stack.emplace(n, m, 1);
                 stack.emplace(n - n / m, m, 0);
             }
