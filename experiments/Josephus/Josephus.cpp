@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stack>
+#include <tuple>
 #include <assert.h>
 #include <sys/time.h>
 #include <sys/resource.h>
@@ -27,18 +29,35 @@ int josephus0(int n, int m)
 }
 
 // Fatih Gelgi's method in "Time Improvement on Josephus Problem"
-// Since this is a recursive algorith, stack may overflow.
 int josephus1(int n, int m);
 int josephus1(int n, int m)
 {
-    if (n <= m)
-        return josephus0(n, m);
-    int jn = josephus1(n - n / m, m);
-    if (jn <= n % m)
-        return jn + (n / m) * m;
-    jn -= n % m;
-    int k = jn % (m - 1);
-    return (jn / (m - 1)) * m + (k == 0 ? -1 : k);
+    std::stack<std::tuple<int, int, int>> stack;
+    stack.emplace(n, m, 0);
+    int value = 0;
+    while (!stack.empty()) {
+        std::tuple<int, int, int> r = stack.top();
+        stack.pop();
+        n = std::get<0>(r); 
+        m = std::get<1>(r); 
+        if (std::get<2>(r) == 0) {
+            if (n <= m)
+                value = josephus0(n, m);
+            else {
+                stack.emplace(n, m, 1);
+                stack.emplace(n - n / m, m, 0);
+            }
+        } else {
+            if (value <= n % m)
+                value += (n / m) * m;
+            else {
+                value -= n % m;
+                int k = value % (m - 1);
+                value = (value / (m - 1)) * m + (k == 0 ? -1 : k);
+            }
+        }
+    }
+    return value;
 }
 
 // Method from TAOCP
@@ -90,13 +109,13 @@ int main(void)
     }
     time_used(&t1);
     timersub(&t1, &t0, &dt);
-    printf("Armin Shams-Baragh's method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
+    printf("Shams-Baragh's method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
     for (int m = 10000; m < n; m += 100000) {
         ans = josephus1(n, m);
     }
     time_used(&t2);
     timersub(&t2, &t1, &dt);
-    printf("Fatih Gelgi's method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
+    printf("Gelgi's method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
     for (int m = 10000; m < n; m += 100000) {
         ans = josephus2(n, m);
     }
