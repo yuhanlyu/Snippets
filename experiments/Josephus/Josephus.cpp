@@ -10,9 +10,8 @@ int josephus(long long n, int m);
 int josephus(long long n, int m)
 {
     long long d = 1;
-    while (d <= (m - 1) * n) {
+    while (d <= (m - 1) * n)
         d = (m * d) / (m - 1) + ((m * d) % (m - 1) != 0);
-    }
     return m * n + 1 - d;
 }
 
