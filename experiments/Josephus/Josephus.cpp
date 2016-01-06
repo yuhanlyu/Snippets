@@ -29,6 +29,7 @@ int josephus0(int n, int m)
 
 // Fatih Gelgi's method in "Time Improvement on Josephus Problem"
 // I modified the recursive algorithm in the paper to be a iterative one.
+// O(m + lg_{m/(m-1)} (n/m))
 int josephus1(int n, int m);
 int josephus1(int n, int m)
 {
@@ -95,6 +96,7 @@ int josephus1a(int n, int m)
 }
 
 // Method from TAOCP
+// O(log_{m/(m-1)} n(m-1))
 int josephus2(int n, int m);
 int josephus2(int n, int m)
 {
