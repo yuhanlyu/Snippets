@@ -28,6 +28,7 @@ int josephus0(int n, int m)
 }
 
 // Fatih Gelgi's method in "Time Improvement on Josephus Problem"
+// I modified the recursive algorithm in the paper to be a iterative one.
 int josephus1(int n, int m);
 int josephus1(int n, int m)
 {
@@ -59,6 +60,38 @@ int josephus1(int n, int m)
         }
     }
     return value;
+}
+
+// My space-efficient version of Gelgi's method
+int josephus1a(int n, int m);
+int josephus1a(int n, int m)
+{
+    int nn = n, ans = 0, iterations = 1;
+    std::stack<int> mark;
+
+    for (iterations = 1; nn > m; ++iterations) {
+        int p = nn;
+        nn -= nn / m;
+        if (nn + nn / (m - 1) - p == 1)
+            mark.emplace(iterations);
+    }
+    for (int i = 2; i <= nn; ++i)
+        ans = (ans + m) % i;
+    for (++ans, --iterations; nn != n; --iterations) {
+        nn += nn / (m - 1);
+        if (!mark.empty() && mark.top() == iterations) {
+            mark.pop();
+            --nn;
+        }
+        if (ans <= nn % m)
+            ans += (nn / m) * m;
+        else {
+            ans -= nn % m;
+            int k = ans % (m - 1);
+            ans = (ans / (m - 1)) * m + (k == 0 ? -1 : k);
+        }
+    }
+    return ans;
 }
 
 // Method from TAOCP
@@ -95,15 +128,17 @@ int main(void)
     volatile int ans = 0;
 
     for (int m = 100000; m < n; m += 100000) {
+        int z = josephus1a(n, m);
         int a = josephus(n, m), b = josephus1(n, m);
         int c = josephus2(n, m), d = josephus2k(n, m, n);
+        assert(z == a);
         assert(a == b);
         assert(b == c);
         assert(c == d);
     }
     printf("Start\n");
 
-    struct timeval t0, t1, t2, t3, dt;
+    struct timeval t0, t1, t2, t3, t4, dt;
     time_used(&t0);
     for (int m = 100000; m < n; m += 100000) {
         ans = josephus(n, m);
@@ -112,16 +147,22 @@ int main(void)
     timersub(&t1, &t0, &dt);
     printf("Shams-Baragh's method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
     for (int m = 10000; m < n; m += 100000) {
-        ans = josephus1(n, m);
+        ans = josephus2(n, m);
     }
     time_used(&t2);
     timersub(&t2, &t1, &dt);
-    printf("Gelgi's method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
+    printf("TAOCP method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
     for (int m = 10000; m < n; m += 100000) {
-        ans = josephus2(n, m);
+        ans = josephus1(n, m);
     }
     time_used(&t3);
     timersub(&t3, &t2, &dt);
-    printf("TAOCP method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
+    printf("Gelgi's method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
+    for (int m = 10000; m < n; m += 100000) {
+        ans = josephus1a(n, m);
+    }
+    time_used(&t4);
+    timersub(&t4, &t3, &dt);
+    printf("Space efficient method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
     return 0;
 }
