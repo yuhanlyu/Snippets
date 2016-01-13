@@ -1,6 +1,7 @@
-# Remove all elements from a linked list of integers that have value val.
-# Time Complexity: O(n)
-# Space Complexity: O(1)
+/* Remove all elements from a linked list of integers that have value val.
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
 /**
  * @param {ListNode} head
  * @param {number} val
