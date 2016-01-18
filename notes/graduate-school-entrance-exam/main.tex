@@ -1,0 +1,34 @@
+\documentclass{report}[12pt]
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage[backend=bibtex,url=true,doi=true,backref=true,hyperref=true]{biblatex}
+\usepackage{doi}
+\usepackage{hyperref}
+\hypersetup{
+     colorlinks   = true,
+     citecolor    = blue
+}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{tikz}
+\usepackage{exercise}
+\usepackage[T1]{fontenc}
+\usepackage{lettrine}
+\usepackage{mdframed}
+\newmdtheoremenv{theorem}{Theorem}
+
+\addbibresource{algorithms.bib}
+\title{Algorithmic Problems in Graduate School Entrance Exams}
+\author{Yu-Han Lyu}
+\date{\today}
+\begin{document}
+%\maketitle
+%\include{preface}
+%\tableofcontents
+%\listoftables
+%\listoffigures
+\include{chapter1}
+\end{document}
