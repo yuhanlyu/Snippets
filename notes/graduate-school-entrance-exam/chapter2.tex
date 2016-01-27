@@ -1,0 +1,136 @@
+\chapter{Problems on sequences}
+\begin{refsection}
+
+Arrays are the simplest data structures in computers. Even the structure of an array is very simple, there are still some hard problems. In this chapter, we will go through several hard problems of arrays.
+
+\section{Searching}
+
+\begin{Exercise}
+Given two arrays $x[1], \dots, x[m]$ and $y[1], \dots, y[n]$, design an algorithm to find two elements $x[i]$ and $y[j]$ such that the absolute value $|x[i] - y[j]|$ is minimized over all possible pairs of $x$ and $y$ elements. A brute force algorithm needs $O(n^2)$ time. Your algorithm should be far more efficient than that. Analyze the time complexity of your algorithm.\school{[NCU CSIE 101]}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\subsection{$k$-sum problem}
+
+\begin{Exercise}
+\begin{enumerate}
+\item Given three sets of integers $X$, $Y$, and $Z$, and another integer $k$, we want to know if there exists three numbers $x$, $y$, and $z$, such that $x \in X$, $y \in Y$, and $z \in Z$, and $x + y + z = k$. Design an algorithm to solve this problem. A naive method by checking all possible sums of triples $(x+y+z)$ will take $\Theta(|X||Y||Z|)$ time. Your algorithm must be more efficient than it. Analyze the time complexity of your algorithm.\school{[NCU CSIE 99]}
+\item Given an array of $n$ numbers, and a number $s$, determine whether the array contains $4$ elements whose sum is $s$. Analyze the time efficiency of your algorithm. Your algorithm should be more efficient than $O(n^4)$. \school{[NCU CSIE 93]}
+\end{enumerate}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+
+\subsection{Binary search}
+\begin{Exercise}
+\begin{enumerate}
+\item Suppose you are given an array of $n$ sorted numbers that has been circularly shifted $m$ positions to the right. For example $\{36, 45, 5, 18, 26, 29\}$ is a sorted array that has been circularly shifted m = $2$ positions to the right. Give an $O(\lg n)$ algorithm to find the largest number in this array. Note that you don't know what $m$ is. \school{[CYCU CSIE 89]}
+\item Let $A[n]$ be an array with $n$ elements sorted in ascending order. It is simple to construct an $O(\lg n)$ algorithm to find the position $k$ in $A[n]$ for a given value $v$. Assume that $k$ is much less than $n$ (i.e., $k \ll n$). Write an $O(\lg k)$ time algorithm to search for $k$.
+(Note: you do not know the value of $k$ in advance, only $v$ is known) \school{[YZU CSIE 93]}
+\item Give an efficient algorithm to determine if there exists an integer $i$ such that $A_i = i$ in an array of integers $A_1 < A_2 < \cdots < A_n$. What is the running time of your algorithm? \school{[NDHU CSIE 96, CYCU CSIE90]}
+\end{enumerate}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\subsection{Majority problem}
+\begin{Exercise}
+\begin{enumerate}
+\item An array $a[1, \dots, n]$ is said to contain a majority element if there is some element that appears more than~$n/2$ times in the array. The task is to determine if $a$ has a majority element and, if so, to find the element. We do not assume that the elements of the array come from some ordered domain such as the integers, so we cannot sort the array or perform comparisons such as $a[i] < a[j]$. However, we assume we are able to test if~$a[i] = a[j]$ in constant time.
+\begin{enumerate}
+\item Give a divide-and-conquer algorithm (in pseudo-code) for this problem that runs in time $O(n \lg n)$. Justify this running time by writing down an appropriate recurrence relation.
+\item Can you come up with a simple $O(n)$-time algorithm for this problem? \school{[CCU CSIE 95]}
+\end{enumerate}
+\item Given an $n$-element array $A$ of real numbers, design an $O(n)$ time algorithm which determines whether any value occurs more than $n/7$ times in $A$. \school{[NTUT CSIE 102]}
+\end{enumerate}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\section{Sorting}
+
+\begin{Exercise}
+Jeremy is a waiter working in a restaurant. The chef there is sloppy; when he prepares a stack of pancakes, they come out all different sizes. When Jeremy delivers the pancakes to the customer, he wants to rearrange them by grabbing several from the top and flipping them over on the way. After repeating this for several times, the smallest pancake is on top, and so on, down to the largest at the bottom. If there are $n$ pancakes, how many flips are required? Design an algorithm to help Jeremy, and analyze its time complexity.  \school{[NCKU CSIE 102]}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\begin{Exercise}
+Let $A$ be an array of $n$ arbitrary and distinct numbers. $A$ has the following property: If we imagine $B$ as being sorted version of $A$, then any element that is at position $i$ in array $A$ would, in $B$, be at a position $j$ such that $| i - j | \leq k$. In other words, each element in $A$ is not farther than $k$ positions away from where it belongs in the sorted version of $A$. Suppose you are given such an array $A$, and you are told that $A$ has this property for a particular value $k$ (that value of $k$ is also given to you). Design an $O(n \lg k)$ time algorithm for sorting $A$. \school{[NTUT CSIE 95]}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\begin{Exercise}
+The input is a sequence of $n$ integers with many duplications, such that the number of distinct integers in the sequence is $O(\lg n)$.
+\begin{enumerate}
+\item Design a sorting algorithm to sort such sequences using at most $O(n \lg \lg n)$ comparisons in the worst case.
+\item Why is the lower bound of sorting $\Omega(n \lg n)$ not satisfied in this case? \school{[NCU CSIE 98]}
+\end{enumerate}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\subsection{Bucket sort}
+\begin{Exercise}
+We are given $n$ points in an unit circle, $ p_i$ = $(x_i, y_i)$, such that $0 < \sqrt{x_i^2 + y_i^2} < 1$, for $i = 1, \dots, n$. Suppose that the points are uniformly distributed; that is, the probability of finding a point in any region of the circle is proportional to the area of that region. Design and prove a $\Theta(n)$ expected-time algorithm to sort the $n$ points by their distance $d_i = \sqrt{x_i^2 + y_i^2}$ from the origin. (Hints: Design the bucket sizes in Bucket-Sort to reflect the uniform distribution of the points in the unit circle.) \school{[NDHU CSIE 97]}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\section{String}
+\begin{Exercise}
+Given two length-$n$ binary strings $A$ and $B$, consider the problem of computing a longest string $C$ that is a substring of both $A$ and $B$. You are asked to prove or disprove that this so-called longest common substring problem can be solved in $O(n \lg n)$ time. \school{[NTU CSIE 97]}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\section{Array of arrays}
+
+\begin{Exercise}
+It is trivial to find the median of the integers in the sorted array a with median = $a(\lfloor n/2 \rfloor)$. Suppose we have $3n$ distinct integers that are randomly stored in arrays $a[0 \dots n-1]$, $b[0 \dots n-1]$, and $c[0 \dots n-1]$, and each array is sorted independently. Write an algorithm to find the median of these $3n$ distinct integers. Please note that you are not allowed to merge arrays $a$, $b$, and $c$ into a $3n$ integer array and then perform sorting. \school{[NTUST CSIE 98]}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\begin{Exercise}
+$M$ is an $n \times n$ integer matrix in which the entries of each row are in increasing order (reading left to right) and the entries in each column are in increasing order (reading top to bottom). Give an efficient algorithm to find the position of an integer $x$ in $M$, or determine that $x$ is not there. Tell how many comparisons of $x$ with matrix entries your algorithm does in the worst case. \school{[NTU CSIE 93]}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+
+\section{Others}
+
+\begin{Exercise}
+Design an algorithm which detects whether there exists a cycle within a singly linked list. (Suppose that each node in this list contains data and next fields for storing data and the pointer to the next node respectively.) Please analyze the time and space complexities of your algorithm. \school{[MCU CSIE 95]}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\begin{Exercise}
+Given a finite set $A$ and a mapping function $f$ from $A$ to itself, describe an algorithm to find a subset $S$ of $A$ with maximum size such that $f$ is one-to-one when restricted to $S$.
+\school{[NCTU CSIE 91]}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\subsection{Query support}
+
+\begin{Exercise}
+Suppose we have $n$ ranges $[a_1, b_1], [a_2, b_2], \dots, [a_n, b_n]$, where all $a_i$'s are negative and all $b_i$'s are positive. We are asked to preprocess these ranges so that for any input value $x$, we can efficiently count the number of the ranges containing $x$. Design an efficient representation of the ranges so that the desired counting can be done in $O(\lg n)$ time. Your representation must take $O(n)$ space. Describe you representation and how to answer a query in $O(\lg n)$ time in details. \school{[NTHU CSIE 100]}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\begin{Exercise}
+Suppose that we are given a sequence of $n$ unsorted values, say $x_1, x_2, \dots, x_n$, and at the same time, we are asked to quickly answer repeated queries defined as follows: Given $i$ and $j$, where $1 \leq i \leq j \leq n$, find the smallest value in $x_i, x_{i+1}, \dots, x_j$. Please design a data structure that uses $O(n)$ space and answers the queries in $O(\lg n)$ time. \school{[NCTU BIOINFO 100]}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+
+\printbibliography[heading=subbibliography]
+\end{refsection}

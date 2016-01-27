@@ -1,0 +1,55 @@
+\chapter{Problems on computational geometry}
+\begin{refsection}
+
+\section{Plane sweep}
+\begin{Exercise}
+Suppose that you have $n$ circles on a 2D plane. The radius and the center coordinate of each circle can be retrieved in $O(1)$ time. A closed region is defined as a non-empty set of connected 2-D points, and each point is covered by at least one circle.
+\begin{enumerate}
+\item Your task is to find the number of closed regions. Describe your algorithm and data structure in detail. What is the time complexity of your algorithm.
+\item Now we start to add more circles one-by-one to the plane. After each addition, we want to keep track of the number of closed regions. Describe an algorithm and data structure to do so. What is the time complexity of your algorithm for each addition. \school{[NTU CSIE 103]}
+\end{enumerate}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\begin{Exercise}
+The input is a set of $n$ rectangles all of whose edges are parallel to the axes. Design an $O(n \lg n)$ algorithm to mark all the rectangles that are contained in other rectangles. \school{[NCTU CSIE 93]}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+
+\section{Convex hull}
+
+\begin{Exercise}
+\begin{enumerate}
+\item An extreme point of a convex set is a point of this set that is not a middle point of any line segment with endpoints in this set. Design a linear-time algorithm to determine two extreme points of the convex hull of a given set of $n > 1$ points in the plane. \school{[NTOU CSIE 101]}
+\item Let the input set $X$ consists of $n$ points on the $2$-dimensional plane with integral coordinates. The farthest pair problem is to identify two points in $X$ whose Euclidean distance is maximum over all pairs $X$. You are also asked to prove or disprove that the farthest pair problem can be solved in $O(n \lg n)$ time. \school{[NTU CSIE 97]}
+\end{enumerate}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\section{Duality}
+\begin{Exercise}
+Show how to determine in $O(n^2 \lg n)$ time whether any three points in the set $S = \{(x_1, y_1), (x_2, y_2), \dots, (x_n, y_n)\}$ are collinear. \school{[NTU CSIE 92]}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+\section{Others}
+
+\begin{Exercise}
+In a 2D plane, we say that a point $(x_1, y_1)$ dominates $(x_2, y_2)$ if $x_1 > x_2$ and $y_1 > y_2$. A point is called maximal point if no other point dominates it. Given a set of $n$ points, the maxima finding problem is to find all of the maximal points.
+\begin{enumerate}
+\item Write a divide and conquer algorithm to solve the maxima finding problem with the time complexity $O(n \lg n)$.
+\item Show that your algorithm is indeed of the time complexity $O(n \lg n)$. \school{[NCU CSIE 98]}
+\end{enumerate}
+\end{Exercise}
+\begin{Answer}
+\end{Answer}
+
+
+
+\printbibliography[heading=subbibliography]
+\end{refsection}
