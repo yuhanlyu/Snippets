@@ -5,7 +5,7 @@
 \usepackage{booktabs}
 \usepackage[margin=1in]{geometry}
 \usepackage{microtype}
-\usepackage[backend=bibtex,url=true,doi=true,backref=true,hyperref=true]{biblatex}
+\usepackage[backend=bibtex,url=true,doi=true,backref=true,hyperref=true,refsection=chapter,abbreviate=false,alldates=long,dateabbrev=false,style=verbose,citestyle=authoryear]{biblatex}
 \usepackage{doi}
 \usepackage{hyperref}
 \hypersetup{
@@ -19,6 +19,7 @@
 \usepackage{lettrine}
 \usepackage{mdframed}
 \newmdtheoremenv{theorem}{Theorem}
+\newcommand{\school}[1]{\hfill{\mbox{#1}}}
 
 \addbibresource{algorithms.bib}
 \title{Algorithmic Problems in Graduate School Entrance Exams}
@@ -31,4 +32,9 @@
 %\listoftables
 %\listoffigures
 \include{chapter1}
+\include{chapter2}
+\include{chapter3}
+\include{chapter4}
+\include{chapter5}
+\include{chapter6}
 \end{document}

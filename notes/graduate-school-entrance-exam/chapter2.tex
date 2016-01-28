@@ -1,6 +1,4 @@
 \chapter{Problems on sequences}
-\begin{refsection}
-
 Arrays are the simplest data structures in computers. Even the structure of an array is very simple, there are still some hard problems. In this chapter, we will go through several hard problems of arrays.
 
 \section{Searching}
@@ -9,17 +7,23 @@ Arrays are the simplest data structures in computers. Even the structure of an a
 Given two arrays $x[1], \dots, x[m]$ and $y[1], \dots, y[n]$, design an algorithm to find two elements $x[i]$ and $y[j]$ such that the absolute value $|x[i] - y[j]|$ is minimized over all possible pairs of $x$ and $y$ elements. A brute force algorithm needs $O(n^2)$ time. Your algorithm should be far more efficient than that. Analyze the time complexity of your algorithm.\school{[NCU CSIE 101]}
 \end{Exercise}
 \begin{Answer}
+First, sort array $x$. Then, for each element $a$ in $y$, use binary search method to find the element $b$ in $x$, such that $|a - b|$ is minimized. In this way, we can find the pair with the minimum absolute value of the difference. Sorting the array takes $O(m \lg m)$ time and binary search takes $O(n \lg m)$ time. The total running time is $O((n + m) \lg m)$.
 \end{Answer}
 
 \subsection{$k$-sum problem}
 
 \begin{Exercise}
 \begin{enumerate}
-\item Given three sets of integers $X$, $Y$, and $Z$, and another integer $k$, we want to know if there exists three numbers $x$, $y$, and $z$, such that $x \in X$, $y \in Y$, and $z \in Z$, and $x + y + z = k$. Design an algorithm to solve this problem. A naive method by checking all possible sums of triples $(x+y+z)$ will take $\Theta(|X||Y||Z|)$ time. Your algorithm must be more efficient than it. Analyze the time complexity of your algorithm.\school{[NCU CSIE 99]}
-\item Given an array of $n$ numbers, and a number $s$, determine whether the array contains $4$ elements whose sum is $s$. Analyze the time efficiency of your algorithm. Your algorithm should be more efficient than $O(n^4)$. \school{[NCU CSIE 93]}
+\item Given three sets of integers $X$, $Y$, and $Z$, and another integer $k$, we want to know if there exists three numbers $x$, $y$, and $z$, such that $x \in X$, $y \in Y$, and $z \in Z$, and $x + y + z = k$. Design an algorithm to solve this problem. A naive method by checking all possible sums of triples $(x+y+z)$ will take $\Theta(|X||Y||Z|)$ time. Your algorithm must be more efficient than it. Analyze the time complexity of your algorithm. \label{sequence:3sum} \school{[NCU CSIE 99]}
+\item Given an array of $n$ numbers, and a number $s$, determine whether the array contains $4$ elements whose sum is $s$. Analyze the time efficiency of your algorithm. Your algorithm should be more efficient than $O(n^4)$.  \label{sequence:4sum}  \school{[NCU CSIE 93]}
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
+{\bf Problem~\ref{sequence:3sum}}: This is called \href{https://en.wikipedia.org/wiki/3SUM}{3SUM} problem. Construct a set $Z' = \{k - z \mid z \in Z\}$. The problem is equal to finding $x \in X$, $y \in Y$, and $z \in Z'$, such that $x + y = z$. Sort the sets $Y$ and $Z'$. For each element $x \in X$, construct a set $Y_x = \{y + x \mid y \in Y\}$. If there is one element $a$ in both  $Y_x$ and $Z'$, then we find an answer. When $Y_x$ is fixed, finding common elements in sorted $Y_x$ and $Z'$ can be done in $O(|Y|+|Z|)$ time. Since we apply this operation for each element $x \in X$, the total running time is $O(|X|(|Y|+|Z|))$.
+
+This problem can be solved in $o(n^2)$ time~\cite{Jorgensen2014}.
+
+{\bf Problem~\ref{sequence:4sum}}: Let $a$ denote the input array. Let $S_{ij}$ be the sum of $a[i]$ and $[j]$. Sort all $S_{ij}$ in increasing order and store them in an array $A$ of length $L$. The problem is equal to finding two elements in $A$ sum to $s$, which can be solved in time linear in $L$. Since the number of pairs is $O(n^2)$, the sort takes $O(n^2 \lg n)$ time. Moreover, the search takes $O(n^2)$ time. Hence, the total running time is $O(n^2 \lg n)$.
 \end{Answer}
 
 
@@ -38,7 +42,7 @@ Given two arrays $x[1], \dots, x[m]$ and $y[1], \dots, y[n]$, design an algorith
 \subsection{Majority problem}
 \begin{Exercise}
 \begin{enumerate}
-\item An array $a[1, \dots, n]$ is said to contain a majority element if there is some element that appears more than~$n/2$ times in the array. The task is to determine if $a$ has a majority element and, if so, to find the element. We do not assume that the elements of the array come from some ordered domain such as the integers, so we cannot sort the array or perform comparisons such as $a[i] < a[j]$. However, we assume we are able to test if~$a[i] = a[j]$ in constant time.
+\item An array $a[1, \dots, n]$ is said to contain a majority element if there is some element that appears more than $n/2$ times in the array. The task is to determine if $a$ has a majority element and, if so, to find the element. We do not assume that the elements of the array come from some ordered domain such as the integers, so we cannot sort the array or perform comparisons such as $a[i] < a[j]$. However, we assume we are able to test if $a[i] = a[j]$ in constant time.
 \begin{enumerate}
 \item Give a divide-and-conquer algorithm (in pseudo-code) for this problem that runs in time $O(n \lg n)$. Justify this running time by writing down an appropriate recurrence relation.
 \item Can you come up with a simple $O(n)$-time algorithm for this problem? \school{[CCU CSIE 95]}
@@ -133,4 +137,3 @@ Suppose that we are given a sequence of $n$ unsorted values, say $x_1, x_2, \dot
 
 
 \printbibliography[heading=subbibliography]
-\end{refsection}

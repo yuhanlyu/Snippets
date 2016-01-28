@@ -1,5 +1,4 @@
 \chapter{Analysis of algorithms}
-\begin{refsection}
 
 \lettrine{T}{he} analysis of algorithms is to determine the amount of resource (time/space) necessary to execute algorithms.
 By analyzing the resources used in algorithms, we can compare different algorithms theoretically.
@@ -40,7 +39,7 @@ Let $T(n) = aT(n / b) + f(n)$ for all $n > 1$ and $T(1) = c$ for some constants 
 \begin{Exercise}
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
 \begin{enumerate}
-\item $T(n) = 2T(\frac{n}{2}) + \frac{n}{\lg^2 n}$. \label{master:1} [NCTU CS 104]
+\item $T(n) = 2T(\frac{n}{2}) + \frac{n}{\lg^2 n}$. \label{master:1} \school{[NCTU CS 104]}
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
@@ -94,9 +93,9 @@ Drmota and Szpankowski prove a more general theorem that can deal with floor and
 \begin{Exercise}
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
 \begin{enumerate}
-\item $T(n) = 5T(\frac{n}{5}) + n/\lg n$. \label{ABmethod:1}[NCTU CSIE 93]
-\item $T(n) = T(\frac{n}{2} + \sqrt{n}) + n$. \label{ABmethod:2} [NTU CSIE 103]
-\item $T(n) = 4T(\frac{n}{5}) + T(\frac{n}{4}) + n$. \label{ABmethod:3} [NCTU BIOINFO 93]
+\item $T(n) = 5T(\frac{n}{5}) + n/\lg n$. \label{ABmethod:1} \school{[NCTU CSIE 93]}
+\item $T(n) = T(\frac{n}{2} + \sqrt{n}) + n$. \label{ABmethod:2} \school{[NTU CSIE 103]}
+\item $T(n) = 4T(\frac{n}{5}) + T(\frac{n}{4}) + n$. \label{ABmethod:3} \school{[NCTU BIOINFO 93]}
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
@@ -131,7 +130,7 @@ Apply the Akra\--Bazzi method.
 \begin{Exercise}
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
 \begin{enumerate}
-\item $T(n) = n + \frac{4}{n} \sum_{i=1}^{n-1} T(i)$. \label{full-history:1} [NTU CSIE 90]
+\item $T(n) = n + \frac{4}{n} \sum_{i=1}^{n-1} T(i)$. \label{full-history:1} \school{[NTU CSIE 90]}
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
@@ -161,7 +160,7 @@ S(n+1) & = S(n) + \frac{2n+1}{(n+1)(n+2)(n+3)(n+4)} \\
 \begin{Exercise}
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
 \begin{enumerate}
-\item $T(n) = \sqrt{n} T(\sqrt{n}) + \sqrt{n}$. \label{range-transformation:1} [NCTU CSIE 93]
+\item $T(n) = \sqrt{n} T(\sqrt{n}) + \sqrt{n}$. \label{range-transformation:1} \school{[NCTU CSIE 93]}
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
@@ -180,8 +179,8 @@ T(n) & = S(k) = S(k-1) + 2^{-2^{k-1}} \\
 \begin{Exercise}
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
 \begin{enumerate}
-\item $T(n) = 2T(\sqrt{n}) + \lg n$. \label{recursion-trees:1} [NCKU CSIE 95]
-\item $T(n) = nT(\sqrt{n}) + n^2 \lg n$. \label{recursion-trees:2} [NTU CSIE 98]
+\item $T(n) = 2T(\sqrt{n}) + \lg n$. \label{recursion-trees:1} \school{[NCKU CSIE 95]}
+\item $T(n) = nT(\sqrt{n}) + n^2 \lg n$. \label{recursion-trees:2} \school{[NTU CSIE 98]}
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
@@ -208,7 +207,7 @@ T(n) &= n^{1.5}T(\sqrt[4]{n}) + \frac{n^2 \lg n}{2} + n^2 \lg n \\
 \begin{Exercise}
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
 \begin{enumerate}
-\item $T(n) = T(\frac{n}{2}) + T(\sqrt{n}) + n$. \label{comparison:1} [NCTU BIOINFO 93]
+\item $T(n) = T(\frac{n}{2}) + T(\sqrt{n}) + n$. \label{comparison:1} \school{[NCTU BIOINFO 93]}
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
@@ -219,4 +218,3 @@ Hence, we have $T(n) = \Theta(n)$.
 \end{Answer}
 
 \printbibliography[heading=subbibliography]
-\end{refsection}
