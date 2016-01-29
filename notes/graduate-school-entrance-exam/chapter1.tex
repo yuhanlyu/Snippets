@@ -44,9 +44,9 @@ Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently sma
 \end{Exercise}
 \begin{Answer}
 
-{\bf Problem~\ref{master:1}}: By case 1, we know $T(n) = \Theta(n)$.
+\paragraph{Problem~\ref{master:1}} By case 1, we know $T(n) = \Theta(n)$.
 
-{\bf Problem~\ref{master:1} alternative solution}: Suppose that $n = 2^k$. We have
+\paragraph{Problem~\ref{master:1} alternative solution} Suppose that $n = 2^k$. We have
 \begin{align*}
 T(n) &= 2T(\frac{n}{2}) + \frac{n}{\lg^2 n} \\
 \equiv \quad T(n) &= 4T(\frac{n}{4}) + \frac{n}{\lg^2 n} + \frac{n}{(\lg (n-1))^2} \\
@@ -99,21 +99,21 @@ Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently sma
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
-{\bf Problem~\ref{ABmethod:1}}: Suppose that $n = 5^k$. We have
+\paragraph{Problem~\ref{ABmethod:1}} Suppose that $n = 5^k$. We have
 \begin{align*}
  T(n)  & = 5(5T(\frac{n}{25}) + n/(5(\lg_5 n - \lg_5 5))) + n/\lg n \\
 \equiv \quad T(n) & = 5^kT(1) + n/(\lg n + \lg (n-1) + \cdots + 1) \\
 \equiv  \quad T(n) &=  \Theta(n \lg \lg n) \\
 \end{align*}
 
-{\bf Problem~\ref{ABmethod:1} another solution}: apply the Akra\--Bazzi method. Set $k = 1$, $a_1 = 5$, $b_1 = 1/5$, and solve $p = 1$. We get
+\paragraph{Problem~\ref{ABmethod:1} another solution} apply the Akra\--Bazzi method. Set $k = 1$, $a_1 = 5$, $b_1 = 1/5$, and solve $p = 1$. We get
 \[ T(n) = \Theta( n (1 + \int_{1}^n (x / \lg x) x^{-2} dx)) = \Theta(n \lg \lg n). \]
-\textbf{Note}: Similarly, for any constant $c$, we have $T(n) = cT(\frac{n}{c}) + n/\lg n = \Theta(n \lg \lg n)$.
+\textbf{Note} Similarly, for any constant $c$, we have $T(n) = cT(\frac{n}{c}) + n/\lg n = \Theta(n \lg \lg n)$.
 
-{\bf Problem~\ref{ABmethod:2}}: apply the Akra\--Bazzi method. Set $k = 1$, $a_1 = 1$, $b_1 = 1/2$, and solve $p = 0$. Hence, we get
+\paragraph{Problem~\ref{ABmethod:2}} apply the Akra\--Bazzi method. Set $k = 1$, $a_1 = 1$, $b_1 = 1/2$, and solve $p = 0$. Hence, we get
 \[ T(n) = \Theta( 1 (1 + \int_{1}^n (x / x) dx)) = \Theta(n). \]
 
-{\bf Problem~\ref{ABmethod:3}}: apply the Akra\--Bazzi method. Set $k = 2$, $a_1 = 4$, $b_1 = 1/5$, $a_2 = 1$, $b_2 = 1/4$, and solve $p \approx 1.03$. We get
+\paragraph{Problem~\ref{ABmethod:3}} apply the Akra\--Bazzi method. Set $k = 2$, $a_1 = 4$, $b_1 = 1/5$, $a_2 = 1$, $b_2 = 1/4$, and solve $p \approx 1.03$. We get
 \[ T(n) = \Theta( n^{p}), \text{where} p \approx 1.03. \]
 
 \end{Answer}
@@ -135,7 +135,7 @@ Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently sma
 \end{Exercise}
 \begin{Answer}
 
-{\bf Problem~\ref{full-history:1}}: 
+\paragraph{Problem~\ref{full-history:1}}
 \begin{align*}
 T(n) & = n + \frac{4}{n} \sum_{i=1}^{n-1} T(i) \\
 \equiv \quad nT(n) &= n^2 + 4\sum_{i=1}^{n-1} T(i) \\
@@ -164,8 +164,8 @@ Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently sma
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
-
-{\bf Problem~\ref{range-transformation:1}}: The trick is to divide $n$ by both side and then expand.
+\paragraph{Problem~\ref{range-transformation:1}}
+The trick is to divide $n$ by both side and then expand.
 $\frac{T(n)}{n} =  \frac{T(\sqrt{n})}{\sqrt{n}} + n^{-0.5}$.
 Suppose that $n = 2^{2^k}$. Let $S(k) = T(2^{2^k})/2^{2^k}$. 
 \begin{align*}
@@ -185,7 +185,7 @@ Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently sma
 \end{Exercise}
 \begin{Answer}
 
-{\bf Problem~\ref{recursion-trees:1}}: Suppose that $n = 2^{2^k}$. We have
+\paragraph{Problem~\ref{recursion-trees:1}} Suppose that $n = 2^{2^k}$. We have
 \begin{align*}
 T(n) &= 2^2T(\sqrt[4]{n}) + 2(\lg n - 1) + \lg n \\
 \equiv \quad T(n) &= 2^k T(1) + \lg n + 2(\lg n)/2 + 4(\lg n)/4 + ... + 2^k(\lg n)/2^k \\
@@ -193,7 +193,7 @@ T(n) &= 2^2T(\sqrt[4]{n}) + 2(\lg n - 1) + \lg n \\
 \equiv \quad T(n) &= \Theta(\lg n \lg \lg n) \\
 \end{align*}
 
-{\bf Problem~\ref{recursion-trees:2}}: Suppose that $n = 2^{2^k}$. We have
+\paragraph{Problem~\ref{recursion-trees:2}} Suppose that $n = 2^{2^k}$. We have
 \begin{align*}
 T(n) &= n^{1.5}T(\sqrt[4]{n}) + \frac{n^2 \lg n}{2} + n^2 \lg n \\
 \equiv \quad T(n) &= n^2 T(1) + n^2 \lg n \sum_{i=0}^k 2^{-i} \\
@@ -212,7 +212,8 @@ Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently sma
 \end{Exercise}
 \begin{Answer}
 
-{\bf Problem~\ref{comparison:1}}: By the recurrence relation, we have $T(n) = \Omega(n)$. Let $F(n) = F(n/2) + F(n/3) + n$. Since $n/3 >  \sqrt{n}$ for all $n > 9$, we have $F(n) \geq T(n)$.
+\paragraph{Problem~\ref{comparison:1}}
+By the recurrence relation, we have $T(n) = \Omega(n)$. Let $F(n) = F(n/2) + F(n/3) + n$. Since $n/3 >  \sqrt{n}$ for all $n > 9$, we have $F(n) \geq T(n)$.
 By using the Akra\--Bazzi method, we get $F(n) = \Theta(n)$.
 Hence, we have $T(n) = \Theta(n)$.
 \end{Answer}

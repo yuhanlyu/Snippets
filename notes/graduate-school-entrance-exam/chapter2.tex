@@ -7,7 +7,7 @@ Arrays are the simplest data structures in computers. Even the structure of an a
 Given two arrays $x[1], \dots, x[m]$ and $y[1], \dots, y[n]$, design an algorithm to find two elements $x[i]$ and $y[j]$ such that the absolute value $|x[i] - y[j]|$ is minimized over all possible pairs of $x$ and $y$ elements. A brute force algorithm needs $O(n^2)$ time. Your algorithm should be far more efficient than that. Analyze the time complexity of your algorithm.\school{[NCU CSIE 101]}
 \end{Exercise}
 \begin{Answer}
-First, sort array $x$. Then, for each element $a$ in $y$, use binary search method to find the element $b$ in $x$, such that $|a - b|$ is minimized. In this way, we can find the pair with the minimum absolute value of the difference. Sorting the array takes $O(m \lg m)$ time and binary search takes $O(n \lg m)$ time. The total running time is $O((n + m) \lg m)$.
+First, sort array $x$. Then, for each element $a$ in $y$, use binary search method to find the element $b$ in $x$, such that $|a - b|$ is minimized. In this way, we can find the pair with the minimum absolute value of the difference. Sorting the array takes $O(m \lg m)$ time and binary search takes $O(n \lg m)$ time. The running time is $O((n + m) \lg m)$.
 \end{Answer}
 
 \subsection{$k$-sum problem}
@@ -19,38 +19,65 @@ First, sort array $x$. Then, for each element $a$ in $y$, use binary search meth
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
-{\bf Problem~\ref{sequence:3sum}}: This is called \href{https://en.wikipedia.org/wiki/3SUM}{3SUM} problem. Construct a set $Z' = \{k - z \mid z \in Z\}$. The problem is equal to finding $x \in X$, $y \in Y$, and $z \in Z'$, such that $x + y = z$. Sort the sets $Y$ and $Z'$. For each element $x \in X$, construct a set $Y_x = \{y + x \mid y \in Y\}$. If there is one element $a$ in both  $Y_x$ and $Z'$, then we find an answer. When $Y_x$ is fixed, finding common elements in sorted $Y_x$ and $Z'$ can be done in $O(|Y|+|Z|)$ time. Since we apply this operation for each element $x \in X$, the total running time is $O(|X|(|Y|+|Z|))$.
+\paragraph{Problem~\ref{sequence:3sum}} This is called \href{https://en.wikipedia.org/wiki/3SUM}{3SUM problem}. Construct a set $Z' = \{k - z \mid z \in Z\}$. The problem is equal to finding $x \in X$, $y \in Y$, and $z \in Z'$, such that $x + y = z$. Sort the sets $Y$ and $Z'$. For each element $x \in X$, construct a set $Y_x = \{y + x \mid y \in Y\}$. If there is one element $a$ in both  $Y_x$ and $Z'$, then we find an answer. When $Y_x$ is fixed, finding common elements in sorted $Y_x$ and $Z'$ can be done in $O(|Y|+|Z|)$ time. Since we apply this operation for each element $x \in X$, the running time is $O(|X|(|Y|+|Z|))$.
 
 This problem can be solved in $o(n^2)$ time~\cite{Jorgensen2014}.
 
-{\bf Problem~\ref{sequence:4sum}}: Let $a$ denote the input array. Let $S_{ij}$ be the sum of $a[i]$ and $[j]$. Sort all $S_{ij}$ in increasing order and store them in an array $A$ of length $L$. The problem is equal to finding two elements in $A$ sum to $s$, which can be solved in time linear in $L$. Since the number of pairs is $O(n^2)$, the sort takes $O(n^2 \lg n)$ time. Moreover, the search takes $O(n^2)$ time. Hence, the total running time is $O(n^2 \lg n)$.
+\paragraph{Problem~\ref{sequence:4sum}} Let $a$ denote the input array. Let $S_{ij}$ be the sum of $a[i]$ and $[j]$. Sort all $S_{ij}$ in increasing order and store them in an array $A$ of length $L$. The problem is equal to finding two elements in $A$ sum to $s$, which can be solved in time linear in $L$. Since the number of pairs is $O(n^2)$, the sort takes $O(n^2 \lg n)$ time. Moreover, the search takes $O(n^2)$ time. Hence, the running time is $O(n^2 \lg n)$.
 \end{Answer}
-
 
 \subsection{Binary search}
 \begin{Exercise}
 \begin{enumerate}
-\item Suppose you are given an array of $n$ sorted numbers that has been circularly shifted $m$ positions to the right. For example $\{36, 45, 5, 18, 26, 29\}$ is a sorted array that has been circularly shifted m = $2$ positions to the right. Give an $O(\lg n)$ algorithm to find the largest number in this array. Note that you don't know what $m$ is. \school{[CYCU CSIE 89]}
 \item Let $A[n]$ be an array with $n$ elements sorted in ascending order. It is simple to construct an $O(\lg n)$ algorithm to find the position $k$ in $A[n]$ for a given value $v$. Assume that $k$ is much less than $n$ (i.e., $k \ll n$). Write an $O(\lg k)$ time algorithm to search for $k$.
-(Note: you do not know the value of $k$ in advance, only $v$ is known) \school{[YZU CSIE 93]}
-\item Give an efficient algorithm to determine if there exists an integer $i$ such that $A_i = i$ in an array of integers $A_1 < A_2 < \cdots < A_n$. What is the running time of your algorithm? \school{[NDHU CSIE 96, CYCU CSIE90]}
+(Note: you do not know the value of $k$ in advance, only $v$ is known) \label{sequence:exponential-search}\school{[YZU CSIE 93]}
+\item Suppose you are given an array of $n$ sorted numbers that has been circularly shifted $m$ positions to the right. For example $\{36, 45, 5, 18, 26, 29\}$ is a sorted array that has been circularly shifted m = $2$ positions to the right. Give an $O(\lg n)$ algorithm to find the largest number in this array. Note that you don't know what $m$ is. \label{sequence:shift}\school{[CYCU CSIE 89]}
+\item Give an efficient algorithm to determine if there exists an integer $i$ such that $A_i = i$ in an array of integers $A_1 < A_2 < \cdots < A_n$. What is the running time of your algorithm? \label{sequence:fixed-point}\school{[NDHU CSIE 96, CYCU CSIE90]}
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
+\paragraph{Problem~\ref{sequence:exponential-search}}
+We use linear search to find an index $i$ such that $2^i \leq k < 2^{i+1}$, which takes $O(\lg k)$ time.
+Then, we apply binary search in the range $1 ~ 2^{i + 1}$, which takes $O(\lg k)$ time as well.
+
+This idea can also be generalized to higher dimension space~\cite{Bentley1976}.
+
+\paragraph{Problem~\ref{sequence:shift}}
+Let $m = (1 + n)/2$. There are three cases:
+\begin{enumerate}
+\item $A[m] > A[m+1]$: $A[mid]$ is the maximum.
+\item $A[m] > A[1]$: the maximum locates in $A[m + 1] ~ A[n]$. Recurse.
+\item $A[m] < A[1]$: the maximum locates in $A[1] ~ A[m-1]$. Recurse.
+\end{enumerate}
+Since the problem size is halved in each recursion, the running time is $O(\lg n)$.
+
+\paragraph{Problem~\ref{sequence:fixed-point}}
+Let $m = (1 + n)/2$. There are three cases:
+\begin{enumerate}
+\item $A[m] = m$: $A[m]$ is the fixed point.
+\item $A[m] > m$: the fixed point locates in $A[1] ~ A[m - 1]$. Recurse.
+\item $A[m] < m$: the fixed point locates in $A[m + 1] ~ A[n]$. Recurse.
+\end{enumerate}
+Since the problem size is halved in each recursion, the running time is $O(\lg n)$.
+
 \end{Answer}
 
 \subsection{Majority problem}
 \begin{Exercise}
 \begin{enumerate}
-\item An array $a[1, \dots, n]$ is said to contain a majority element if there is some element that appears more than $n/2$ times in the array. The task is to determine if $a$ has a majority element and, if so, to find the element. We do not assume that the elements of the array come from some ordered domain such as the integers, so we cannot sort the array or perform comparisons such as $a[i] < a[j]$. However, we assume we are able to test if $a[i] = a[j]$ in constant time.
-\begin{enumerate}
-\item Give a divide-and-conquer algorithm (in pseudo-code) for this problem that runs in time $O(n \lg n)$. Justify this running time by writing down an appropriate recurrence relation.
-\item Can you come up with a simple $O(n)$-time algorithm for this problem? \school{[CCU CSIE 95]}
-\end{enumerate}
-\item Given an $n$-element array $A$ of real numbers, design an $O(n)$ time algorithm which determines whether any value occurs more than $n/7$ times in $A$. \school{[NTUT CSIE 102]}
+\item An array $a[1, \dots, n]$ is said to contain a majority element if there is some element that appears more than $n/2$ times in the array. The task is to determine if $a$ has a majority element and, if so, to find the element. We do not assume that the elements of the array come from some ordered domain such as the integers, so we cannot sort the array or perform comparisons such as $a[i] < a[j]$. However, we assume we are able to test if $a[i] = a[j]$ in constant time. Can you come up with a simple $O(n)$-time algorithm for this problem? \label{sequence:maj1} \school{[CCU CSIE 95]}
+\item Given an $n$-element array $A$ of real numbers, design an $O(n)$ time algorithm which determines whether any value occurs more than $n/7$ times in $A$. \label{sequence:maj2}\school{[NTUT CSIE 102]}
 \end{enumerate}
 \end{Exercise}
+
 \begin{Answer}
+\paragraph{Problem~\ref{sequence:maj1}}
+If $x$ and $y$ are unequal elements in $a$, then discarding them from $a$ will keep the majority unchanged. We choose the first element as a candidate and set $M$ as one. If the next element differs from the candidate, then decrease $M$ by one. If $M$ becomes zero, then choose the next element as a candidate. Repeat this process until all elements are processed. Finally, we need one more pass to test whether the candidate is indeed a majority. Since this is a two pass algorithm, the algorithm runs in linear time~\cite{Misra1982}.
+
+\paragraph{Problem~\ref{sequence:maj2}}
+If there exists one element which occurs more than $n/7$ times in $A$, then the element must be one of $(kn/7)$-th largest element in $A$, where $1 \leq k \leq 7$. Hence, we can use the selection algorithm to find $(kn/7)$-th largest element in $A$ for all $k$ in linear time. For each of them, determine whether this element occurs more than $n/7$ times in $A$ can also be done in linear time. Thus, the running time is linear.
+
+For any threshold value $t$, finding element with frequency larger than $n/t$ can be done in linear time (independent from $t$)~\cite{Karp2003}.
 \end{Answer}
 
 \section{Sorting}
@@ -59,6 +86,9 @@ This problem can be solved in $o(n^2)$ time~\cite{Jorgensen2014}.
 Jeremy is a waiter working in a restaurant. The chef there is sloppy; when he prepares a stack of pancakes, they come out all different sizes. When Jeremy delivers the pancakes to the customer, he wants to rearrange them by grabbing several from the top and flipping them over on the way. After repeating this for several times, the smallest pancake is on top, and so on, down to the largest at the bottom. If there are $n$ pancakes, how many flips are required? Design an algorithm to help Jeremy, and analyze its time complexity.  \school{[NCKU CSIE 102]}
 \end{Exercise}
 \begin{Answer}
+This problem is called \href{https://en.wikipedia.org/wiki/Pancake_sorting}{pancake sorting problem}. For a stack of pancakes, we first locate the largest pancake. Then we flip the largest pancake to the top by using one flip and use another flip to move the largest pancake to the bottom. We recursively sort the top $n-1$ pancakes. Since every pancake except the smallest one needs at most two flips to move to the correct position, the number of flips is $2n - 2$.
+
+One algorithm with at most $\frac{18}{11}n$ flips exists~\cite{Chitturi2009}.
 \end{Answer}
 
 \begin{Exercise}
