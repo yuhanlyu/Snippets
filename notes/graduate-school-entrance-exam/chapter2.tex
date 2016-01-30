@@ -40,7 +40,7 @@ This problem can be solved in $o(n^2)$ time~\cite{Jorgensen2014}.
 We use linear search to find an index $i$ such that $2^i \leq k < 2^{i+1}$, which takes $O(\lg k)$ time.
 Then, we apply binary search in the range $1 ~ 2^{i + 1}$, which takes $O(\lg k)$ time as well.
 
-This idea can also be generalized to higher dimension space~\cite{Bentley1976}.
+This technique is called \href{https://en.wikipedia.org/wiki/Exponential_search}{exponential search}.~\cite{Bentley1976}.
 
 \paragraph{Problem~\ref{sequence:shift}}
 Let $m = (1 + n)/2$. There are three cases:
@@ -95,6 +95,11 @@ One algorithm with at most $\frac{18}{11}n$ flips exists~\cite{Chitturi2009}.
 Let $A$ be an array of $n$ arbitrary and distinct numbers. $A$ has the following property: If we imagine $B$ as being sorted version of $A$, then any element that is at position $i$ in array $A$ would, in $B$, be at a position $j$ such that $| i - j | \leq k$. In other words, each element in $A$ is not farther than $k$ positions away from where it belongs in the sorted version of $A$. Suppose you are given such an array $A$, and you are told that $A$ has this property for a particular value $k$ (that value of $k$ is also given to you). Design an $O(n \lg k)$ time algorithm for sorting $A$. \school{[NTUT CSIE 95]}
 \end{Exercise}
 \begin{Answer}
+Initially, insert the first $2k$ elements into a min heap; then, repeat the following process $n - 2k$ times. In iteration $i$, delete the minimum value in the heap and output it; then, insert the $(2k + i)$-th element into the heap. After loops terminates, sort the elements in the heap by the heap sort and output it.
+
+For any position $i$ in the sorted array, the possible positions in the unsorted array are from $i - k$ to $i + k$, so using a min heap guarantees the correctness. 
+Since the size of heap is $O(k)$, the insertion and deletion takes $O(\lg k)$ time. 
+Since we insert and delete $O(n)$ times, the running time is $O(n \lg k)$.
 \end{Answer}
 
 \begin{Exercise}
@@ -105,6 +110,7 @@ The input is a sequence of $n$ integers with many duplications, such that the nu
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
+We need to augment an AVL-tree by creating a count field in each tree node. We first process all elements in the input sequentially. For each integer $x$ in input, search for $x$ in the tree; if x has been inserted, then increment the $x$'s count; otherwise, insert $x$ into the tree and initialize the count to $1$. Then, in-order traverse the data structure and output the elements with its multiplicity. Since the distinct integers is $O(\lg n)$, both of search and insertion take $O(\lg \lg n)$ time. We insert or search at most $O(n)$ times, so the running time is $O(n \lg \lg n)$.
 \end{Answer}
 
 \subsection{Bucket sort}
@@ -112,6 +118,7 @@ The input is a sequence of $n$ integers with many duplications, such that the nu
 We are given $n$ points in an unit circle, $ p_i$ = $(x_i, y_i)$, such that $0 < \sqrt{x_i^2 + y_i^2} < 1$, for $i = 1, \dots, n$. Suppose that the points are uniformly distributed; that is, the probability of finding a point in any region of the circle is proportional to the area of that region. Design and prove a $\Theta(n)$ expected-time algorithm to sort the $n$ points by their distance $d_i = \sqrt{x_i^2 + y_i^2}$ from the origin. (Hints: Design the bucket sizes in Bucket-Sort to reflect the uniform distribution of the points in the unit circle.) \school{[NDHU CSIE 97]}
 \end{Exercise}
 \begin{Answer}
+Divide the circle into $n$ concentric circles with radii $\sqrt{\frac{1}{n}}, \sqrt{\frac{2}{n}}, \dots, 1$. The area of the $i$th level is $\pi {\sqrt{\frac{i}{n}}}^2 - \pi {\sqrt{\frac{i-1}{n}}}^2 = \pi/n$. Since the areas are equal-size, the probability of point locates in any level is $1/n$. So we can partition the points by their levels and use the bucket sort to sort these points.
 \end{Answer}
 
 \section{String}
@@ -119,29 +126,38 @@ We are given $n$ points in an unit circle, $ p_i$ = $(x_i, y_i)$, such that $0 <
 Given two length-$n$ binary strings $A$ and $B$, consider the problem of computing a longest string $C$ that is a substring of both $A$ and $B$. You are asked to prove or disprove that this so-called longest common substring problem can be solved in $O(n \lg n)$ time. \school{[NTU CSIE 97]}
 \end{Exercise}
 \begin{Answer}
+This problem is called the \href{https://en.wikipedia.org/wiki/Longest_common_substring_problem}{longest common substring problem}. Build a generalized suffix tree from $A$ and $B$. Find the deepest internal node that has leaves from two strings. The string corresponding to the path from the root to the deepest internal node is the longest common substring. Since building a suffix tree takes linear time, the running time is linear.
 \end{Answer}
 
 \section{Array of arrays}
 
 \begin{Exercise}
-It is trivial to find the median of the integers in the sorted array a with median = $a(\lfloor n/2 \rfloor)$. Suppose we have $3n$ distinct integers that are randomly stored in arrays $a[0 \dots n-1]$, $b[0 \dots n-1]$, and $c[0 \dots n-1]$, and each array is sorted independently. Write an algorithm to find the median of these $3n$ distinct integers. Please note that you are not allowed to merge arrays $a$, $b$, and $c$ into a $3n$ integer array and then perform sorting. \school{[NTUST CSIE 98]}
+It is trivial to find the median of the integers in the sorted array $a$ with median $= a[\lfloor n/2 \rfloor]$. Suppose we have $3n$ distinct integers that are randomly stored in arrays $a[0 \dots n-1]$, $b[0 \dots n-1]$, and $c[0 \dots n-1]$, and each array is sorted independently. Write an algorithm to find the median of these $3n$ distinct integers. Please note that you are not allowed to merge arrays $a$, $b$, and $c$ into a $3n$ integer array and then perform sorting. \school{[NTUST CSIE 98]}
 \end{Exercise}
 \begin{Answer}
+The idea is as follows:  in each iteration, we eliminate some elements that cannot be the answer. Repeat this process until only one element remains.
+
+Let $N$ be the number of all remaining elements and our goal is to find the $k$-th smallest element. Initially, we have $N = 3n$ and $k = N / 2$. In each iteration, we collect the middle elements of all arrays as a set $P$. If $k < N/2$, then we pick the array with the maximum middle element. In this array, the elements that are larger than the middle element must be larger than $N / 2$ elements in all elements. Hence, we can remove these elements safely. The case in which $k > N / 2$ is symmetric. We adjust the $k$ value and recurse on the remaining elements. Since one array is halved in each iteration, the number of iterations is $O(\lg n)$. Since each iteration takes constant time, the running time is $O(\lg n)$.
 \end{Answer}
 
 \begin{Exercise}
 $M$ is an $n \times n$ integer matrix in which the entries of each row are in increasing order (reading left to right) and the entries in each column are in increasing order (reading top to bottom). Give an efficient algorithm to find the position of an integer $x$ in $M$, or determine that $x$ is not there. Tell how many comparisons of $x$ with matrix entries your algorithm does in the worst case. \school{[NTU CSIE 93]}
 \end{Exercise}
 \begin{Answer}
+For any pair of indices , $i$ and $j$, if $M[i][j] > x$, then we know $M[i][k] \neq x$ for all $j \leq k \leq n$ and $M[k][j] \neq x$ for all $i \leq k \leq n$. Similarly, if $M[i][j] < x$, then we know $M[i][k] \neq x$ for all $1 \leq k \leq j$ and $M[k][j] \neq x$ for all $1 \leq k \leq i$. 
+
+The idea is as follows: in each iteration, we compare an entry with $x$ and the eliminate either a row or a column.
+
+We always compare $x$ of the top-right element of the remaining submatrix. If this entry equals $x$, then we found the answer. If this entry is smaller $x$, then the top row can be discarded. If this entry is larger than $x$, the the rightmost column can be discarded. Since there are $O(n)$ rows and columns, the running time is $O(n)$. This technique is called {\emph saddleback search}~\cite{Bird2006}.
 \end{Answer}
 
 
 \section{Others}
-
 \begin{Exercise}
 Design an algorithm which detects whether there exists a cycle within a singly linked list. (Suppose that each node in this list contains data and next fields for storing data and the pointer to the next node respectively.) Please analyze the time and space complexities of your algorithm. \school{[MCU CSIE 95]}
 \end{Exercise}
 \begin{Answer}
+This problem is identical to the \href{https://en.wikipedia.org/wiki/Cycle_detection}{cycle detection problem}~\cite{Nesterenko2012}. Maintain two pointers, fast and slow, and traverse the linked list from head in parallel. The fast pointer traverse the list two nodes per iteration, while the slow pointer traverses one node. If the list contains a cycle, then these two pointers will point to the same node in some iteration. Otherwise, the fast pointer will achieve the end of the list. The running time is linear and the space usage is constant.
 \end{Answer}
 
 \begin{Exercise}
@@ -149,6 +165,9 @@ Given a finite set $A$ and a mapping function $f$ from $A$ to itself, describe a
 \school{[NCTU CSIE 91]}
 \end{Exercise}
 \begin{Answer}
+The idea is as follows: we repeatedly remove one element $x \in S$ such that $f(y) \neq x$ for all $y \in S$ until no such an element exists.
+
+In implementation, we maintain an hashtable $h$, where $h[x]$ stores how many elements $y$ satisfy $f(y) = x$. In each iteration, eliminate an element $x$ with $h[x] = 0$, and decrement $h[f(x)]$, until $h[x] \neq 0$ for all x. The running time is $O(n^2)$.
 \end{Answer}
 
 \subsection{Query support}
@@ -157,12 +176,21 @@ Given a finite set $A$ and a mapping function $f$ from $A$ to itself, describe a
 Suppose we have $n$ ranges $[a_1, b_1], [a_2, b_2], \dots, [a_n, b_n]$, where all $a_i$'s are negative and all $b_i$'s are positive. We are asked to preprocess these ranges so that for any input value $x$, we can efficiently count the number of the ranges containing $x$. Design an efficient representation of the ranges so that the desired counting can be done in $O(\lg n)$ time. Your representation must take $O(n)$ space. Describe you representation and how to answer a query in $O(\lg n)$ time in details. \school{[NTHU CSIE 100]}
 \end{Exercise}
 \begin{Answer}
+Suppose that $x$ is a positive number. Since $a_i$ is negative and $b_i$ is positive, we only need to count the number of intervals whose $b_i$ is larger than $x$. If we preprocess the ranges in order by $b_i$, counting the can be done in $O(\lg n)$ time by using binary search. The case in which $x$ is a negative number is symmetric.
 \end{Answer}
 
 \begin{Exercise}
 Suppose that we are given a sequence of $n$ unsorted values, say $x_1, x_2, \dots, x_n$, and at the same time, we are asked to quickly answer repeated queries defined as follows: Given $i$ and $j$, where $1 \leq i \leq j \leq n$, find the smallest value in $x_i, x_{i+1}, \dots, x_j$. Please design a data structure that uses $O(n)$ space and answers the queries in $O(\lg n)$ time. \school{[NCTU BIOINFO 100]}
 \end{Exercise}
 \begin{Answer}
+This problem is called the \href{https://en.wikipedia.org/wiki/Range_minimum_query}{range minimum query problem}. 
+We first divide $n$ values into blocks of size $\lg n$.
+For a given query $(i, j)$, since each block has $O(\lg n)$ elements, the minimum among all elements in $i$'s block that are after $i$ can be found in $O(\lg n)$ time.
+Similarly, the minimum among all elements in $j$'s block that are before $j$ can be found in $O(\lg n)$ time as well.
+The problem becomes how to find the minimum of all full blocks between $i$ and $j$ in $O(\lg n)$ time.
+We can precompute a matrix $M$, such that $M[s][k]$ is the minimum in blocks $s, s + 1, \dots, s + 2^k$.
+The minimum of all full blocks between $i$ and $j$ can be found in $O(\lg n)$ time by reading $M$.
+Since there are $O(n / \lg n)$ blocks, the size of $M$ is $O(\frac{n}{\lg n} \lg \frac{n}{\lg n}) = O(n)$.
 \end{Answer}
 
 
