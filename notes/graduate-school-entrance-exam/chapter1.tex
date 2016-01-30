@@ -29,12 +29,13 @@ Let $T(n) = aT(n / b) + f(n)$ for all $n > 1$ and $T(1) = c$ for some constants 
 \end{enumerate}
 \end{theorem}
 
-\paragraph{Note} When you apply the master theorem, please pay attention to the following:
+\begin{remark} When you apply the master theorem, please pay attention to the following:
 \begin{enumerate}
 \item When the recursion involves floor or ceiling function, the master theorem does not apply. For example, $T(n) = T(\lfloor \frac{n}{2} \rfloor) + T(\lceil \frac{n}{2} \rceil) + n$. 
 \item In order to apply the case 2 (the extended master theorem), $k$ must be non-negative. For example, case 2 does not apply in the case of $T(n) = 2T(\frac{n}{2}) + n/ \lg n$.
 \item In order to apply the case 3, the regularity condition must be satisfied. For example, case 3 does not apply in the case of $T(n) = T(\frac{n}{2}) + n(2 - \cos n)$.
 \end{enumerate}
+\end{remark}
 
 \begin{Exercise}[origin={NCTU CSIE 104}]
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
@@ -67,8 +68,8 @@ Let \[T(n) =
 where
 \begin{enumerate}
 \item $k \geq 1$ is a constant and for all $i$, $a_i > 0$ and $b_i \in (0, 1)$ are constants.
-\item $|f(n)|$ is polynomially-bounded.
-\item for all $i$, $|h_i(n)| = O(x /\lg^2x)$.
+\item $\abs{f(n)}$ is polynomially-bounded.
+\item for all $i$, $\abs{h_i(n)} = O(x /\lg^2x)$.
 \item $n_0$ is large enough.
 \end{enumerate}
 Let $p$ be the unique solution for $\sum_{i=1}^k a_ib_i^p = 1$. Then
@@ -80,13 +81,15 @@ Let $p$ be the unique solution for $\sum_{i=1}^k a_ib_i^p = 1$. Then
 \end{enumerate}
 \end{theorem}
 
-\paragraph{Note} This version of the Akra\--Bazzi method can deal with floor and ceil function by picking $h_i$.
+\begin{remark}
+This version of the Akra\--Bazzi method can deal with floor and ceil function by picking $h_i$.
+\end{remark}
 
 \paragraph{General version}
 Some of the requirements can be relaxed~\cite{Leighton1996}.
 \begin{enumerate}
 \item The second condition is called {\em polynomial-growth condition} and can be replaced by the following weaker requirement: $g(n)$ is nonnegative and exist constants $c_1$ and $c_2$ such that for all $i$ and for all $u \in [b_in + h_i(n), n]$, we have $c_1f(n) \leq f(u) \leq c_2 f(n)$.
-\item The third condition can be replaced by the following weaker requirement: there exists a constant $\epsilon > 0$, $|h_i(n)| \leq n / (\lg^{1 + \epsilon} n)$ for all $i$ and $n \geq n_0$.
+\item The third condition can be replaced by the following weaker requirement: there exists a constant $\epsilon > 0$, $\abs{h_i(n)} \leq n / (\lg^{1 + \epsilon} n)$ for all $i$ and $n \geq n_0$.
 \item The fourth condition is pretty technical and you can find the complete version in the original paper.
 \end{enumerate}
 Drmota and Szpankowski prove a more general theorem that can deal with floor and ceil functions directly~\cite{Drmota2013}.
@@ -108,7 +111,8 @@ Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently sma
 
 \paragraph{Problem~\ref{ABmethod:1} another solution} apply the Akra\--Bazzi method. Set $k = 1$, $a_1 = 5$, $b_1 = 1/5$, and solve $p = 1$. We get
 \[ T(n) = \Theta( n (1 + \int_{1}^n (x / \lg x) x^{-2} dx)) = \Theta(n \lg \lg n). \]
-\textbf{Note} Similarly, for any constant $c$, we have $T(n) = cT(\frac{n}{c}) + n/\lg n = \Theta(n \lg \lg n)$.
+\begin{remark} Similarly, for any constant $c$, we have $T(n) = cT(\frac{n}{c}) + n/\lg n = \Theta(n \lg \lg n)$.
+\end{remark}
 
 \paragraph{Problem~\ref{ABmethod:2}} apply the Akra\--Bazzi method. Set $k = 1$, $a_1 = 1$, $b_1 = 1/2$, and solve $p = 0$. Hence, we get
 \[ T(n) = \Theta( 1 (1 + \int_{1}^n (x / x) dx)) = \Theta(n). \]

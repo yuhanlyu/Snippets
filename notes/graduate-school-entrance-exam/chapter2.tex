@@ -14,15 +14,17 @@ Arrays are the simplest data structures in computers. Even the structure of an a
 
 \begin{Exercise}
 \begin{enumerate}
-\item Given three sets of integers $X$, $Y$, and $Z$, and another integer $k$, we want to know if there exists three numbers $x$, $y$, and $z$, such that $x \in X$, $y \in Y$, and $z \in Z$, and $x + y + z = k$. Design an algorithm to solve this problem. A naive method by checking all possible sums of triples $(x+y+z)$ will take $\Theta(|X||Y||Z|)$ time. Your algorithm must be more efficient than it. Analyze the time complexity of your algorithm. \label{sequence:3sum} \school{[NCU CSIE 99]}
+\item Given three sets of integers $X$, $Y$, and $Z$, and another integer $k$, we want to know if there exists three numbers $x$, $y$, and $z$, such that $x \in X$, $y \in Y$, and $z \in Z$, and $x + y + z = k$. Design an algorithm to solve this problem. A naive method by checking all possible sums of triples $(x+y+z)$ will take $\Theta(\abs{X}\abs{Y}\abs{Z})$ time. Your algorithm must be more efficient than it. Analyze the time complexity of your algorithm. \label{sequence:3sum} \school{[NCU CSIE 99]}
 \item Given an array of $n$ numbers, and a number $s$, determine whether the array contains $4$ elements whose sum is $s$. Analyze the time efficiency of your algorithm. Your algorithm should be more efficient than $O(n^4)$.  \label{sequence:4sum}  \school{[NCU CSIE 93]}
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
 \paragraph{Problem~\ref{sequence:3sum}} 
-This problem is called the \href{https://en.wikipedia.org/wiki/3SUM}{3SUM problem}. Construct a set $Z' = \{k - z \mid z \in Z\}$. The problem is equal to finding $x \in X$, $y \in Y$, and $z \in Z'$, such that $x + y = z$. Sort the sets $Y$ and $Z'$. For each element $x \in X$, construct a set $Y_x = \{y + x \mid y \in Y\}$. If there is one element $a$ in both  $Y_x$ and $Z'$, then we find an answer. When $Y_x$ is fixed, finding common elements in sorted $Y_x$ and $Z'$ can be done in $O(|Y|+|Z|)$ time. Since we apply this operation for each element $x \in X$, the running time is $O(|X|(|Y|+|Z|))$.
+This problem is called the \href{https://en.wikipedia.org/wiki/3SUM}{3SUM problem}. Construct a set $Z' = \{k - z \mid z \in Z\}$. The problem is equal to finding $x \in X$, $y \in Y$, and $z \in Z'$, such that $x + y = z$. Sort the sets $Y$ and $Z'$. For each element $x \in X$, construct a set $Y_x = \{y + x \mid y \in Y\}$. If there is one element $a$ in both  $Y_x$ and $Z'$, then we find an answer. When $Y_x$ is fixed, finding common elements in sorted $Y_x$ and $Z'$ can be done in $O(\abs{Y}+\abs{Z})$ time. Since we apply this operation for each element $x \in X$, the running time is $\Theta(\abs{X}\abs{Y}\abs{Z})$.
 
+\begin{remark}
 This problem can be solved in $o(n^2)$ time~\cite{Jorgensen2014}.
+\end{remark}
 
 \paragraph{Problem~\ref{sequence:4sum}} Let $a$ denote the input array. Let $S_{ij}$ be the sum of $a[i]$ and $[j]$. Sort all $S_{ij}$ in increasing order and store them in an array $A$ of length $L$. The problem is equal to finding two elements in $A$ sum to $s$, which can be solved in time linear in $L$. Since the number of pairs is $O(n^2)$, the sort takes $O(n^2 \lg n)$ time. Moreover, the search takes $O(n^2)$ time. Hence, the running time is $O(n^2 \lg n)$.
 \end{Answer}
@@ -41,10 +43,12 @@ This problem can be solved in $o(n^2)$ time~\cite{Jorgensen2014}.
 We use linear search to find an index $i$ such that $2^i \leq k < 2^{i+1}$, which takes $O(\lg k)$ time.
 Then, we apply binary search for find $x = A[k]$ for $k \in [1 \dots 2^{i + 1}]$, which takes $O(\lg k)$ time as well.
 
-This technique is called \href{https://en.wikipedia.org/wiki/Exponential_search}{exponential search}.~\cite{Bentley1976}.
+\begin{remark}
+This technique is called \href{https://en.wikipedia.org/wiki/Exponential_search}{exponential search}~\cite{Bentley1976}.
+\end{remark}
 
 \paragraph{Problem~\ref{sequence:shift}}
-Let $m = n/2$. There are three cases:
+Let $m = \frac{n}{2}$. There are three cases:
 \begin{enumerate}
 \item $A[m] > A[m+1]$: $A[m]$ is the maximum.
 \item $A[m] > A[1]$: the maximum locates in $A[m + 1] \sim A[n]$. Recurse.
@@ -53,7 +57,7 @@ Let $m = n/2$. There are three cases:
 Since the problem size is halved in each recursion, the running time is $O(\lg n)$.
 
 \paragraph{Problem~\ref{sequence:fixed-point}}
-Let $m = n/2$. There are three cases:
+Let $m = \frac{n}{2}$. There are three cases:
 \begin{enumerate}
 \item $A[m] = m$: $A[m]$ is the fixed point.
 \item $A[m] > m$: the fixed point locates in $A[1] \sim A[m - 1]$. Recurse.
@@ -66,8 +70,8 @@ Since the problem size is halved in each recursion, the running time is $O(\lg n
 \subsection{Majority problem}
 \begin{Exercise}
 \begin{enumerate}
-\item An array $a[1, \dots, n]$ is said to contain a majority element if there is some element that appears more than $n/2$ times in the array. The task is to determine if $a$ has a majority element and, if so, to find the element. We do not assume that the elements of the array come from some ordered domain such as the integers, so we cannot sort the array or perform comparisons such as $a[i] < a[j]$. However, we assume we are able to test if $a[i] = a[j]$ in constant time. Can you come up with a simple $O(n)$-time algorithm for this problem? \label{sequence:maj1} \school{[CCU CSIE 95]}
-\item Given an $n$-element array $A$ of real numbers, design an $O(n)$ time algorithm which determines whether any value occurs more than $n/7$ times in $A$. \label{sequence:maj2}\school{[NTUT CSIE 102]}
+\item An array $a[1, \dots, n]$ is said to contain a majority element if there is some element that appears more than $\frac{n}{2}$ times in the array. The task is to determine if $a$ has a majority element and, if so, to find the element. We do not assume that the elements of the array come from some ordered domain such as the integers, so we cannot sort the array or perform comparisons such as $a[i] < a[j]$. However, we assume we are able to test if $a[i] = a[j]$ in constant time. Can you come up with a simple $O(n)$-time algorithm for this problem? \label{sequence:maj1} \school{[CCU CSIE 95]}
+\item Given an $n$-element array $A$ of real numbers, design an $O(n)$ time algorithm which determines whether any value occurs more than $\frac{n}{7}$ times in $A$. \label{sequence:maj2}\school{[NTUT CSIE 102]}
 \end{enumerate}
 \end{Exercise}
 
@@ -75,12 +79,18 @@ Since the problem size is halved in each recursion, the running time is $O(\lg n
 \paragraph{Problem~\ref{sequence:maj1}}
 The algorithm is based on the following observation: Let $x$ and $y$ be two distinct elements in $a$. Discarding $x$ and $y$ from $a$ will keep the majority unchanged. 
 
-We choose the first element as a candidate and set $M$ as one. If the next element differs from the candidate, then decrease $M$ by one. If $M$ becomes zero, then choose the next element as a candidate. Repeat this process until all elements are processed. Finally, we need one more pass to test whether the candidate is indeed a majority. Since this is a two pass algorithm, the algorithm runs in linear time~\cite{Misra1982}.
+We choose the first element as a candidate and set $M$ as one. If the next element differs from the candidate, then decrease $M$ by one. If $M$ becomes zero, then choose the next element as a candidate. Repeat this process until all elements are processed. Finally, we need one more pass to test whether the candidate is indeed a majority. Since this is a two pass algorithm, the algorithm runs in linear time.
+
+\begin{remark}
+More information can be found in~\cite{Misra1982}.
+\end{remark}
 
 \paragraph{Problem~\ref{sequence:maj2}}
-If there exists one element which occurs more than $n/7$ times in $A$, then the element must be one of $(kn/7)$-th largest element in $A$, where $1 \leq k \leq 7$. Hence, we can use the selection algorithm to find all $(kn/7)$-th largest elements in $A$ for all $k$ in linear time. For each of them, determine whether this element occurs more than $n/7$ times in $A$ can also be done in linear time. Thus, the running time is linear.
+If there exists one element which occurs more than $\frac{n}{7}$ times in $A$, then the element must be one of $\frac{kn}{7}$-th largest element in $A$, where $1 \leq k \leq 7$. Hence, we can use the selection algorithm to find all $\frac{kn}{7}$-th largest elements in $A$ for all $k$ in linear time. For each of them, determine whether this element occurs more than $\frac{n}{7}$ times in $A$ can also be done in linear time. Thus, the running time is linear.
 
-For any threshold value $t$, finding element with frequency larger than $n/t$ can be done in linear time (independent from $t$)~\cite{Karp2003}.
+\begin{remark}
+For any threshold value $t$, finding element with frequency larger than $\frac{n}{t}$ can be done in linear time (independent from $t$)~\cite{Karp2003}.
+\end{remark}
 \end{Answer}
 
 \section{Sorting}
@@ -91,11 +101,13 @@ Jeremy is a waiter working in a restaurant. The chef there is sloppy; when he pr
 \begin{Answer}
 This problem is called the \href{https://en.wikipedia.org/wiki/Pancake_sorting}{pancake sorting problem}. For a stack of pancakes, first locate the largest pancake. Then flip the largest pancake to the top by using one flip and use another flip to move the largest pancake to the bottom. Sort the top $n-1$ pancakes recursively. Since every pancake except the smallest one needs at most two flips to move to the correct position, the number of flips is $2n - 2$.
 
+\begin{remark}
 One algorithm with at most $\frac{18}{11}n$ flips exists~\cite{Chitturi2009}.
+\end{remark}
 \end{Answer}
 
 \begin{Exercise}[origin={NTUT CSIE 95}]
-Let $A$ be an array of $n$ arbitrary and distinct numbers. $A$ has the following property: If we imagine $B$ as being sorted version of $A$, then any element that is at position $i$ in array $A$ would, in $B$, be at a position $j$ such that $| i - j | \leq k$. In other words, each element in $A$ is not farther than $k$ positions away from where it belongs in the sorted version of $A$. Suppose you are given such an array $A$, and you are told that $A$ has this property for a particular value $k$ (that value of $k$ is also given to you). Design an $O(n \lg k)$ time algorithm for sorting $A$.
+Let $A$ be an array of $n$ arbitrary and distinct numbers. $A$ has the following property: If we imagine $B$ as being sorted version of $A$, then any element that is at position $i$ in array $A$ would, in $B$, be at a position $j$ such that $\abs{i - j} \leq k$. In other words, each element in $A$ is not farther than $k$ positions away from where it belongs in the sorted version of $A$. Suppose you are given such an array $A$, and you are told that $A$ has this property for a particular value $k$ (that value of $k$ is also given to you). Design an $O(n \lg k)$ time algorithm for sorting $A$.
 \end{Exercise}
 \begin{Answer}
 Initially, insert the first $2k$ elements into a min heap; then, repeat the following process $n - 2k$ times. In iteration $i$, delete the minimum value in the heap and output it; then, insert the $(2k + i)$-th element into the heap. After loops terminates, sort the elements in the heap by the heap sort and output it.
@@ -135,12 +147,12 @@ This problem is called the \href{https://en.wikipedia.org/wiki/Longest_common_su
 \section{Array of arrays}
 
 \begin{Exercise}[origin={NTUST CSIE 98},difficulty=1]
-It is trivial to find the median of the integers in the sorted array $a$ with median $= a[\lfloor n/2 \rfloor]$. Suppose we have $3n$ distinct integers that are randomly stored in arrays $a[0 \dots n-1]$, $b[0 \dots n-1]$, and $c[0 \dots n-1]$, and each array is sorted independently. Write an algorithm to find the median of these $3n$ distinct integers. Please note that you are not allowed to merge arrays $a$, $b$, and $c$ into a $3n$ integer array and then perform sorting. 
+It is trivial to find the median of the integers in the sorted array $a$ with median $= a[\lfloor \frac{n}{2} \rfloor]$. Suppose we have $3n$ distinct integers that are randomly stored in arrays $a[0 \dots n-1]$, $b[0 \dots n-1]$, and $c[0 \dots n-1]$, and each array is sorted independently. Write an algorithm to find the median of these $3n$ distinct integers. Please note that you are not allowed to merge arrays $a$, $b$, and $c$ into a $3n$ integer array and then perform sorting. 
 \end{Exercise}
 \begin{Answer}
 The idea is as follows:  in each iteration, we eliminate some elements that cannot be the answer. Repeat this process until only one element remains.
 
-Let $N$ be the number of all remaining elements and our goal is to find the $k$-th smallest element. Initially, we have $N = 3n$ and $k = N / 2$. In each iteration, we collect the middle elements of all arrays as a set $P$. If $k < N/2$, then we pick the array with the maximum middle element. In this array, the elements that are larger than the middle element must be larger than $N / 2$ elements in all elements. Hence, we can remove these elements safely. The case in which $k > N / 2$ is symmetric. We adjust the $k$ value and recurse on the remaining elements. Since one array is halved in each iteration, the number of iterations is $O(\lg n)$. Since each iteration takes constant time, the running time is $O(\lg n)$.
+Let $N$ be the number of all remaining elements and our goal is to find the $k$-th smallest element. Initially, we have $N = 3n$ and $k = \frac{N}{2}$. In each iteration, we collect the middle elements of all arrays as a set $P$. If $k < \frac{N}{2}$, then we pick the array with the maximum middle element. In this array, the elements that are larger than the middle element must be larger than $\frac{N}{2}$ elements in all elements. Hence, we can remove these elements safely. The case in which $k > \frac{N}{2}$ is symmetric. We adjust the $k$ value and recurse on the remaining elements. Since one array is halved in each iteration, the number of iterations is $O(\lg n)$. Since each iteration takes constant time, the running time is $O(\lg n)$.
 \end{Answer}
 
 \begin{Exercise}[origin={NTU CSIE 93}]
@@ -151,7 +163,11 @@ For any pair of indices , $i$ and $j$, if $M[i][j] > x$, then we know $M[i][k] \
 
 The idea is as follows: in each iteration, we compare an entry with $x$ and the eliminate either a row or a column.
 
-We always compare $x$ of the top-right element of the remaining submatrix. If this entry equals $x$, then we found the answer. If this entry is smaller $x$, then the top row can be discarded. If this entry is larger than $x$, the the rightmost column can be discarded. Since there are $O(n)$ rows and columns, the running time is $O(n)$. This technique is called \emph{saddleback search}~\cite{Bird2006}.
+We always compare $x$ of the top-right element of the remaining submatrix. If this entry equals $x$, then we found the answer. If this entry is smaller $x$, then the top row can be discarded. If this entry is larger than $x$, the the rightmost column can be discarded. Since there are $O(n)$ rows and columns, the running time is $O(n)$. 
+
+\begin{remark}
+This technique is called \emph{saddleback search}~\cite{Bird2006}.
+\end{remark}
 \end{Answer}
 
 
@@ -160,7 +176,11 @@ We always compare $x$ of the top-right element of the remaining submatrix. If th
 Design an algorithm which detects whether there exists a cycle within a singly linked list. (Suppose that each node in this list contains data and next fields for storing data and the pointer to the next node respectively.) Please analyze the time and space complexities of your algorithm.
 \end{Exercise}
 \begin{Answer}
-This problem is identical to the \href{https://en.wikipedia.org/wiki/Cycle_detection}{cycle detection problem}~\cite{Nesterenko2012}. Maintain two pointers, fast and slow, and traverse the linked list from head in parallel. The fast pointer traverse the list two nodes per iteration, while the slow pointer traverses one node. If the list contains a cycle, then these two pointers will point to the same node in some iteration. Otherwise, the fast pointer will achieve the end of the list. The running time is linear and the space usage is constant.
+This problem is identical to the \href{https://en.wikipedia.org/wiki/Cycle_detection}{cycle detection problem}. Maintain two pointers, fast and slow, and traverse the linked list from head in parallel. The fast pointer traverse the list two nodes per iteration, while the slow pointer traverses one node. If the list contains a cycle, then these two pointers will point to the same node in some iteration. Otherwise, the fast pointer will achieve the end of the list. The running time is linear and the space usage is constant.
+
+\begin{remark}
+More information can be found in~\cite{Nesterenko2012}.
+\end{remark}
 \end{Answer}
 
 \begin{Exercise}[origin={NCTU CSIE 91}]
@@ -193,8 +213,7 @@ Similarly, the minimum among all elements in $j$'s block that are before $j$ can
 The problem becomes how to find the minimum of all full blocks between $i$ and $j$ in $O(\lg n)$ time.
 We can precompute a matrix $M$, such that $M[s][k]$ is the minimum in blocks $s, s + 1, \dots, s + 2^k$.
 The minimum of all full blocks between $i$ and $j$ can be found in $O(\lg n)$ time by reading $M$.
-Since there are $O(n / \lg n)$ blocks, the size of $M$ is $O(\frac{n}{\lg n} \lg \frac{n}{\lg n}) = O(n)$.
+Since there are $O(\frac{n}{\lg n})$ blocks, the size of $M$ is $O(\frac{n}{\lg n} \lg \frac{n}{\lg n}) = O(n)$.
 \end{Answer}
-
 
 \printbibliography[heading=subbibliography]
