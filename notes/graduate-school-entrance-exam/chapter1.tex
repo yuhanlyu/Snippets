@@ -36,10 +36,10 @@ Let $T(n) = aT(n / b) + f(n)$ for all $n > 1$ and $T(1) = c$ for some constants 
 \item In order to apply the case 3, the regularity condition must be satisfied. For example, case 3 does not apply in the case of $T(n) = T(\frac{n}{2}) + n(2 - \cos n)$.
 \end{enumerate}
 
-\begin{Exercise}
+\begin{Exercise}[origin={NCTU CSIE 104}]
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
 \begin{enumerate}
-\item $T(n) = 2T(\frac{n}{2}) + \frac{n}{\lg^2 n}$. \label{master:1} \school{[NCTU CS 104]}
+\item $T(n) = 2T(\frac{n}{2}) + \frac{n}{\lg^2 n}$. \label{master:1}
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
@@ -118,8 +118,8 @@ Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently sma
 
 \end{Answer}
 
-\begin{Exercise}
-Given positive constants $c'$, $c_1, c_2, \dots, c_k$, assume that $T(n) \leq  c'n + \sum_{i=1}^k T(c_in)$ and $\sum_{i=1}^k c_i < 1$. Prove $T(n) = O(n)$. [NCTU CSIE 92] 
+\begin{Exercise}[origin={NCTU CSIE 92}]
+Given positive constants $c'$, $c_1, c_2, \dots, c_k$, assume that $T(n) \leq  c'n + \sum_{i=1}^k T(c_in)$ and $\sum_{i=1}^k c_i < 1$. Prove $T(n) = O(n)$.
 \end{Exercise}
 \begin{Answer}
 Apply the Akra\--Bazzi method.
@@ -127,10 +127,10 @@ Apply the Akra\--Bazzi method.
 
 
 \subsection{Full-history recurrence}
-\begin{Exercise}
+\begin{Exercise}[origin={NTU CSIE 90}]
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
 \begin{enumerate}
-\item $T(n) = n + \frac{4}{n} \sum_{i=1}^{n-1} T(i)$. \label{full-history:1} \school{[NTU CSIE 90]}
+\item $T(n) = n + \frac{4}{n} \sum_{i=1}^{n-1} T(i)$. \label{full-history:1}
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
@@ -157,10 +157,10 @@ S(n+1) & = S(n) + \frac{2n+1}{(n+1)(n+2)(n+3)(n+4)} \\
 
 
 \subsection{Range transformation}
-\begin{Exercise}
+\begin{Exercise}[origin={NCTU CSIE 93}]
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
 \begin{enumerate}
-\item $T(n) = \sqrt{n} T(\sqrt{n}) + \sqrt{n}$. \label{range-transformation:1} \school{[NCTU CSIE 93]}
+\item $T(n) = \sqrt{n} T(\sqrt{n}) + \sqrt{n}$. \label{range-transformation:1}
 \end{enumerate}
 \end{Exercise}
 \begin{Answer}
@@ -202,9 +202,8 @@ T(n) &= n^{1.5}T(\sqrt[4]{n}) + \frac{n^2 \lg n}{2} + n^2 \lg n \\
 
 \end{Answer}
 
-
 \subsection{Comparison}
-\begin{Exercise}
+\begin{Exercise}[origin={NCTU BIOINFO 93},difficulty=1]
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
 \begin{enumerate}
 \item $T(n) = T(\frac{n}{2}) + T(\sqrt{n}) + n$. \label{comparison:1} \school{[NCTU BIOINFO 93]}
