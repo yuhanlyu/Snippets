@@ -39,9 +39,7 @@ Let $T(n) = aT(n / b) + f(n)$ for all $n > 1$ and $T(1) = c$ for some constants 
 
 \begin{Exercise}[origin={NCTU CSIE 104}]
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
-\begin{enumerate}
-\item $T(n) = 2T(\frac{n}{2}) + \frac{n}{\lg^2 n}$. \label{master:1}
-\end{enumerate}
+\Question $T(n) = 2T(\frac{n}{2}) + \frac{n}{\lg^2 n}$. \label{master:1}
 \end{Exercise}
 \begin{Answer}
 
@@ -93,13 +91,13 @@ Some of the requirements can be relaxed~\cite{Leighton1996}.
 \item The fourth condition is pretty technical and you can find the complete version in the original paper.
 \end{enumerate}
 Drmota and Szpankowski prove a more general theorem that can deal with floor and ceil functions directly~\cite{Drmota2013}.
+
+
 \begin{Exercise}
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
-\begin{enumerate}
-\item $T(n) = 5T(\frac{n}{5}) + n/\lg n$. \label{ABmethod:1} \school{[NCTU CSIE 93]}
-\item $T(n) = T(\frac{n}{2} + \sqrt{n}) + n$. \label{ABmethod:2} \school{[NTU CSIE 103]}
-\item $T(n) = 4T(\frac{n}{5}) + T(\frac{n}{4}) + n$. \label{ABmethod:3} \school{[NCTU BIOINFO 93]}
-\end{enumerate}
+\Question $T(n) = 5T(\frac{n}{5}) + n/\lg n$. \label{ABmethod:1} \school{[NCTU CSIE 93]}
+\Question $T(n) = T(\frac{n}{2} + \sqrt{n}) + n$. \label{ABmethod:2} \school{[NTU CSIE 103]}
+\Question $T(n) = 4T(\frac{n}{5}) + T(\frac{n}{4}) + n$. \label{ABmethod:3} \school{[NCTU BIOINFO 93]}
 \end{Exercise}
 \begin{Answer}
 \paragraph{Problem~\ref{ABmethod:1}} Suppose that $n = 5^k$. We have
@@ -133,9 +131,7 @@ Apply the Akra\--Bazzi method.
 \subsection{Full-history recurrence}
 \begin{Exercise}[origin={NTU CSIE 90}]
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
-\begin{enumerate}
-\item $T(n) = n + \frac{4}{n} \sum_{i=1}^{n-1} T(i)$. \label{full-history:1}
-\end{enumerate}
+\Question $T(n) = n + \frac{4}{n} \sum_{i=1}^{n-1} T(i)$. \label{full-history:1}
 \end{Exercise}
 \begin{Answer}
 
@@ -163,9 +159,7 @@ S(n+1) & = S(n) + \frac{2n+1}{(n+1)(n+2)(n+3)(n+4)} \\
 \subsection{Range transformation}
 \begin{Exercise}[origin={NCTU CSIE 93}]
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
-\begin{enumerate}
-\item $T(n) = \sqrt{n} T(\sqrt{n}) + \sqrt{n}$. \label{range-transformation:1}
-\end{enumerate}
+\Question $T(n) = \sqrt{n} T(\sqrt{n}) + \sqrt{n}$. \label{range-transformation:1}
 \end{Exercise}
 \begin{Answer}
 \paragraph{Problem~\ref{range-transformation:1}}
@@ -182,10 +176,8 @@ T(n) & = S(k) = S(k-1) + 2^{-2^{k-1}} \\
 \subsection{Recursion trees}
 \begin{Exercise}
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
-\begin{enumerate}
-\item $T(n) = 2T(\sqrt{n}) + \lg n$. \label{recursion-trees:1} \school{[NCKU CSIE 95]}
-\item $T(n) = nT(\sqrt{n}) + n^2 \lg n$. \label{recursion-trees:2} \school{[NTU CSIE 98]}
-\end{enumerate}
+\Question $T(n) = 2T(\sqrt{n}) + \lg n$. \label{recursion-trees:1} \school{[NCKU CSIE 95]}
+\Question $T(n) = nT(\sqrt{n}) + n^2 \lg n$. \label{recursion-trees:2} \school{[NTU CSIE 98]}
 \end{Exercise}
 \begin{Answer}
 
@@ -209,9 +201,7 @@ T(n) &= n^{1.5}T(\sqrt[4]{n}) + \frac{n^2 \lg n}{2} + n^2 \lg n \\
 \subsection{Comparison}
 \begin{Exercise}[origin={NCTU BIOINFO 93},difficulty=1]
 Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently small $n$. Derive $f(n)$ in the simplest formula for each of the following $T(n)$.
-\begin{enumerate}
-\item $T(n) = T(\frac{n}{2}) + T(\sqrt{n}) + n$. \label{comparison:1} \school{[NCTU BIOINFO 93]}
-\end{enumerate}
+\Question $T(n) = T(\frac{n}{2}) + T(\sqrt{n}) + n$. \label{comparison:1} \school{[NCTU BIOINFO 93]}
 \end{Exercise}
 \begin{Answer}
 

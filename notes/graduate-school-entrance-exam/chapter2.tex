@@ -13,10 +13,8 @@ Arrays are the simplest data structures in computers. Even the structure of an a
 \subsection{$k$-sum problem}
 
 \begin{Exercise}
-\begin{enumerate}
-\item Given three sets of integers $X$, $Y$, and $Z$, and another integer $k$, we want to know if there exists three numbers $x$, $y$, and $z$, such that $x \in X$, $y \in Y$, and $z \in Z$, and $x + y + z = k$. Design an algorithm to solve this problem. A naive method by checking all possible sums of triples $(x+y+z)$ will take $\Theta(\abs{X}\abs{Y}\abs{Z})$ time. Your algorithm must be more efficient than it. Analyze the time complexity of your algorithm. \label{sequence:3sum} \school{[NCU CSIE 99]}
-\item Given an array of $n$ numbers, and a number $s$, determine whether the array contains $4$ elements whose sum is $s$. Analyze the time efficiency of your algorithm. Your algorithm should be more efficient than $O(n^4)$.  \label{sequence:4sum}  \school{[NCU CSIE 93]}
-\end{enumerate}
+\Question Given three sets of integers $X$, $Y$, and $Z$, and another integer $k$, we want to know if there exists three numbers $x$, $y$, and $z$, such that $x \in X$, $y \in Y$, and $z \in Z$, and $x + y + z = k$. Design an algorithm to solve this problem. A naive method by checking all possible sums of triples $(x+y+z)$ will take $\Theta(\abs{X}\abs{Y}\abs{Z})$ time. Your algorithm must be more efficient than it. Analyze the time complexity of your algorithm. \label{sequence:3sum} \school{[NCU CSIE 99]}
+\Question Given an array of $n$ numbers, and a number $s$, determine whether the array contains $4$ elements whose sum is $s$. Analyze the time efficiency of your algorithm. Your algorithm should be more efficient than $O(n^4)$.  \label{sequence:4sum}  \school{[NCU CSIE 93]}
 \end{Exercise}
 \begin{Answer}
 \paragraph{Problem~\ref{sequence:3sum}} 
@@ -31,12 +29,10 @@ This problem can be solved in $o(n^2)$ time~\cite{Jorgensen2014}.
 
 \subsection{Binary search}
 \begin{Exercise}
-\begin{enumerate}
-\item Let $A[n]$ be an array with $n$ elements sorted in ascending order. It is simple to construct an $O(\lg n)$ algorithm to find the position $k$ in $A[n]$ for a given value $v$. Assume that $k$ is much less than $n$ (i.e., $k \ll n$). Write an $O(\lg k)$ time algorithm to search for $k$.
+\Question Let $A[n]$ be an array with $n$ elements sorted in ascending order. It is simple to construct an $O(\lg n)$ algorithm to find the position $k$ in $A[n]$ for a given value $v$. Assume that $k$ is much less than $n$ (i.e., $k \ll n$). Write an $O(\lg k)$ time algorithm to search for $k$.
 (Note: you do not know the value of $k$ in advance, only $v$ is known) \label{sequence:exponential-search}\school{[YZU CSIE 93]}
-\item Suppose you are given an array of $n$ sorted numbers that has been circularly shifted $m$ positions to the right. For example $\{36, 45, 5, 18, 26, 29\}$ is a sorted array that has been circularly shifted $m = 2$ positions to the right. Give an $O(\lg n)$ algorithm to find the largest number in this array. Note that you don't know what $m$ is. \label{sequence:shift}\school{[CYCU CSIE 89]}
+\Question Suppose you are given an array of $n$ sorted numbers that has been circularly shifted $m$ positions to the right. For example $\{36, 45, 5, 18, 26, 29\}$ is a sorted array that has been circularly shifted $m = 2$ positions to the right. Give an $O(\lg n)$ algorithm to find the largest number in this array. Note that you don't know what $m$ is. \label{sequence:shift}\school{[CYCU CSIE 89]}
 \item Give an efficient algorithm to determine if there exists an integer $i$ such that $A_i = i$ in an array of integers $A_1 < A_2 < \cdots < A_n$. What is the running time of your algorithm? \label{sequence:fixed-point}\school{[NDHU CSIE 96, CYCU CSIE90]}
-\end{enumerate}
 \end{Exercise}
 \begin{Answer}
 \paragraph{Problem~\ref{sequence:exponential-search}}
@@ -69,10 +65,8 @@ Since the problem size is halved in each recursion, the running time is $O(\lg n
 
 \subsection{Majority problem}
 \begin{Exercise}
-\begin{enumerate}
-\item An array $a[1, \dots, n]$ is said to contain a majority element if there is some element that appears more than $\frac{n}{2}$ times in the array. The task is to determine if $a$ has a majority element and, if so, to find the element. We do not assume that the elements of the array come from some ordered domain such as the integers, so we cannot sort the array or perform comparisons such as $a[i] < a[j]$. However, we assume we are able to test if $a[i] = a[j]$ in constant time. Can you come up with a simple $O(n)$-time algorithm for this problem? \label{sequence:maj1} \school{[CCU CSIE 95]}
-\item Given an $n$-element array $A$ of real numbers, design an $O(n)$ time algorithm which determines whether any value occurs more than $\frac{n}{7}$ times in $A$. \label{sequence:maj2}\school{[NTUT CSIE 102]}
-\end{enumerate}
+\Question An array $a[1, \dots, n]$ is said to contain a majority element if there is some element that appears more than $\frac{n}{2}$ times in the array. The task is to determine if $a$ has a majority element and, if so, to find the element. We do not assume that the elements of the array come from some ordered domain such as the integers, so we cannot sort the array or perform comparisons such as $a[i] < a[j]$. However, we assume we are able to test if $a[i] = a[j]$ in constant time. Can you come up with a simple $O(n)$-time algorithm for this problem? \label{sequence:maj1} \school{[CCU CSIE 95]}
+\Question Given an $n$-element array $A$ of real numbers, design an $O(n)$ time algorithm which determines whether any value occurs more than $\frac{n}{7}$ times in $A$. \label{sequence:maj2}\school{[NTUT CSIE 102]}
 \end{Exercise}
 
 \begin{Answer}
@@ -95,7 +89,7 @@ For any threshold value $t$, finding element with frequency larger than $\frac{n
 
 \section{Sorting}
 
-\begin{Exercise}[origin={NCKU CSIE 102},difficulty=1]
+\begin{Exercise}[title={Pancake sorting problem},origin={NCKU CSIE 102},difficulty=1]
 Jeremy is a waiter working in a restaurant. The chef there is sloppy; when he prepares a stack of pancakes, they come out all different sizes. When Jeremy delivers the pancakes to the customer, he wants to rearrange them by grabbing several from the top and flipping them over on the way. After repeating this for several times, the smallest pancake is on top, and so on, down to the largest at the bottom. If there are $n$ pancakes, how many flips are required? Design an algorithm to help Jeremy, and analyze its time complexity.
 \end{Exercise}
 \begin{Answer}
@@ -119,10 +113,7 @@ Since we insert and delete $O(n)$ times, the running time is $O(n \lg k)$.
 
 \begin{Exercise}[origin={NCU CSIE 98}]
 The input is a sequence of $n$ integers with many duplications, such that the number of distinct integers in the sequence is $O(\lg n)$.
-\begin{enumerate}
-\item Design a sorting algorithm to sort such sequences using at most $O(n \lg \lg n)$ comparisons in the worst case.
-\item Why is the lower bound of sorting $\Omega(n \lg n)$ not satisfied in this case?
-\end{enumerate}
+Design a sorting algorithm to sort such sequences using at most $O(n \lg \lg n)$ comparisons in the worst case.
 \end{Exercise}
 \begin{Answer}
 Augment an AVL-tree by creating a count field in each tree node. First process all elements in the input sequentially. For each integer $x$ in input, search for $x$ in the tree; if $x$ has been inserted, then increment the $x$'s count; otherwise, insert $x$ into the tree and initialize the count to $1$. Then, in-order traverse the data structure and output the elements with its multiplicity. Since the distinct integers is $O(\lg n)$, both of search and insertion take $O(\lg \lg n)$ time. Since the number of insertion and search is $O(n)$, the running time is $O(n \lg \lg n)$.
@@ -137,7 +128,7 @@ Divide the circle into $n$ concentric circles with radii $\sqrt{\frac{1}{n}}, \s
 \end{Answer}
 
 \section{String}
-\begin{Exercise}[origin={NTU CSIE 97},difficulty=1]
+\begin{Exercise}[title={Longest common substring problem},origin={NTU CSIE 97},difficulty=1]
 Given two length-$n$ binary strings $A$ and $B$, consider the problem of computing a longest string $C$ that is a substring of both $A$ and $B$. You are asked to prove or disprove that this so-called longest common substring problem can be solved in $O(n \lg n)$ time.
 \end{Exercise}
 \begin{Answer}
@@ -172,7 +163,7 @@ This technique is called \emph{saddleback search}~\cite{Bird2006}.
 
 
 \section{Others}
-\begin{Exercise}[origin={MCU CSIE 95}]
+\begin{Exercise}[title={Cycle detection problem},origin={MCU CSIE 95}]
 Design an algorithm which detects whether there exists a cycle within a singly linked list. (Suppose that each node in this list contains data and next fields for storing data and the pointer to the next node respectively.) Please analyze the time and space complexities of your algorithm.
 \end{Exercise}
 \begin{Answer}
@@ -201,7 +192,7 @@ Suppose we have $n$ ranges $[a_1, b_1], [a_2, b_2], \dots, [a_n, b_n]$, where al
 Suppose that $x$ is a positive number. Since $a_i$ is negative and $b_i$ is positive, we only need to count the number of intervals whose $b_i$ is larger than $x$. If we preprocess the ranges in order by $b_i$, counting the can be done in $O(\lg n)$ time by using binary search. The case in which $x$ is a negative number is symmetric.
 \end{Answer}
 
-\begin{Exercise}[origin={NCTU BIOINFO 100},difficulty=1]
+\begin{Exercise}[title={Range minimum query problem},origin={NCTU BIOINFO 100},difficulty=1]
 Suppose that we are given a sequence of $n$ unsorted values, say $x_1, x_2, \dots, x_n$, and at the same time, we are asked to quickly answer repeated queries defined as follows: Given $i$ and $j$, where $1 \leq i \leq j \leq n$, find the smallest value in $x_i, x_{i+1}, \dots, x_j$. Please design a data structure that uses $O(n)$ space and answers the queries in $O(\lg n)$ time.
 \end{Exercise}
 \begin{Answer}

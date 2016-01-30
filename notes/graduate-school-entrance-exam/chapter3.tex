@@ -1,70 +1,84 @@
 \chapter{Problems on graphs}
 
 \section{Tree}
-\begin{Exercise}
-Let $T$ be an $n$-node tree rooted at some node $r$. We want to place as few guards as possible on nodes in $T$, such that every edge of $T$ is guarded: an edge between a parent node $v$ and its child $w$ is guarded if one places a guard on at least one of these two nodes $v$, $w$. Give an $O(n)$ time algorithm for finding an optimal solution to the problem. Please show the analysis on the time and correctness of your algorithm.\school{[NTUT CSIE 101]}
+\begin{Exercise}[title={Vertex cover on trees}, origin={NTUT CSIE 101}]
+Let $T$ be an $n$-node tree rooted at some node $r$. We want to place as few guards as possible on nodes in $T$, such that every edge of $T$ is guarded: an edge between a parent node $v$ and its child $w$ is guarded if one places a guard on at least one of these two nodes $v$, $w$. Give an $O(n)$ time algorithm for finding an optimal solution to the problem. Please show the analysis on the time and correctness of your algorithm
 \end{Exercise}
 \begin{Answer}
+For any edge incident with a leaf, since the edge should be guarded, either the leaf node or its parent node should be chosen. Choosing the parent node not only can guard this edge but only guard the edge incident with the parent node. Thus, choosing the parent node is no worse than choosing the leaf node. Hence, we can choose all nodes that connect to leaf nodes. After removing all edges that are guarded, we get a smaller tree. We can recursively apply this procedure to get a minimum vertex cover of the tree. The running time is $O(n)$.
 \end{Answer}
 
 \subsection{Lowest common ancestor}
 \begin{Exercise}
-\begin{enumerate}
-\item Let $T$ be a binary tree rooted at $r$ with vertex set $V$ and edge set $E$. Suppose it is represented using adjacency list format. If node $u$ is an ancestor of $v$, there is a path from $r$ to $v$ passing through $u$. Consider the function $\text{ancestor}(u, v)$ which returns TRUE if $u$ is a ancestor of $v$ and FALSE otherwise. In order to have this function run in $O(1)$ time, we are asked to design an algorithm to preprocess the tree. Please provide a linear-time, i.e., $O(|V| + |E|)$ time algorithm for this preprocess. \school{[NTUT CSIE 100]}
-\item \begin{enumerate}
-\item Let $T$ be a binary search tree, where each vertex contains a pointer to its parent and pointers to its children, and also a field named temp, which is of type integer. You are given two pointers $q_1$, $q_2$, pointing to two vertices $v_1$, $v_2$ in $T$. Find in time $O(k)$ what is the length of the shortest path in T connecting $v_1$ to $v_2$, where $k$ is the length of this path. You may assume that before the execution of your program, the value of all the "temp" fields is zero, and you can use these fields for your algorithm.
-\item Same as above, but this time the "temp" fields do not exist, you cannot write on the tree (so its information is "read-only" and the expected running time of your algorithm should be $O(k)$.
+\Question Let $T$ be a binary tree rooted at $r$ with vertex set $V$ and edge set $E$. Suppose it is represented using adjacency list format. If node $u$ is an ancestor of $v$, there is a path from $r$ to $v$ passing through $u$. Consider the function $\text{ancestor}(u, v)$ which returns TRUE if $u$ is a ancestor of $v$ and FALSE otherwise. In order to have this function run in $O(1)$ time, we are asked to design an algorithm to preprocess the tree. Please provide a linear-time, i.e., $O(\abs{V} + \abs{E})$ time algorithm for this preprocess. \school{[NTUT CSIE 100]} \label{lca:1}
+\Question \label{lca:2}
+\subQuestion Let $T$ be a binary search tree, where each vertex contains a pointer to its parent and pointers to its children, and also a field named temp, which is of type integer. You are given two pointers $q_1$, $q_2$, pointing to two vertices $v_1$, $v_2$ in $T$. Find in time $O(k)$ what is the length of the shortest path in T connecting $v_1$ to $v_2$, where $k$ is the length of this path. You may assume that before the execution of your program, the value of all the "temp" fields is zero, and you can use these fields for your algorithm. \label{lca:21}
+\subQuestion Same as above, but this time the "temp" fields do not exist, you cannot write on the tree (so its information is "read-only" and the expected running time of your algorithm should be $O(k)$. \label{lca:22}
 Hint: Assume that T is stored in the memory of your computer and you can find, in time $O(1)$, what is the address in which each node is stored. \school{[CCU CSIE 93]}
-\end{enumerate}
-\end{enumerate}
 \end{Exercise}
 \begin{Answer}
+\paragraph{Problem~\ref{lca:1}}
+We can use the pre-order traversal and post-order traversal on the tree to get each node's pre-order and post-order numbers. A node $u$ is an ancestor of a node $v$ if and only if $u$'s pre-order number is smaller than $v$'s pre-order number and $u$'s post-order number is larger than $v$'s post-order number. Since pre-order traversal and post-order traversal take linear time, the preprocess takes linear time.
+
+\paragraph{Problem~\ref{lca:2}}
+Question~\ref{lca:21}: Initially, let two pointers $a$ and $b$ point to $v_1$ and $v_2$ respectively and set their $\text{temp}$ fields to $1$. In each iteration, move $a$ and $b$ to their parent nodes respectively. If their $\text{temp}$ fields are zero, then set them to one and repeat; otherwise, we find the solution. Suppose that $a$'s $\text{temp}$ field is one without loss of generality, then $a$ is the lowest common ancestor of $v_1$ and $v_2$. If there is a path between $v_1$ and $v_2$ of length $k$, then the process will terminate in $k$ iterations. Hence, the running time is $O(k)$.
+
+Question~\ref{lca:22}: If the $\text{temp}$ field does not exist, then we can use a hashtable instead. Hence, the running time is $O(k)$ in expectation assuming universal hash function is used.
 \end{Answer}
 
 \section{Traversal}
 \subsection{DFS}
 \begin{Exercise}
-\begin{enumerate}
-\item An undirected graph $G = (V, E)$ is stored in a text file with the following format: The first line contains two integer numbers $n$ and $m$ that denote the numbers of vertices and edges of $G$ respectively. Then, the first line is followed by $m$ lines. Each line contains two distinct integers, say $i$ and $j$, indicating that there is an edge between vertices $i$ and $j$. Given such a file, design an $O(n)$ time algorithm to test if the undirected graph represented by the file is a tree. You should specify the data structure used to store the graph in the memory and how you construct such a data structure.  \school{[NCU CSIE 96, NTU CSIE 99]}
-\item For an undirected graph $G = (V, E)$, a vertex $v \in V$, and an edge $(x, y) \in E$, let $G\setminus v$ denote the subgraph of $G$ obtained by removing $v$ and all the edges incident to $v$ from $G$; and let $G\setminus(x, y)$ denote the subgraph of $G$ obtained by removing the edge $(x, y)$ from $G$. If $G$ is connected, then $G\setminus v$ can be disconnected or connected.
-\begin{enumerate}
-\item Given a connected graph $G$, design an $O(|V|)$ time algorithm to find a vertex $v \in G$ such that $G\setminus v$ is connected.
-\item Given a connected graph $G$, design an $O(|V|)$ time algorithm to either find an edge $(x, y) \in G$ such that $G\setminus (x, y)$  is connected or report that no such an edge exists. \school{[NCU CSIE 102]}
-\end{enumerate}
-\end{enumerate}
+
+\Question An undirected graph $G = (V, E)$ is stored in a text file with the following format: The first line contains two integer numbers $n$ and $m$ that denote the numbers of vertices and edges of $G$ respectively. Then, the first line is followed by $m$ lines. Each line contains two distinct integers, say $i$ and $j$, indicating that there is an edge between vertices $i$ and $j$. Given such a file, design an $O(n)$ time algorithm to test if the undirected graph represented by the file is a tree. You should specify the data structure used to store the graph in the memory and how you construct such a data structure.  \school{[NCU CSIE 96, NTU CSIE 99]} \label{dfs:1}
+\Question For an undirected graph $G = (V, E)$, a vertex $v \in V$, and an edge $(x, y) \in E$, let $G\setminus v$ denote the subgraph of $G$ obtained by removing $v$ and all the edges incident to $v$ from $G$; and let $G\setminus(x, y)$ denote the subgraph of $G$ obtained by removing the edge $(x, y)$ from $G$. If $G$ is connected, then $G\setminus v$ can be disconnected or connected. \label{dfs:2}
+\subQuestion Given a connected graph $G$, design an $O(\abs{V})$ time algorithm to find a vertex $v \in G$ such that $G\setminus v$ is connected. \label{dfs:21}
+\subQuestion Given a connected graph $G$, design an $O(\abs{V})$ time algorithm to either find an edge $(x, y) \in G$ such that $G\setminus (x, y)$  is connected or report that no such an edge exists. \school{[NCU CSIE 102]} \label{dfs:22}
 \end{Exercise}
 \begin{Answer}
+
+\paragraph{Problem~\ref{dfs:1}}
+Without loss of generality, suppose that $m = n-1$, otherwise it is not a tree obviously. Because a tree is a connected graph without a cycle, we can use DFS to check whether the graph contains a cycle. Since DFS takes $O(\abs{V} + \abs{E})$ time, the running time is $O(n)$.
+
+\paragraph{Problem~\ref{dfs:2}}
+I do not have any solution for Question~\ref{dfs:21}. For Question~\ref{dfs:22}, use DFS to find a cycle and any edge on this cycle can be removed without disconnecting the graph. If no cycle exists, this graph is a tree and every edge cannot be removed. The running time is $O(\abs{V})$.
 \end{Answer}
 
 \subsection{BFS}
 
 \begin{Exercise}
-\begin{enumerate}
-\item Given is a directed graph $G = (V, E)$ represented via adjacency lists and a vertex $v_a \in V$. Design an algorithm that outputs the length of the shortest cycle containing $v_a$ in $G$. your algorithm should solve the problem in $O(|V| + |E|)$ time.\school{[NTHU CSIE 95]}
-\item We have a directed graph $G = (V, E)$ represented using adjacency lists. The edge costs are integers in the range $\{1, 2, 3, 4, 5\}$. Assume that $G$ has no self-loops or multiple edges. Design an algorithm that solves the single-source shortest path problem on $G$ in $O(|V|+|E|)$.\school{[NTHU CSIE 95]}
-\end{enumerate}
+\Question Given is a directed graph $G = (V, E)$ represented via adjacency lists and a vertex $v_a \in V$. Design an algorithm that outputs the length of the shortest cycle containing $v_a$ in $G$. your algorithm should solve the problem in $O(\abs{V} + \abs{E})$ time. \label{bfs:1}\school{[NTHU CSIE 95]}
+\Question We have a directed graph $G = (V, E)$ represented using adjacency lists. The edge costs are integers in the range $\{1, 2, 3, 4, 5\}$. Assume that $G$ has no self-loops or multiple edges. Design an algorithm that solves the single-source shortest path problem on $G$ in $O(\abs{V}+\abs{E})$. \label{bfs:2}\school{[NTHU CSIE 95]}
 \end{Exercise}
 \begin{Answer}
+\paragraph{Problem~\ref{bfs:1}}
+Use BFS to traverse from $v_a$. Find the first back edge from vertex $u$ back to $v_a$. This cycle is the shortest cycle containing $v_a$. The running time is $O(\abs{V} + \abs{E})$.
+
+\paragraph{Problem~\ref{bfs:2}}
+The idea is to transform the problem to an unweighted graph and use BFS to find the shortest path. Construct a graph $G' = (V \cup V', E')$ as follows:. For every edge $(u, v) \in E$ of weight $k$, if $k = 1$, then add an edge $(u, v)$ to $E'$. Otherwise, add $k-1$ vertices $uv_1 \sim uv_{k-1}$ to $V'$ and add edges $(u, uv_1)$, $(uv_{k-1}, v)$, and $(uv_i, uv_{i+1})$ for all $1 \leq i \leq k-2$ to $E'$. This transformation does not create path between any vertex in $V$. Moreover, if there is one path from $u$ to $v$ of cost $C$ in $G$, then there is one path from $u$ to $v$ of $C$ edges in $G'$. Since $k$ is at most $5$, the size of $V'$ and $E'$ is $O(\abs{E})$. Hence, the running time is $O(\abs{E})$.
 \end{Answer}
 
 \subsection{Topological sort}
-\begin{Exercise}
-Professor Lee wants to construct the tallest tower possible out of building blocks. She has n types of blocks, and an unlimited supply of blocks of each type. Each type-$i$ block is rectangular solid with linear dimension $(x_i, y_i, z_i)$. A block can be oriented so that any two of its three dimensions determine the dimensions of a base and the other dimension is the height. In building a tower, one block may be placed on top of another block as long as the two dimensions of the lower block. (Thus, for example, blocks oriented to have equal-sized bases cannot be stacked.) Use graph model to design an efficient algorithm to determine the tallest tower that the professor can build. Analyze the run time complexity. \school{[CYCU CSIE 92]}
+\begin{Exercise}[origin={CYCU CSIE 92}]
+Professor Lee wants to construct the tallest tower possible out of building blocks. She has $n$ types of blocks, and an unlimited supply of blocks of each type. Each type-$i$ block is rectangular solid with linear dimension $(x_i, y_i, z_i)$. A block can be oriented so that any two of its three dimensions determine the dimensions of a base and the other dimension is the height. In building a tower, one block may be placed on top of another block as long as the two dimensions of the lower block. (Thus, for example, blocks oriented to have equal-sized bases cannot be stacked.) Use graph model to design an efficient algorithm to determine the tallest tower that the professor can build. Analyze the run time complexity.
 \end{Exercise}
 \begin{Answer}
+For each type $i$ block, construct three nodes, $v_{i1}$, $v_{i2}$, and $v_{i3}$, corresponding to three faces, $x_i \times y_i$, $y_i \times z_i$, and $x_i \times z_i$.  If there is one type $j$ block which can be placed on top of a type $i$ block, then create the edges between the corresponding faces and the edge's weight is the height of type $j$ block. The longest path in this graph is the tallest tower can be built. Since the graph is a directed acyclic graph, we can find the longest path in $O(\abs{V} + \abs{E})$ time by using topological sort. Because the graph has $3n$ vertices and $O(n^2)$ edges, the running time is $O(n^2)$.
 \end{Answer}
 
 \section{Path}
-\begin{Exercise}
-Given a graph $G = (V, E)$ and a weight function $w: E \rightarrow R$, describe a method to decide whether there is a function $h: V \rightarrow R$ such that the new weight function $w_h$ defined b $w_h = w(u, v) + h(u) - h(v)$ is non-negative. \school{[NTPU CSIE 100]}
+\begin{Exercise}[title={Johnson's algorithm},origin={NTPU CSIE 100}]
+Given a graph $G = (V, E)$ and a weight function $w: E \rightarrow \mathbb{R}$, describe a method to decide whether there is a function $h: V \rightarrow \mathbb{R}$ such that the new weight function $w_h$ defined by $w_h = w(u, v) + h(u) - h(v)$ is non-negative.
 \end{Exercise}
 \begin{Answer}
+Pick a vertex $s$ and solve shortest path problem from $s$. If there is no negative cycle, the shortest distance between $s$ and vertex $v$ is a candidate of $h(v)$, since we know that $h(v) \leq h(u) + w(u, v)$ by the property of the shortest paths. On the other hand, if there exists a negative cycle in $G$, the function $h$ can not exist.
 \end{Answer}
 
-\begin{Exercise}
+\begin{Exercise}[origin={NCTU CSIE 96},title={Arbitrage}]
 Given an $N$ by $N$ positive matrix $R$ (i.e., each entry $R[I, J]$ is positive) design an efficient algorithm to determine whether or not there exists a sequence of distinct indices: $I_1, I_2, \dots, I_k$, where $1 \leq k \leq N$, such that $ R[I_1, I_2] \times R[I_2, I_3] \times \cdots \ \times R[I_{k-1}, I_k] \times R[I_k, I_1] > 1$. State your algorithm precisely and analyze the running time of your algorithm. \school{[NCTU CSIE 96]}
 \end{Exercise}
 \begin{Answer}
+The idea is to reduce this problem to finding a negative weight cycle in graph and use Bellman-Ford algorithm to solve it. Let $A[i, j] = - \lg R[i, j]$.  There is one sequence satisfying the problem's criterion, if and only if, there is one negative weight cycle in the graph represented by $A$. Since the transformation take $O(\abs{V}^2)$ time and the running time of Bellman-Ford algorithm is $O(\abs{V}\abs{E}) = O(\abs{V}^3)$, the running time is $O(\abs{V}^3)$.
 \end{Answer}
 
 \section{Spanning tree}
@@ -105,14 +119,14 @@ Suppose you are asked to assign direction for each edge in the graph to make it 
 \end{Answer}
 
 \begin{Exercise}
-A tournament $T = (V, E)$ is a simple digraph of $|V| = n$ vertices and $|E| = \frac{n(n-1)}{2}$ edges, suppose you already know $\text{outdeg}[i]$, the outdegree for each vertex $i$. A tournament is transitive, whenever edge $(u, v) \in E$ and $(v, w) \in E$ implies $(u, w) \in E$. In other words, if there exists any $3$ vertices $i$, $j$, $k$ in $T$ with edges $(i, j)$, $(j, k)$, and $(k, i)$, then $T$ is NOT transitive. Now you want to check whether $T$ is transitive or not. \school{[NCKU CSIE 100]}
+A tournament $T = (V, E)$ is a simple digraph of $\abs{V} = n$ vertices and $\abs{E} = \frac{n(n-1)}{2}$ edges, suppose you already know $\text{outdeg}[i]$, the outdegree for each vertex $i$. A tournament is transitive, whenever edge $(u, v) \in E$ and $(v, w) \in E$ implies $(u, w) \in E$. In other words, if there exists any $3$ vertices $i$, $j$, $k$ in $T$ with edges $(i, j)$, $(j, k)$, and $(k, i)$, then $T$ is NOT transitive. Now you want to check whether $T$ is transitive or not. \school{[NCKU CSIE 100]}
 \end{Exercise}
 \begin{Answer}
 \end{Answer}
 
 
 \begin{Exercise}
-Given an undirected graph $G = (V, E)$ with $n = |V|$ vertices, four vertices of $G$, say, $u$, $v$, $x$, and $y$, are said to form a $4$-cycle if $(u, v)$, $(v, x)$, $(x, y)$ and $(y, u)$ are in $E$. Consider the problem of determining whether $G$ contains a $4$-cycle. A naive method by checking all possible $4$-combinations of the vertex set will need $\Omega(n^4)$ time to complete the job. Design a more efficient algorithm (i.e., the time complexity of your algorithm should be $O(n^k)$ with $k < 4$) to solve the problem. Analysis the execution time of your algorithm. \school{[NCU CSIE 95]}
+Given an undirected graph $G = (V, E)$ with $n = \abs{V}$ vertices, four vertices of $G$, say, $u$, $v$, $x$, and $y$, are said to form a $4$-cycle if $(u, v)$, $(v, x)$, $(x, y)$ and $(y, u)$ are in $E$. Consider the problem of determining whether $G$ contains a $4$-cycle. A naive method by checking all possible $4$-combinations of the vertex set will need $\Omega(n^4)$ time to complete the job. Design a more efficient algorithm (i.e., the time complexity of your algorithm should be $O(n^k)$ with $k < 4$) to solve the problem. Analysis the execution time of your algorithm. \school{[NCU CSIE 95]}
 \end{Exercise}
 \begin{Answer}
 \end{Answer}
