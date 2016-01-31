@@ -34,7 +34,7 @@ Let $F(k, n)$ be the probability of cutting stick of length $k$ such that at lea
 \[ F(k, n) = 
    \begin{cases}
        0 & \text{for all } 1 \leq k \leq n-1 \\ 
-       (1-P)^{n-1} + \sum_{i=k-n-1}^{k-1} PF(k-i-1, n) +  & \text{for all } k \geq n.
+       (1-P)^{n-1} + \sum_{i=1}^{n-1} P(1-P)^{i-1}F(k-i-1, n) +  & \text{for all } k \geq n.
     \end{cases} \]
 We can use this recurrence relation to calculate the probability.    
 \end{Answer}
