@@ -83,52 +83,71 @@ The idea is to reduce this problem to finding a negative weight cycle in graph a
 
 \section{Spanning tree}
 \begin{Exercise}
-\begin{enumerate}
-\item Consider the following variation of the Minimum Spanning Tree problem: Given a graph $G$ of $n$ vertices and $m$ edges AND a minimum spanning tree $T$ of graph $G$, we wish to add new edge e with weight $w_e$ to $G$ forming a new graph $G'$ and construct the new minimum spanning tree of the new graph $G'$. Give an algorithm which constructs the minimum spanning tree of $G'$ in $O(n)$ time. \school{[NCU CSIE 102]}
-\item Suppose that a graph $G$ has a minimum spanning tree already computed. How quickly can the minimum spanning be updated if a new vertex and incident edges are added to $G$? Please justify your answer.\school{[NTUT CSIE 98]}
-\end{enumerate}
+\Question Consider the following variation of the Minimum Spanning Tree problem: Given a graph $G$ of $n$ vertices and $m$ edges AND a minimum spanning tree $T$ of graph $G$, we wish to add new edge $e$ with weight $w_e$ to $G$ forming a new graph $G'$ and construct the new minimum spanning tree of the new graph $G'$. Give an algorithm which constructs the minimum spanning tree of $G'$ in $O(n)$ time. \label{st:1}\school{[NCU CSIE 102]}
+\Question Suppose that a graph $G$ has a minimum spanning tree already computed. How quickly can the minimum spanning be updated if a new vertex and incident edges are added to $G$? Please justify your answer. \label{st:2}\school{[NTUT CSIE 98]}
 \end{Exercise}
 \begin{Answer}
+\paragraph{Problem~\ref{st:1}}
+Add $e$ to $T$ to form a cycle. Remove the largest weight edge in this cycle then we get the new minimum spanning tree.
+
+\paragraph{Problem~\ref{st:2}}
+Let $T$ be the original MST. When we add a new vertex $v$ to $T$, we need to check all cycles and then remove the edge with the largest weight from each cycle. This can be done by using DFS on $T$ as follows: during the recursive call of DFS, we maintain the edge with the largest weight, $m$, from the current node, $r$, to $v$ through all explored descents. For a new explored descent $d$, we find the edge with the largest weight, $t$, from the descent to $v$ through its subtree. Since $m$, $t$, and $(r, d)$ will form a cycle, we only keep the smaller two among these three edges. The total complexity is $O(\abs{T})$.
+\begin{remark}
+After deleting edges/vertices, new MST can also be found efficiently~\cite{Chin1978,Das2001}.
+\end{remark}
 \end{Answer}
 
 \section{Matching}
-\begin{Exercise}
-Let $X = \{1, \dots, n\}$. For a subset of $X$, we say that it covers its elements. Given a set $\mathcal{S} = \{ S_1, S_2, \dots, S_m\}$ of $m$ subsets of $X$ such that $\cup_{i=1}^m S_i = X$, the set cover problem is to find the smallest subset $T$ of $S$ whose union is equal to $X$, that is, $\cup_{S_i \in T} S_i = X$. Suppose that each subset $S_i \in \mathcal{S}$ contains only two elements. Can the set cover problem then be solved in polynomial time? If yes, please also design a polynomial-time algorithm to solve this set cover problem and analyze its time complexity. \school{[NTHU CSIE 101]}
+\begin{Exercise}[title={Edge cover problem},origin={NTHU CSIE 101}]
+Let $X = \{1, \dots, n\}$. For a subset of $X$, we say that it covers its elements. Given a set $\mathcal{S} = \{ S_1, S_2, \dots, S_m\}$ of $m$ subsets of $X$ such that $\cup_{i=1}^m S_i = X$, the set cover problem is to find the smallest subset $T$ of $S$ whose union is equal to $X$, that is, $\cup_{S_i \in T} S_i = X$. Suppose that each subset $S_i \in \mathcal{S}$ contains only two elements. Can the set cover problem then be solved in polynomial time? If yes, please also design a polynomial-time algorithm to solve this set cover problem and analyze its time complexity. 
 \end{Exercise}
 \begin{Answer}
+Since each subset $S_i$ has only two elements, we can create a graph $G = (X, S)$.
+Finding the minimum set cover problem is equal to finding the \href{https://en.wikipedia.org/wiki/Edge_cover}{minimum edge cover} on $G$, which can be solved in $O(n^4)$ time.
 \end{Answer}
 
 \section{Network flow}
-\begin{Exercise}
-The escape problem is defined as the following. An $n \times n$ grid is an undirected graph consisting of $n$ rows and $n$ columns of vertices. We denote the vertex in the $i$-th row and $j$-th column by $(i, j)$. All vertices in a grid have exactly four neighbors, except for the boundary vertices, which are the vertices $(i, j)$ for which $i = 1$, $i = n$, $j = 1$, or $j = n$. Given $m \leq n^2$ starting vertices in the grid, the escape problem is to determine whether or not there are $m$ vertex-disjoint paths from the starting vertices to any m different vertices on the boundary. Vertex-disjoint paths mean that each vertex can be used at most once in the escape. Show how to convert the escape problem into the maximum flow problem. It is enough to give the conversion procedure. It is not require to show the correctness of your procedure. \school{[NTU CSIE 100]}
+\begin{Exercise}[origin={NTU CSIE 100}]
+The escape problem is defined as the following. An $n \times n$ grid is an undirected graph consisting of $n$ rows and $n$ columns of vertices. We denote the vertex in the $i$-th row and $j$-th column by $(i, j)$. All vertices in a grid have exactly four neighbors, except for the boundary vertices, which are the vertices $(i, j)$ for which $i = 1$, $i = n$, $j = 1$, or $j = n$. Given $m \leq n^2$ starting vertices in the grid, the escape problem is to determine whether or not there are $m$ vertex-disjoint paths from the starting vertices to any $m$ different vertices on the boundary. Vertex-disjoint paths mean that each vertex can be used at most once in the escape. Show how to convert the escape problem into the maximum flow problem. It is enough to give the conversion procedure. It is not require to show the correctness of your procedure.
 \end{Exercise}
 \begin{Answer}
-\end{Answer}
+We can create a graph $G = (V, E)$, where $V$ consists of all vertices on the grid and two new vertices $s$ and $t$. For every adjacent pair of vertices, we create an edge on $G$. We connect $s$ to every starting vertices and connect all boundary vertices to $t$. Set the node capacity for each node be one. If the maximum flow from $s$ to $t$ equals $m$, then there are $m$ vertex-disjoint path.
 
-\begin{Exercise}
-Suppose we are to assign $n$ persons to $n$ jobs. Let $C_{ij}$ be the cost of assigning the $i$-th person to the $j$-th job. Use a greedy method approach to write an algorithm that finds an assignment that minimizes the total cost of assigning all $n$ persons to all $n$ jobs. Analyze your algorithm, and give the time complexity using order notation. \school{[FJU CSIE 91]}
-\end{Exercise}
-\begin{Answer}
+Although traditional network has only edge capacity, we can transform node-capacitated network into edge-capacitated graph. For each vertex $v$, we create two vertices $v'$ and $v''$, such that all the incoming edges of $v$ connect to $v'$ and all outgoing edges of $v$ connect to $v''$. Moreover, we connect $v'$ to $v''$ with edge capacity equals to $v'$s node capacity. It is easy to see that a feasible flow in the transformed network can be transformed to a feasible flow in the original network, and \textit{vice versa}.
 \end{Answer}
+%
+%\begin{Exercise}[origin={FJU CSIE 91}]
+%Suppose we are to assign $n$ persons to $n$ jobs. Let $C_{ij}$ be the cost of assigning the $i$-th person to the $j$-th job. Use a greedy method approach to write an algorithm that finds an assignment that minimizes the total cost of assigning all $n$ persons to all $n$ jobs. Analyze your algorithm, and give the time complexity using order notation.
+%\end{Exercise}
+%\begin{Answer}
+%\end{Answer}
 
 \section{Others}
-\begin{Exercise}
-Suppose you are asked to assign direction for each edge in the graph to make it a digraph such that each vertex can connect to each other vertex by some directed graph (i.e. strongly connected). How do you know whether such strongly connected orientation exists for an undirected graph $G$ of $n$ vertices and $m$ edges. Explain your method and discuss its complexity. \school{[NCKU IM 99]}
+\begin{Exercise}[title={Strong orientation},origin={NCKU IM 99}]
+Suppose you are asked to assign direction for each edge in the graph to make it a digraph such that each vertex can connect to each other vertex by some directed graph (i.e. strongly connected). How do you know whether such strongly connected orientation exists for an undirected graph $G$ of $n$ vertices and $m$ edges. Explain your method and discuss its complexity.
 \end{Exercise}
 \begin{Answer}
+We can prove that a graph $G = (V, E)$ has a strong orientation if and only if $G$ has no bridge. If $G$ has a bridge, then it is impossible to assign the direction to become strongly connected. On the other hand, suppose that $G$ has no bridge but the orientation does not exist. There must be a maximum subgraph $H$ of $G$ that $H$ can be oriented. For a vertex $v \in V - H$, since $G$ is $2$-edge-connected, there must be two paths from $v$ to some vertex $u \in H$. Let the two paths be $P$ and $Q$ and let the first vertex of $P$ and $Q$ that enter $H$ be $p$ and $q$. Then, we can construct orientation of paths from $v$ to $p$ and from $q$ to $v$. Therefore, we construct a larger subgraph with orientation, which is impossible. Finally, testing for $2$-edge-connectivity can be done in $O(n + m)$ time.
+\begin{remark} This theorem is called \href{https://en.wikipedia.org/wiki/Robbins%27_theorem}{Robbins theorem}.
+\end{remark}
 \end{Answer}
 
-\begin{Exercise}
-A tournament $T = (V, E)$ is a simple digraph of $\abs{V} = n$ vertices and $\abs{E} = \frac{n(n-1)}{2}$ edges, suppose you already know $\text{outdeg}[i]$, the outdegree for each vertex $i$. A tournament is transitive, whenever edge $(u, v) \in E$ and $(v, w) \in E$ implies $(u, w) \in E$. In other words, if there exists any $3$ vertices $i$, $j$, $k$ in $T$ with edges $(i, j)$, $(j, k)$, and $(k, i)$, then $T$ is NOT transitive. Now you want to check whether $T$ is transitive or not. \school{[NCKU CSIE 100]}
+\begin{Exercise}[origin={NCKU CSIE 100}]
+A tournament $T = (V, E)$ is a simple digraph of $\abs{V} = n$ vertices and $\abs{E} = \frac{n(n-1)}{2}$ edges, suppose you already know $\text{outdeg}[i]$, the outdegree for each vertex $i$. A tournament is transitive, whenever edge $(u, v) \in E$ and $(v, w) \in E$ implies $(u, w) \in E$. In other words, if there exists any $3$ vertices $i$, $j$, $k$ in $T$ with edges $(i, j)$, $(j, k)$, and $(k, i)$, then $T$ is NOT transitive. Now you want to check whether $T$ is transitive or not.
 \end{Exercise}
 \begin{Answer}
+A naive solution is to generate all $3$-tuple $(i, j, k)$ and check. This method needs $O(n^3)$ time. We know that a tournament is transitive if and only if $T$ is acyclic. Hence, we can use DFS to test whether the graph is acyclic in $O(n^2)$ time. Furthermore, we know that a tournament is transitive if and only if all values in $\text{outdegree}$ are distinct. Since the range of $\text{outdegree}$ is from $0$ to $n-1$, we can use an array to test whether all elements are distinct in $O(n)$ time.
 \end{Answer}
 
 
-\begin{Exercise}
-Given an undirected graph $G = (V, E)$ with $n = \abs{V}$ vertices, four vertices of $G$, say, $u$, $v$, $x$, and $y$, are said to form a $4$-cycle if $(u, v)$, $(v, x)$, $(x, y)$ and $(y, u)$ are in $E$. Consider the problem of determining whether $G$ contains a $4$-cycle. A naive method by checking all possible $4$-combinations of the vertex set will need $\Omega(n^4)$ time to complete the job. Design a more efficient algorithm (i.e., the time complexity of your algorithm should be $O(n^k)$ with $k < 4$) to solve the problem. Analysis the execution time of your algorithm. \school{[NCU CSIE 95]}
+\begin{Exercise}[origin={NCU CSIE 95}]
+Given an undirected graph $G = (V, E)$ with $n = \abs{V}$ vertices, four vertices of $G$, say, $u$, $v$, $x$, and $y$, are said to form a $4$-cycle if $(u, v)$, $(v, x)$, $(x, y)$ and $(y, u)$ are in $E$. Consider the problem of determining whether $G$ contains a $4$-cycle. A naive method by checking all possible $4$-combinations of the vertex set will need $\Omega(n^4)$ time to complete the job. Design a more efficient algorithm (i.e., the time complexity of your algorithm should be $O(n^k)$ with $k < 4$) to solve the problem. Analysis the execution time of your algorithm.
 \end{Exercise}
 \begin{Answer}
+Construct another matrix $A$ with all zeros. For each vertex $u$, for each pairs of $u$'s neighbors, $v$ and $x$, we look the value of $A[v][x] = y$. If $y$ is zero, then set $A[v][x]$ to be $u$, which means that $v$ and $x$ have a common neighbor $u$. If $y$ is non-zero, then we found a $4$-cycle $u$, $v$, $y$, $x$. Since each time we either find a $4$-cycle or change the value of one entry in $A$, the running time is $O(n^2)$.
+\begin{remark}
+For any even number $k$, finding a cycle of length $k$ can be done in $O(n^2)$ time~\cite{Yuster1997}. Finding a path of length at least $k$ > 0 can be done in $O^*(k^2)$~\cite{Williams2009}.
+\end{remark}
 \end{Answer}
 
 
