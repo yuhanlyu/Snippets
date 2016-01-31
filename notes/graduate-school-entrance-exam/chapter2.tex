@@ -2,6 +2,27 @@
 Arrays are the simplest data structures in computers. Even the structure of an array is very simple, there are still some hard problems. In this chapter, we will go through several hard problems of arrays.
 
 \section{Searching}
+\begin{Exercise}[origin={NCU CSIE 96}]
+Suppose that $k$ workers are given the task of scanning through a shelf of books in search of a given piece of information. To get the job done efficiently, the books are to be partitioned among $k$ workers. To avoid the need to rearrange the books, it would be simplest to divide the shelf into $k$ regions and assign each region to one worker. Each book can only be scanned by one worker. you are asked to find the fairest way to divide the shelf up. For example, if a shelf has 9 books of sizes 100, 200, 300, 400, 500, 600, 700, 800 and 900 pages, and $k = 3$, the fairest possible partition for the shelf would be
+\[ 100~200~300~400~500 \mid 600~700 \mid 800~900 \]
+where the largest job is 1700 pages and the smallest job 1300. In general, we have the following problem: Given an arrangement $S$ of $n$ nonnegative numbers, and an integer $k$, partition $S$ into $k$ regions so as to minimize the difference between the largest and the smallest sum over all regions.
+Design algorithm to find an optimal solution for any given $k \leq n$.
+\end{Exercise}
+\begin{Answer}
+For a number $d$, we can verify whether these $n$ books can be partitions into $k$ parts with the maximum load at most $d$.
+Since we know $d$ is between $1$ and $\sum_i S_i$, we can use binary search to find the minimum feasible $d$ value and the running time is $O(n \lg n)$.
+Let $S(i, j)$ be $\sum_{k=i}^j S_k$.
+The minimum $d$ value must be $S(i, j)$ for some $i$ and $j$.
+Hence, it suffice to do binary search on $S(i, j)$.
+%Let $S(i, j)$ be 
+%Let $F(n, k)$ be the difference between the largest and the smallest sum over all regions for an optimal solution of partition $n$ books into $k$ parts.
+%
+%The recurrence relation is
+%\[ F(i, j) = \begin{cases}
+%                    S(1, i) & j = 1 \\
+%                    \min_k \max(F(i-k, k-1), S(i-k+1, j))
+%                \end{cases}\]
+\end{Answer}
 
 %\begin{Exercise}
 %Given two arrays $x[1], \dots, x[m]$ and $y[1], \dots, y[n]$, design an algorithm to find two elements $x[i]$ and $y[j]$ such that the absolute value $|x[i] - y[j]|$ is minimized over all possible pairs of $x$ and $y$ elements. A brute force algorithm needs $O(n^2)$ time. Your algorithm should be far more efficient than that. Analyze the time complexity of your algorithm.\school{[NCU CSIE 101]}

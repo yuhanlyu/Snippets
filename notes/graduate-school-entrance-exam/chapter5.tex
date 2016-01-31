@@ -1,41 +1,41 @@
 \chapter{Algorithm design problems}
 
 \section{Greedy}
-\begin{Exercise}
-Consider the following scheduling problem. Suppose a man has several jobs waiting for his treatments. Each job takes one unit of time to finish and has a deadline and a profit. He can only do one job at any time. If a job starts before or at its deadline, its profit is obtained. The goal is to schedule the jobs so as to maximize the total profit. But not all jobs have to be scheduled. Please design an efficient algorithm to find a schedule that maximizes the total profit. \school{[NTU CSIE 97, NTNU CSIE 97]}
+\begin{Exercise}[origin={NTU CSIE 97, NTNU CSIE 97}]
+Consider the following scheduling problem. Suppose a man has several jobs waiting for his treatments. Each job takes one unit of time to finish and has a deadline and a profit. He can only do one job at any time. If a job starts before or at its deadline, its profit is obtained. The goal is to schedule the jobs so as to maximize the total profit. But not all jobs have to be scheduled. Please design an efficient algorithm to find a schedule that maximizes the total profit.
 \end{Exercise}
 \begin{Answer}
+The idea is based on the greedy method. Sort the jobs by increasing deadline and process jobs in the sorted order.
+Let the schedule be empty initially. When considering the job $j$, if assigning job $j$ to the last slot will not violate the constraint, then assign job $j$ to the latest time slot; otherwise if there is a job $k$ in schedule that has profit smaller than job $j$, then replace job $k$ by job $j$. We prove the correctness of this algorithm by contradiction. Suppose that there exists an optimal solution that is different from the solution found by the greedy algorithm, then it has some jobs that we did not select. The most profitable job among these unselected jobs is assigned into an optimal schedule but unassigned in our schedule; however, it is impossible. The running time is $O(n \lg n)$.
 \end{Answer}
 
 
 \section{Dynamic programming}
-\begin{Exercise}
-A one way railway has $n$ stops. Suppose that for all $i < j$, the price of the ticket fro the $i$-th stop to $j$-th stop is know, denoted $\text{cost}(i, j)$. (There is no traffic in the reverse direction since the railway is one-way.) Apply the dynamic programming technique to design your algorithm that outputs the minimum travel cost from stop $1$ to stop $n$, and all the intermediate stops that the travel takes. What is the time complexity of your algorithm. \school{[CYCU CSIE 90]}
+\begin{Exercise}[origin={CYCU CSIE 90}]
+A one way railway has $n$ stops. Suppose that for all $i < j$, the price of the ticket fro the $i$-th stop to $j$-th stop is know, denoted $\text{cost}(i, j)$. (There is no traffic in the reverse direction since the railway is one-way.) Apply the dynamic programming technique to design your algorithm that outputs the minimum travel cost from stop $1$ to stop $n$, and all the intermediate stops that the travel takes. What is the time complexity of your algorithm.
 \end{Exercise}
 \begin{Answer}
+Let $F(i, j)$ be the minimum cost of traveling from stop $i$ to stop $j$. The recurrence relation of $F$ is 
+\[ F(i, j) = 
+   \begin{cases}
+    0 & \text{if } i = j \\
+    \min( \min_k F(i, k) + F(k, j), C_{ij}) & \text{if } i < j.
+    \end{cases} \]
+The running time is $O(n^3)$.
 \end{Answer}
 
-\begin{Exercise}
+\begin{Exercise}[origin={NCNU CSIE 93}]
 Suppose that we cut a stick of length $L$ (a positive integer) with the probability $P$ at each position such that its distance from the left end is a positive integer.
-When $L = 7$, calculate the probability that a stick of length at least $5$ remains.
 Design an efficient dynamic programming algorithm for calculating the probability that a stick of length at least $n$ remains.
-Explain the basic concept and advantages of the dynamic programming method. \school{[NCNU CSIE 93]}
 \end{Exercise}
 \begin{Answer}
+Let $F(k, n)$ be the probability of cutting stick of length $k$ such that at least length $n$ remains. The recurrence relation of $F$ is 
+
+\[ F(k, n) = 
+   \begin{cases}
+       0 & \text{for all } 1 \leq k \leq n-1 \\ 
+       (1-P)^{n-1} + \sum_{i=k-n-1}^{k-1} PF(k-i-1, n) +  & \text{for all } k \geq n.
+    \end{cases} \]
+We can use this recurrence relation to calculate the probability.    
 \end{Answer}
-
-\begin{Exercise}
-Suppose that $k$ workers are given the task of scanning through a shelf of books in search of a given piece of information. To get the job done efficiently, the books are to be partitioned among $k$ workers. To avoid the need to rearrange the books, it would be simplest to divide the shelf into $k$ regions and assign each region to one worker. Each book can only be scanned by one worker. you are asked to find the fairest way to divide the shelf up. For example, if a shelf has 9 books of sizes 100, 200, 300, 400, 500, 600, 700, 800 and 900 pages, and $k = 3$, the fairest possible partition for the shelf would be
-\[ 100~200~300~400~500 \mid 600~700 \mid 800~900 \]
-where the largest job is 1700 pages and the smallest job 1300. In general, we have the following problem: Given an arrangement $S$ of $n$ nonnegative numbers, and an integer $k$, partition $S$ into $k$ regions so as to minimize the difference between the largest and the smallest sum over all regions.
-
-\begin{enumerate}
-\item Give an $O(n)$ time algorithm to solve the problem for the case $k = 2$.
-\item Design an efficient algorithm to solve the problem for the case $k = 3$. Analysis the time efficiency of your algorithm.
-\item Extend your algorithm to the more general case for any given $k \leq n$. \school{[NCU CSIE 96]}
-\end{enumerate}
-\end{Exercise}
-\begin{Answer}
-\end{Answer}
-
 \printbibliography[heading=subbibliography]
