@@ -129,7 +129,7 @@ Divide the circle into $n$ concentric circles with radii $\sqrt{\frac{1}{n}}, \s
 
 \section{String}
 \begin{Exercise}[title={Longest common substring problem},origin={NTU CSIE 97},difficulty=1]
-Given two length-$n$ binary strings $A$ and $B$, consider the problem of computing a longest string $C$ that is a substring of both $A$ and $B$. You are asked to prove or disprove that this so-called longest common substring problem can be solved in $O(n \lg n)$ time.
+Given two length-$n$ binary strings $A$ and $B$, consider the problem of computing a longest string $C$ that is a substring of both $A$ and $B$. You are asked to prove or disprove that this so-called \emph{longest common substring problem} can be solved in $O(n \lg n)$ time.
 \end{Exercise}
 \begin{Answer}
 This problem is called the \href{https://en.wikipedia.org/wiki/Longest_common_substring_problem}{longest common substring problem}. Build a generalized suffix tree from $A$ and $B$. Find the deepest internal node that has leaves from two strings. The string corresponding to the path from the root to the deepest internal node is the longest common substring. Since building a suffix tree takes linear time, the running time is linear.
