@@ -6,7 +6,7 @@ Consider the following scheduling problem. Suppose a man has several jobs waitin
 \end{Exercise}
 \begin{Answer}
 The idea is based on the greedy method. Sort the jobs by increasing deadline and process jobs in the sorted order.
-Let the schedule be empty initially. When considering the job $j$, if assigning job $j$ to the last slot will not violate the constraint, then assign job $j$ to the latest time slot; otherwise if there is a job $k$ in schedule that has profit smaller than job $j$, then replace job $k$ by job $j$. We prove the correctness of this algorithm by contradiction. Suppose that there exists an optimal solution that is different from the solution found by the greedy algorithm, then it has some jobs that we did not select. The most profitable job among these unselected jobs is assigned into an optimal schedule but unassigned in our schedule; however, it is impossible. The running time is $O(n \lg n)$.
+Let the schedule be empty initially. When considering the job $j$, if assigning job $j$ to the last slot will not violate the constraint, then assign job $j$ to the latest time slot; otherwise if there is a job $k$ in schedule that has profit smaller than job $j$, then replace job $k$ by job $j$. We prove the correctness of this algorithm by contradiction. Suppose that there exists an optimal solution that is different from the solution found by the greedy algorithm, then it has some jobs that we did not select. The most profitable job among these unselected jobs is assigned into an optimal schedule but unassigned in our schedule; however, it is impossible. The time complexity is $O(n \lg n)$.
 \end{Answer}
 
 
@@ -21,7 +21,7 @@ Let $F(i, j)$ be the minimum cost of traveling from stop $i$ to stop $j$. The re
     0 & \text{if } i = j \\
     \min( \min_k F(i, k) + F(k, j), C_{ij}) & \text{if } i < j.
     \end{cases} \]
-The running time is $O(n^3)$.
+The time complexity is $O(n^3)$.
 \end{Answer}
 
 \begin{Exercise}[origin={NCNU CSIE 93}]

@@ -5,7 +5,7 @@
 Let $T$ be an $n$-node tree rooted at some node $r$. We want to place as few guards as possible on nodes in $T$, such that every edge of $T$ is guarded: an edge between a parent node $v$ and its child $w$ is guarded if one places a guard on at least one of these two nodes $v$, $w$. Give an $O(n)$ time algorithm for finding an optimal solution to the problem. Please show the analysis on the time and correctness of your algorithm
 \end{Exercise}
 \begin{Answer}
-For any edge incident with a leaf, since the edge should be guarded, either the leaf node or its parent node should be chosen. Choosing the parent node not only can guard this edge but only guard the edge incident with the parent node. Thus, choosing the parent node is no worse than choosing the leaf node. Hence, we can choose all nodes that connect to leaf nodes. After removing all edges that are guarded, we get a smaller tree. We can recursively apply this procedure to get a minimum vertex cover of the tree. The running time is $O(n)$.
+For any edge incident with a leaf, since the edge should be guarded, either the leaf node or its parent node should be chosen. Choosing the parent node not only can guard this edge but only guard the edge incident with the parent node. Thus, choosing the parent node is no worse than choosing the leaf node. Hence, we can choose all nodes that connect to leaf nodes. After removing all edges that are guarded, we get a smaller tree. We can recursively apply this procedure to get a minimum vertex cover of the tree. The time complexity is $O(n)$.
 \end{Answer}
 
 \subsection{Lowest common ancestor}
@@ -21,9 +21,9 @@ Hint: Assume that T is stored in the memory of your computer and you can find, i
 We can use the pre-order traversal and post-order traversal on the tree to get each node's pre-order and post-order numbers. A node $u$ is an ancestor of a node $v$ if and only if $u$'s pre-order number is smaller than $v$'s pre-order number and $u$'s post-order number is larger than $v$'s post-order number. Since pre-order traversal and post-order traversal take linear time, the preprocess takes linear time.
 
 \paragraph{Problem~\ref{lca:2}}
-Question~\ref{lca:21}: Initially, let two pointers $a$ and $b$ point to $v_1$ and $v_2$ respectively and set their $\text{temp}$ fields to $1$. In each iteration, move $a$ and $b$ to their parent nodes respectively. If their $\text{temp}$ fields are zero, then set them to one and repeat; otherwise, we find the solution. Suppose that $a$'s $\text{temp}$ field is one without loss of generality, then $a$ is the lowest common ancestor of $v_1$ and $v_2$. If a path between $v_1$ and $v_2$ of length $k$ exists, then the process will terminate in $k$ iterations. Thus, the running time is $O(k)$.
+Question~\ref{lca:21}: Initially, let two pointers $a$ and $b$ point to $v_1$ and $v_2$ respectively and set their $\text{temp}$ fields to $1$. In each iteration, move $a$ and $b$ to their parent nodes respectively. If their $\text{temp}$ fields are zero, then set them to one and repeat; otherwise, we find the solution. Suppose that $a$'s $\text{temp}$ field is one without loss of generality, then $a$ is the lowest common ancestor of $v_1$ and $v_2$. If a path between $v_1$ and $v_2$ of length $k$ exists, then the process will terminate in $k$ iterations. Thus, the time complexity is $O(k)$.
 
-Question~\ref{lca:22}: If the $\text{temp}$ field does not exist, then we can use a hashtable instead. Thus, the running time is $O(k)$ in expectation assuming universal hash function is used.
+Question~\ref{lca:22}: If the $\text{temp}$ field does not exist, then we can use a hashtable instead. Thus, the time complexity is $O(k)$ in expectation assuming universal hash function is used.
 \end{Answer}
 
 \section{Traversal}
@@ -38,10 +38,10 @@ Question~\ref{lca:22}: If the $\text{temp}$ field does not exist, then we can us
 \begin{Answer}
 
 \paragraph{Problem~\ref{dfs:1}}
-Without loss of generality, suppose that $m = n-1$, otherwise it is not a tree obviously. Since a tree is a connected graph without a cycle, we can use DFS to check whether the graph contains a cycle. Because DFS takes $O(\abs{V} + \abs{E})$ time, the running time is $O(n)$.
+Without loss of generality, suppose that $m = n-1$, otherwise it is not a tree obviously. Since a tree is a connected graph without a cycle, we can use DFS to check whether the graph contains a cycle. Because DFS takes $O(\abs{V} + \abs{E})$ time, the time complexity is $O(n)$.
 
 \paragraph{Problem~\ref{dfs:2}}
-I do not have any solution for Question~\ref{dfs:21}. For Question~\ref{dfs:22}, use DFS to find a cycle and any edge on this cycle can be removed without disconnecting the graph. If no cycle exists, this graph is a tree and every edge cannot be removed. The running time is $O(\abs{V})$.
+For Question~\ref{dfs:21}, no such an algorithm exists.\footnote{\url{http://cstheory.stackexchange.com/a/33703/28542}} For Question~\ref{dfs:22}, use DFS to find a cycle and any edge on this cycle can be removed without disconnecting the graph. If no cycle exists, this graph is a tree and every edge cannot be removed. The time complexity is $O(\abs{V})$.
 \end{Answer}
 
 \subsection{BFS}
@@ -52,10 +52,10 @@ I do not have any solution for Question~\ref{dfs:21}. For Question~\ref{dfs:22},
 \end{Exercise}
 \begin{Answer}
 \paragraph{Problem~\ref{bfs:1}}
-Use BFS to traverse from $v_a$. Find the first back edge from vertex $u$ back to $v_a$. This cycle is the shortest cycle containing $v_a$. The running time is $O(\abs{V} + \abs{E})$.
+Use BFS to traverse from $v_a$. Find the first back edge from vertex $u$ back to $v_a$. This cycle is the shortest cycle containing $v_a$. The time complexity is $O(\abs{V} + \abs{E})$.
 
 \paragraph{Problem~\ref{bfs:2}}
-The idea is to transform the problem to an unweighted graph and use BFS to find the shortest path. Construct a graph $G' = (V \cup V', E')$ as follows:. For every edge $(u, v) \in E$ of weight $k$, if $k = 1$, then add an edge $(u, v)$ to $E'$. Otherwise, add $k-1$ vertices $uv_1 \sim uv_{k-1}$ to $V'$ and add edges $(u, uv_1)$, $(uv_{k-1}, v)$, and $(uv_i, uv_{i+1})$ for all $1 \leq i \leq k-2$ to $E'$. This transformation does not create path between any vertex in $V$. Moreover, if one path from $u$ to $v$ of cost $C$ exists in $G$, then one path from $u$ to $v$ of $C$ edges also exists in $G'$. Since $k$ is at most $5$, the size of $V'$ and $E'$ is $O(\abs{E})$. Thus, the running time is $O(\abs{E})$.
+The idea is to transform the problem to an unweighted graph and use BFS to find the shortest path. Construct a graph $G' = (V \cup V', E')$ as follows:. For every edge $(u, v) \in E$ of weight $k$, if $k = 1$, then add an edge $(u, v)$ to $E'$. Otherwise, add $k-1$ vertices $uv_1 \sim uv_{k-1}$ to $V'$ and add edges $(u, uv_1)$, $(uv_{k-1}, v)$, and $(uv_i, uv_{i+1})$ for all $1 \leq i \leq k-2$ to $E'$. This transformation does not create path between any vertex in $V$. Moreover, if one path from $u$ to $v$ of cost $C$ exists in $G$, then one path from $u$ to $v$ of $C$ edges also exists in $G'$. Since $k$ is at most $5$, the size of $V'$ and $E'$ is $O(\abs{E})$. Thus, the time complexity is $O(\abs{E})$.
 \end{Answer}
 
 \subsection{Topological sort}
@@ -63,7 +63,7 @@ The idea is to transform the problem to an unweighted graph and use BFS to find 
 Professor Lee wants to construct the tallest tower possible out of building blocks. She has $n$ types of blocks, and an unlimited supply of blocks of each type. Each type-$i$ block is rectangular solid with linear dimension $(x_i, y_i, z_i)$. A block can be oriented so that any two of its three dimensions determine the dimensions of a base and the other dimension is the height. In building a tower, one block may be placed on top of another block as long as the two dimensions of the lower block. (Thus, for example, blocks oriented to have equal-sized bases cannot be stacked.) Use graph model to design an efficient algorithm to determine the tallest tower that the professor can build. Analyze the run time complexity.
 \end{Exercise}
 \begin{Answer}
-For each type $i$ block, construct three nodes, $v_{i1}$, $v_{i2}$, and $v_{i3}$, corresponding to three faces, $x_i \times y_i$, $y_i \times z_i$, and $x_i \times z_i$.  If one type $j$ block can be placed on top of a type $i$ block, then create the edges between the corresponding faces and the edge's weight is the height of type $j$ block. The longest path in this graph is the tallest tower can be built. Since the graph is a directed acyclic graph, we can find the longest path in $O(\abs{V} + \abs{E})$ time by using topological sort. Bacause the graph has $3n$ vertices and $O(n^2)$ edges, the running time is $O(n^2)$.
+For each type $i$ block, construct three nodes, $v_{i1}$, $v_{i2}$, and $v_{i3}$, corresponding to three faces, $x_i \times y_i$, $y_i \times z_i$, and $x_i \times z_i$.  If one type $j$ block can be placed on top of a type $i$ block, then create the edges between the corresponding faces and the edge's weight is the height of type $j$ block. The longest path in this graph is the tallest tower can be built. Since the graph is a directed acyclic graph, we can find the longest path in $O(\abs{V} + \abs{E})$ time by using topological sort. Bacause the graph has $3n$ vertices and $O(n^2)$ edges, the time complexity is $O(n^2)$.
 \end{Answer}
 
 \section{Path}
@@ -78,7 +78,7 @@ Pick a vertex $s$ and solve shortest path problem from $s$. If no negative cycle
 Given an $N$ by $N$ positive matrix $R$ (i.e., each entry $R[I, J]$ is positive) design an efficient algorithm to determine whether or not there exists a sequence of distinct indices: $I_1, I_2, \dots, I_k$, where $1 \leq k \leq N$, such that $ R[I_1, I_2] \times R[I_2, I_3] \times \cdots \ \times R[I_{k-1}, I_k] \times R[I_k, I_1] > 1$. State your algorithm precisely and analyze the running time of your algorithm. \school{[NCTU CSIE 96]}
 \end{Exercise}
 \begin{Answer}
-The idea is to reduce this problem to finding a negative weight cycle in graph and use Bellman-Ford algorithm to solve it. Let $A[i, j] = - \lg R[i, j]$.  We know that one sequence satisfies the problem's criterion, if and only if, one negative weight cycle exists in the graph represented by $A$. Since the transformation take $O(\abs{V}^2)$ time and the running time of Bellman-Ford algorithm is $O(\abs{V}\abs{E}) = O(\abs{V}^3)$, the running time is $O(\abs{V}^3)$.
+The idea is to reduce this problem to finding a negative weight cycle in graph and use Bellman-Ford algorithm to solve it. Let $A[i, j] = - \lg R[i, j]$.  We know that one sequence satisfies the problem's criterion, if and only if, one negative weight cycle exists in the graph represented by $A$. Since the transformation take $O(\abs{V}^2)$ time and the time complexity of Bellman-Ford algorithm is $O(\abs{V}\abs{E}) = O(\abs{V}^3)$, the time complexity is $O(\abs{V}^3)$.
 \end{Answer}
 
 \section{Spanning tree}
@@ -144,7 +144,7 @@ A naive solution is to generate all $3$-tuple $(i, j, k)$ and check. This method
 Given an undirected graph $G = (V, E)$ with $n = \abs{V}$ vertices, four vertices of $G$, say, $u$, $v$, $x$, and $y$, are said to form a $4$-cycle if $(u, v)$, $(v, x)$, $(x, y)$ and $(y, u)$ are in $E$. Consider the problem of determining whether $G$ contains a $4$-cycle. A naive method by checking all possible $4$-combinations of the vertex set will need $\Omega(n^4)$ time to complete the job. Design a more efficient algorithm (i.e., the time complexity of your algorithm should be $O(n^k)$ with $k < 4$) to solve the problem. Analysis the execution time of your algorithm.
 \end{Exercise}
 \begin{Answer}
-Construct another matrix $A$ with all zeros. For each vertex $u$, for each pairs of $u$'s neighbors, $v$ and $x$, we look the value of $A[v][x] = y$. If $y$ is zero, then set $A[v][x]$ to be $u$, which means that $v$ and $x$ have a common neighbor $u$. If $y$ is non-zero, then we found a $4$-cycle $u$, $v$, $y$, $x$. Since each time we either find a $4$-cycle or change the value of one entry in $A$, the running time is $O(n^2)$.
+Construct another matrix $A$ with all zeros. For each vertex $u$, for each pairs of $u$'s neighbors, $v$ and $x$, we look the value of $A[v][x] = y$. If $y$ is zero, then set $A[v][x]$ to be $u$, which means that $v$ and $x$ have a common neighbor $u$. If $y$ is non-zero, then we found a $4$-cycle $u$, $v$, $y$, $x$. Since each time we either find a $4$-cycle or change the value of one entry in $A$, the time complexity is $O(n^2)$.
 \begin{remark}
 For any even number $k$, finding a cycle of length $k$ can be done in $O(n^2)$ time~\cite{Yuster1997}. Finding a path of length at least $k$ > 0 can be done in $O^*(k^2)$~\cite{Williams2009}.
 \end{remark}

@@ -17,13 +17,13 @@ Arrays are the simplest data structures in computers. Even the structure of an a
 \end{Exercise}
 \begin{Answer}
 \paragraph{Problem~\ref{sequence:3sum}} 
-This problem is called the \href{https://en.wikipedia.org/wiki/3SUM}{3SUM problem}. Construct a set $Z' = \{k - z \mid z \in Z\}$. The problem is equal to finding $x \in X$, $y \in Y$, and $z \in Z'$, such that $x + y = z$. Sort the sets $Y$ and $Z'$. For each element $x \in X$, construct a set $Y_x = \{y + x \mid y \in Y\}$. If one element $a$ in both  $Y_x$ and $Z'$ exists, then we find an answer. When $Y_x$ is fixed, finding common elements in sorted $Y_x$ and $Z'$ can be done in $O(\abs{Y}+\abs{Z})$ time. Since we apply this operation for each element $x \in X$, the running time is $\Theta(\abs{X}\abs{Y}\abs{Z})$.
+This problem is called the \href{https://en.wikipedia.org/wiki/3SUM}{3SUM problem}. Construct a set $Z' = \{k - z \mid z \in Z\}$. The problem is equal to finding $x \in X$, $y \in Y$, and $z \in Z'$, such that $x + y = z$. Sort the sets $Y$ and $Z'$. For each element $x \in X$, construct a set $Y_x = \{y + x \mid y \in Y\}$. If one element $a$ in both  $Y_x$ and $Z'$ exists, then we find an answer. When $Y_x$ is fixed, finding common elements in sorted $Y_x$ and $Z'$ can be done in $O(\abs{Y}+\abs{Z})$ time. Since we apply this operation for each element $x \in X$, the time complexity is $\Theta(\abs{X}\abs{Y}\abs{Z})$.
 
 \begin{remark}
 This problem can be solved in $o(n^2)$ time~\cite{Jorgensen2014}.
 \end{remark}
 
-\paragraph{Problem~\ref{sequence:4sum}} Let $a$ denote the input array. Let $S_{ij}$ be the sum of $a[i]$ and $[j]$. Sort all $S_{ij}$ in increasing order and store them in an array $A$ of length $L$. The problem is equal to finding two elements in $A$ sum to $s$, which can be solved in time linear in $L$. Since the number of pairs is $O(n^2)$, the sort takes $O(n^2 \lg n)$ time. Moreover, the search takes $O(n^2)$ time. Thus, the running time is $O(n^2 \lg n)$.
+\paragraph{Problem~\ref{sequence:4sum}} Let $a$ denote the input array. Let $S_{ij}$ be the sum of $a[i]$ and $[j]$. Sort all $S_{ij}$ in increasing order and store them in an array $A$ of length $L$. The problem is equal to finding two elements in $A$ sum to $s$, which can be solved in time linear in $L$. Since the number of pairs is $O(n^2)$, the sort takes $O(n^2 \lg n)$ time. Moreover, the search takes $O(n^2)$ time. Thus, the time complexity is $O(n^2 \lg n)$.
 \end{Answer}
 
 \subsection{Binary search}
@@ -49,7 +49,7 @@ Let $m = \frac{n}{2}$. We have three cases:
 \item $A[m] > A[1]$: the maximum locates in $A[m + 1] \sim A[n]$. Recurse.
 \item $A[m] < A[1]$: the maximum locates in $A[1] \sim A[m-1]$. Recurse.
 \end{enumerate}
-Since the problem size is halved in each recursion, the running time is $O(\lg n)$.
+Since the problem size is halved in each recursion, the time complexity is $O(\lg n)$.
 
 \paragraph{Problem~\ref{sequence:fixed-point}}
 Let $m = \frac{n}{2}$. We have three cases:
@@ -58,7 +58,7 @@ Let $m = \frac{n}{2}$. We have three cases:
 \item $A[m] > m$: the fixed point locates in $A[1] \sim A[m - 1]$. Recurse.
 \item $A[m] < m$: the fixed point locates in $A[m + 1] \sim A[n]$. Recurse.
 \end{enumerate}
-Since the problem size is halved in each recursion, the running time is $O(\lg n)$.
+Since the problem size is halved in each recursion, the time complexity is $O(\lg n)$.
 
 \end{Answer}
 
@@ -79,12 +79,30 @@ More information can be found in~\cite{Misra1982}.
 \end{remark}
 
 \paragraph{Problem~\ref{sequence:maj2}}
-If one element occurs more than $\frac{n}{7}$ times in $A$, then the element must be one of $\frac{kn}{7}$-th largest element in $A$, where $1 \leq k \leq 7$. Thus, we can use the selection algorithm to find all $\frac{kn}{7}$-th largest elements in $A$ for all $k$ in linear time. For each of them, determine whether this element occurs more than $\frac{n}{7}$ times in $A$ can also be done in linear time. Thus, the running time is linear.
+If one element occurs more than $\frac{n}{7}$ times in $A$, then the element must be one of $\frac{kn}{7}$-th largest element in $A$, where $1 \leq k \leq 7$. Thus, we can use the selection algorithm to find all $\frac{kn}{7}$-th largest elements in $A$ for all $k$ in linear time. For each of them, determine whether this element occurs more than $\frac{n}{7}$ times in $A$ can also be done in linear time. Thus, the time complexity is linear.
 
 \begin{remark}
 For any threshold value $t$, finding element with frequency larger than $\frac{n}{t}$ can be done in linear time (independent from $t$)~\cite{Karp2003}.
 \end{remark}
 \end{Answer}
+
+\subsection{Saddleback search}
+
+\begin{Exercise}[origin={NTU CSIE 93}]
+$M$ is an $n \times n$ integer matrix in which the entries of each row are in increasing order (reading left to right) and the entries in each column are in increasing order (reading top to bottom). Give an efficient algorithm to find the position of an integer $x$ in $M$, or determine that $x$ is not there. Tell how many comparisons of $x$ with matrix entries your algorithm does in the worst case.
+\end{Exercise}
+\begin{Answer}
+For any pair of indices , $i$ and $j$, if $M[i][j] > x$, then we know $M[i][k] \neq x$ for all $j \leq k \leq n$ and $M[k][j] \neq x$ for all $i \leq k \leq n$. Similarly, if $M[i][j] < x$, then we know $M[i][k] \neq x$ for all $1 \leq k \leq j$ and $M[k][j] \neq x$ for all $1 \leq k \leq i$. 
+
+The idea is as follows: in each iteration, we compare an entry with $x$ and the eliminate either a row or a column.
+
+We always compare $x$ of the top-right element of the remaining submatrix. If this entry equals $x$, then we found the answer. If this entry is smaller $x$, then the top row can be discarded. If this entry is larger than $x$, the the rightmost column can be discarded. Since the matrix has $O(n)$ rows and columns, the time complexity is $O(n)$. 
+
+\begin{remark}
+This technique is called \emph{saddleback search}~\cite{Bird2006}.
+\end{remark}
+\end{Answer}
+
 
 \section{Sorting}
 
@@ -107,7 +125,7 @@ Initially, insert the first $2k$ elements into a min heap; then, repeat the foll
 
 For any position $i$ in the sorted array, the possible positions in the unsorted array are from $i - k$ to $i + k$, so using a min heap guarantees the correctness. 
 Since the size of heap is $O(k)$, the insertion and deletion takes $O(\lg k)$ time. 
-Since we insert and delete $O(n)$ times, the running time is $O(n \lg k)$.
+Since we insert and delete $O(n)$ times, the time complexity is $O(n \lg k)$.
 \end{Answer}
 
 \begin{Exercise}[origin={NCU CSIE 98}]
@@ -115,7 +133,7 @@ The input is a sequence of $n$ integers with many duplications, such that the nu
 Design a sorting algorithm to sort such sequences using at most $O(n \lg \lg n)$ comparisons in the worst case.
 \end{Exercise}
 \begin{Answer}
-Augment an AVL-tree by creating a count field in each tree node. First process all elements in the input sequentially. For each integer $x$ in input, search for $x$ in the tree; if $x$ has been inserted, then increment the $x$'s count; otherwise, insert $x$ into the tree and initialize the count to $1$. Then, in-order traverse the data structure and output the elements with its multiplicity. Since the distinct integers is $O(\lg n)$, both of search and insertion take $O(\lg \lg n)$ time. Since the number of insertion and search is $O(n)$, the running time is $O(n \lg \lg n)$.
+Augment an AVL-tree by creating a count field in each tree node. First process all elements in the input sequentially. For each integer $x$ in input, search for $x$ in the tree; if $x$ has been inserted, then increment the $x$'s count; otherwise, insert $x$ into the tree and initialize the count to $1$. Then, in-order traverse the data structure and output the elements with its multiplicity. Since the distinct integers is $O(\lg n)$, both of search and insertion take $O(\lg \lg n)$ time. Since the number of insertion and search is $O(n)$, the time complexity $O(n \lg \lg n)$.
 \end{Answer}
 
 \subsection{Bucket sort}
@@ -126,38 +144,14 @@ We are given $n$ points in an unit circle, $ p_i$ = $(x_i, y_i)$, such that $0 <
 Divide the circle into $n$ concentric circles with radii $\sqrt{\frac{1}{n}}, \sqrt{\frac{2}{n}}, \dots, 1$. The area of the $i$th level is $\pi {\sqrt{\frac{i}{n}}}^2 - \pi {\sqrt{\frac{i-1}{n}}}^2 = \pi/n$. Since the areas are equal-size, the probability of point locates in any level is $1/n$. So we can partition the points by their levels and use the bucket sort to sort these points.
 \end{Answer}
 
-\section{String}
-\begin{Exercise}[title={Longest common substring problem},origin={NTU CSIE 97},difficulty=1]
-Given two length-$n$ binary strings $A$ and $B$, consider the problem of computing a longest string $C$ that is a substring of both $A$ and $B$. You are asked to prove or disprove that this so-called \emph{longest common substring problem} can be solved in $O(n \lg n)$ time.
-\end{Exercise}
-\begin{Answer}
-This problem is called the \href{https://en.wikipedia.org/wiki/Longest_common_substring_problem}{longest common substring problem}. Build a generalized suffix tree from $A$ and $B$. Find the deepest internal node that has leaves from two strings. The string corresponding to the path from the root to the deepest internal node is the longest common substring. Since building a suffix tree takes linear time, the running time is linear.
-\end{Answer}
-
-\section{Array of arrays}
-
+\section{Order statistics}
 \begin{Exercise}[origin={NTUST CSIE 98},difficulty=1]
 It is trivial to find the median of the integers in the sorted array $a$ with median $= a[\lfloor \frac{n}{2} \rfloor]$. Suppose we have $3n$ distinct integers that are randomly stored in arrays $a[0 \dots n-1]$, $b[0 \dots n-1]$, and $c[0 \dots n-1]$, and each array is sorted independently. Write an algorithm to find the median of these $3n$ distinct integers. Please note that you are not allowed to merge arrays $a$, $b$, and $c$ into a $3n$ integer array and then perform sorting. 
 \end{Exercise}
 \begin{Answer}
 The idea is as follows:  in each iteration, we eliminate some elements that cannot be the answer. Repeat this process until only one element remains.
 
-Let $N$ be the number of all remaining elements and our goal is to find the $k$-th smallest element. Initially, we have $N = 3n$ and $k = \frac{N}{2}$. In each iteration, we collect the middle elements of all arrays as a set $P$. If $k < \frac{N}{2}$, then we pick the array with the maximum middle element. In this array, the elements that are larger than the middle element must be larger than $\frac{N}{2}$ elements in all elements. Thus, we can remove these elements safely. The case in which $k > \frac{N}{2}$ is symmetric. We adjust the $k$ value and recurse on the remaining elements. Since one array is halved in each iteration, the number of iterations is $O(\lg n)$. Since each iteration takes constant time, the running time is $O(\lg n)$.
-\end{Answer}
-
-\begin{Exercise}[origin={NTU CSIE 93}]
-$M$ is an $n \times n$ integer matrix in which the entries of each row are in increasing order (reading left to right) and the entries in each column are in increasing order (reading top to bottom). Give an efficient algorithm to find the position of an integer $x$ in $M$, or determine that $x$ is not there. Tell how many comparisons of $x$ with matrix entries your algorithm does in the worst case.
-\end{Exercise}
-\begin{Answer}
-For any pair of indices , $i$ and $j$, if $M[i][j] > x$, then we know $M[i][k] \neq x$ for all $j \leq k \leq n$ and $M[k][j] \neq x$ for all $i \leq k \leq n$. Similarly, if $M[i][j] < x$, then we know $M[i][k] \neq x$ for all $1 \leq k \leq j$ and $M[k][j] \neq x$ for all $1 \leq k \leq i$. 
-
-The idea is as follows: in each iteration, we compare an entry with $x$ and the eliminate either a row or a column.
-
-We always compare $x$ of the top-right element of the remaining submatrix. If this entry equals $x$, then we found the answer. If this entry is smaller $x$, then the top row can be discarded. If this entry is larger than $x$, the the rightmost column can be discarded. Since the matrix has $O(n)$ rows and columns, the running time is $O(n)$. 
-
-\begin{remark}
-This technique is called \emph{saddleback search}~\cite{Bird2006}.
-\end{remark}
+Let $N$ be the number of all remaining elements and our goal is to find the $k$-th smallest element. Initially, we have $N = 3n$ and $k = \frac{N}{2}$. In each iteration, we collect the middle elements of all arrays as a set $P$. If $k < \frac{N}{2}$, then we pick the array with the maximum middle element. In this array, the elements that are larger than the middle element must be larger than $\frac{N}{2}$ elements in all elements. Thus, we can remove these elements safely. The case in which $k > \frac{N}{2}$ is symmetric. We adjust the $k$ value and recurse on the remaining elements. Since one array is halved in each iteration, the number of iterations is $O(\lg n)$. Since each iteration takes constant time, the time complexity is $O(\lg n)$.
 \end{Answer}
 
 \begin{Exercise}[origin={NCU CSIE 96}]
@@ -167,11 +161,18 @@ where the largest job is 1700 pages and the smallest job 1300. In general, we ha
 Design algorithm to find an optimal solution for any given $k \leq n$.
 \end{Exercise}
 \begin{Answer}
-For a number $d$, we can verify whether these $n$ books can be partitions into $k$ parts with the maximum load at most $d$.
-Create a matrix $M$, such that $M[i][j] = \sum_{k=i}^j S_k$.
-The minimum $d$ value must be one of the entry of $M$.
-Thus, it suffice to do saddleback search on $M$.
-The running time is $O(n^2)$.
+For a number $d$, we can verify whether these $n$ books can be partitions into $k$ parts with the maximum load at most $d$ in linear time.
+Moreover, the minimum feasible $d$ value must be $\sum_{k=i}^j S_k$ for some $i$ and $j$.
+Create a matrix $M$, such that $M[i][j] = \sum_{k=i}^j S_k$; note that all rows and columns in $M$ are in increasing order.
+Our goal is to find a pair of indices, $i$ and $j$, such that $M[i][j]$ is the minimum feasible $d$ value.
+
+The idea is to eliminate a constant fraction of elements of $M$ iteratively until only one element remains; the remaining candidate is the answer.
+Initially, all elements in all columns are candidates.
+Since the algorithm will remove elements gradually, for each column, we maintain a sub-column of remaining elements. 
+
+In each iteration, first pick all median elements in all sub-columns. Then, find the median, $m$, among all medians. If $m$ leads to a feasible partition, then we know that the true answer is no greater than $m$; otherwise, the true answer is no more than $m$. We apply saddleback search to prune all candidates that cannot be the answer.
+
+Collecting all median elements and find the median among all medians takes $O(n)$ time. Since saddleback search also takes $O(n)$ time, each iteration takes $O(n)$ time as well. Because we eliminate at least a quarter of candidates in each iteration, the time complexity is $O(n \lg n)$.
 \begin{remark}
 This problem can be solved in linear time~\cite{Frederickson1991}.
 \end{remark}
@@ -185,14 +186,20 @@ This problem can be solved in linear time~\cite{Frederickson1991}.
 %                \end{cases}\]
 \end{Answer}
 
-
+\section{String}
+\begin{Exercise}[title={Longest common substring problem},origin={NTU CSIE 97},difficulty=1]
+Given two length-$n$ binary strings $A$ and $B$, consider the problem of computing a longest string $C$ that is a substring of both $A$ and $B$. You are asked to prove or disprove that this so-called \emph{longest common substring problem} can be solved in $O(n \lg n)$ time.
+\end{Exercise}
+\begin{Answer}
+This problem is called the \href{https://en.wikipedia.org/wiki/Longest_common_substring_problem}{longest common substring problem}. Build a generalized suffix tree from $A$ and $B$. Find the deepest internal node that has leaves from two strings. The string corresponding to the path from the root to the deepest internal node is the longest common substring. Since building a suffix tree takes linear time, the time complexity is linear.
+\end{Answer}
 
 \section{Others}
 \begin{Exercise}[title={Cycle detection problem},origin={MCU CSIE 95}]
 Design an algorithm which detects whether there exists a cycle within a singly linked list. (Suppose that each node in this list contains data and next fields for storing data and the pointer to the next node respectively.) Please analyze the time and space complexities of your algorithm.
 \end{Exercise}
 \begin{Answer}
-This problem is identical to the \href{https://en.wikipedia.org/wiki/Cycle_detection}{cycle detection problem}. Maintain two pointers, fast and slow, and traverse the linked list from head in parallel. The fast pointer traverse the list two nodes per iteration, while the slow pointer traverses one node. If the list contains a cycle, then these two pointers will point to the same node in some iteration. Otherwise, the fast pointer will achieve the end of the list. The running time is linear and the space usage is constant.
+This problem is identical to the \href{https://en.wikipedia.org/wiki/Cycle_detection}{cycle detection problem}. Maintain two pointers, fast and slow, and traverse the linked list from head in parallel. The fast pointer traverse the list two nodes per iteration, while the slow pointer traverses one node. If the list contains a cycle, then these two pointers will point to the same node in some iteration. Otherwise, the fast pointer will achieve the end of the list. The time complexity is linear and the space usage is constant.
 
 \begin{remark}
 More information can be found in~\cite{Nesterenko2012}.
@@ -205,7 +212,7 @@ Given a finite set $A$ and a mapping function $f$ from $A$ to itself, describe a
 \begin{Answer}
 The idea is as follows: we repeatedly remove one element $x \in S$ such that $f(y) \neq x$ for all $y \in S$ until no such an element exists.
 
-In implementation, we maintain an hashtable $h$, where $h[x]$ stores how many elements $y$ satisfy $f(y) = x$. In each iteration, eliminate an element $x$ with $h[x] = 0$, and decrement $h[f(x)]$, until $h[x] \neq 0$ for all x. The running time is $O(n^2)$.
+In implementation, we maintain an hashtable $h$, where $h[x]$ stores how many elements $y$ satisfy $f(y) = x$. In each iteration, eliminate an element $x$ with $h[x] = 0$, and decrement $h[f(x)]$, until $h[x] \neq 0$ for all x. The time complexity is $O(n^2)$.
 \end{Answer}
 
 \subsection{Query support}
