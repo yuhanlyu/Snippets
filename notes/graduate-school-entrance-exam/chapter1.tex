@@ -18,7 +18,7 @@ Making assumptions can make the analysis easier.
 
 \subsection{Master theorem}
 The most powerful technique in solving divide-and-conquer recurrence relation is the master theorem.
-There are several forms of the master theorem. Verma gives the following master theorem~\cite{Verma1994}:
+Several forms of the master theorem have been proven. Verma gives the following master theorem~\cite{Verma1994}:
 \begin{theorem}
 Let $T(n) = aT(n / b) + f(n)$ for all $n > 1$ and $T(1) = c$ for some constants $a \geq 1$, $b > 1$, $c > 0$, and non-negative function $f(n)$.
 \begin{enumerate}
@@ -112,10 +112,10 @@ Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently sma
 \begin{remark} Similarly, for any constant $c$, we have $T(n) = cT(\frac{n}{c}) + n/\lg n = \Theta(n \lg \lg n)$.
 \end{remark}
 
-\paragraph{Problem~\ref{ABmethod:2}} apply the Akra\--Bazzi method. Set $k = 1$, $a_1 = 1$, $b_1 = 1/2$, and solve $p = 0$. Hence, we get
+\paragraph{Problem~\ref{ABmethod:2}} apply the Akra\--Bazzi method. Set $k = 1$, $a_1 = 1$, $b_1 = 1/2$, and solve $p = 0$. Then, we get
 \[ T(n) = \Theta( 1 (1 + \int_{1}^n (x / x) dx)) = \Theta(n). \]
 
-\paragraph{Problem~\ref{ABmethod:3}} apply the Akra\--Bazzi method. Set $k = 2$, $a_1 = 4$, $b_1 = 1/5$, $a_2 = 1$, $b_2 = 1/4$, and solve $p \approx 1.03$. We get
+\paragraph{Problem~\ref{ABmethod:3}} apply the Akra\--Bazzi method. Set $k = 2$, $a_1 = 4$, $b_1 = 1/5$, $a_2 = 1$, $b_2 = 1/4$, and solve $p \approx 1.03$. Then, we get
 \[ T(n) = \Theta( n^{p}), \text{where} p \approx 1.03. \]
 
 \end{Answer}
@@ -208,7 +208,7 @@ Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently sma
 \paragraph{Problem~\ref{comparison:1}}
 By the recurrence relation, we have $T(n) = \Omega(n)$. Let $F(n) = F(n/2) + F(n/3) + n$. Since $n/3 >  \sqrt{n}$ for all $n > 9$, we have $F(n) \geq T(n)$.
 By using the Akra\--Bazzi method, we get $F(n) = \Theta(n)$.
-Hence, we have $T(n) = \Theta(n)$.
+Thus, we have $T(n) = \Theta(n)$.
 \end{Answer}
 
 \printbibliography[heading=subbibliography]

@@ -32,7 +32,7 @@ Let the input set $X$ consists of $n$ points on the $2$-dimensional plane with i
 %\paragraph{Problem~\ref{ch:1}}
 %Pick the point with the smallest x-coordinate. If there are several points having the smallest x-coordinate, then pick the point with the smallest y-coordinate. This point must be an extreme point. Similarly, the point with the largest x-coordinate is also an extreme point. Finding these two points takes O(n) time.
 \paragraph{Problem~\ref{ch:2}}
-The first step is to find the \href{https://en.wikipedia.org/wiki/Convex_hull_algorithms}{convex hull}, because the farthest pair must be on the convex hull. Then, apply the technique \href{https://en.wikipedia.org/wiki/Rotating_calipers}{rotating calipers} and find the farthest pair of points on the convex hull. Since finding the convex hull takes $O(n \lg n)$ time and rotating calipers takes linear time, the running time is $O(n \lg n)$.
+The first step is to find the \href{https://en.wikipedia.org/wiki/Convex_hull_algorithms}{convex hull}, since the farthest pair must be on the convex hull. Then, apply the technique \href{https://en.wikipedia.org/wiki/Rotating_calipers}{rotating calipers} and find the farthest pair of points on the convex hull. Since finding the convex hull takes $O(n \lg n)$ time and rotating calipers takes linear time, the running time is $O(n \lg n)$.
 \end{Answer}
 
 \section{Duality}
