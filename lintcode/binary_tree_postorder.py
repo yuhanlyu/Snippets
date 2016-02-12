@@ -17,7 +17,7 @@ class Solution:
             cur, next = start, start.right
             while cur != end:
                 next.right, cur, next = cur, next, next.right
-        result, prev, dummy = [], None, TreeNode(None)
+        result, dummy = [], TreeNode(None)
         dummy.left, node = root, dummy
         while node:
             if node.left:
