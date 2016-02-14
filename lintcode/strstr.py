@@ -8,7 +8,7 @@ class Solution:
             while pos != -1 and target[pos] != target[index - 1]:
                 pos = failure[pos]
             failure[index] = pos + 1
-        ti, pi = 0, 0
+        pi = 0
         for ti in xrange(len(source)):
             while pi != -1 and source[ti] != target[pi]:
                 pi = failure[pi]
