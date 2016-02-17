@@ -21,13 +21,12 @@ var merge = function(intervals) {
             return a.start - b.start
         return a.end - b.end
     })
-    for (i = 0; i < intervals.length; ++i) {
-        if (result.length > 0 && intervals[i].start <= 
-                                 result[result.length - 1].end)
-            result[result.length - 1].end = Math.max(intervals[i].end,
+    for (var interval of intervals) {
+        if (result.length > 0 && interval.start <= result[result.length - 1].end)
+            result[result.length - 1].end = Math.max(interval.end,
                                             result[result.length - 1].end)
         else
-            result.push(interval[i])
+            result.push(interval)
     }
     return result
 };
