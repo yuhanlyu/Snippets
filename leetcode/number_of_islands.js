@@ -14,7 +14,7 @@ var numIslands = function(grid) {
     function helper(row, col) {
         if (0 <= row && row < grid.length
          && 0 <= col && grid[row].length
-         && grid[row][col] == '1') {
+         && grid[row][col] === '1') {
             grid[row][col] = '0'
             helper(row + 1, col)
             helper(row - 1, col)
