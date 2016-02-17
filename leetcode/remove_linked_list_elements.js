@@ -10,9 +10,8 @@
 var removeElements = function(head, val) {
     var dummy = new ListNode(0)
     dummy.next = head
-    var current = dummy
-    while (current.next) {
-        if (current.next.val == val)
+    for (var current = dummy; current.next;) {
+        if (current.next.val === val)
             current.next = current.next.next
         else
             current = current.next
