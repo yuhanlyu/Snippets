@@ -10,7 +10,7 @@
  * @return {number[]}
  */
 var productExceptSelf = function(nums) {
-    result = new Array(nums.length)
+    var result = new Array(nums.length)
     result[0] = 1
     for (var index = 1; index < nums.length; ++index)
         result[index] = nums[index - 1] * result[index - 1]
