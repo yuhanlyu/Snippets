@@ -17,7 +17,7 @@
  * @return {ListNode}
  */
 var rotateRight = function(head, k) {
-    if (head == null)
+    if (head === null)
         return null
     for (var count = 1, current = head; current.next; ++count)
         current = current.next
