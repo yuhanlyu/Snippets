@@ -18,7 +18,7 @@
  */
 var sortedArrayToBST = function(nums) {
     function helper(nums, begin, end) {
-        if (begin == end)
+        if (begin === end)
             return null
         var mid = begin + Math.floor((end - begin) / 2)
         var root = new TreeNode(nums[mid])
