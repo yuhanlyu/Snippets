@@ -11,7 +11,7 @@
 var maxSubArray = function(nums) {
     var result = nums[0], cur = 0           
     for (var x of nums) {
-        cur += nums[i]
+        cur += x
         result = Math.max(result, cur)
         if (cur < 0)
             cur = 0
