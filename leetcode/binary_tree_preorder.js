@@ -18,7 +18,7 @@ var preorderTraversal = function(root) {
     node = root
     while (node) {
         if (node.left) {
-            for (pre = node.left; pre.right && pre.right != node; )
+            for (pre = node.left; pre.right && pre.right !== node; )
                 pre = pre.right
             if (pre.right) {
                 node = node.right
