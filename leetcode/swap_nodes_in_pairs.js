@@ -15,9 +15,10 @@
  * @return {ListNode}
  */
 var swapPairs = function(head) {
-    current = dummy = new ListNode(0)
+    var dummy = new ListNode(0)  
     dummy.next = head
-    for (; current.next && current.next.next; current = current.next.next) {
+    for (var current = dummy; current.next && current.next.next; 
+                              current = current.next.next) {
         first = current.next
         second = current.next.next
         current.next = second
