@@ -8,5 +8,5 @@
  * @return {boolean}
  */
 var isPowerOfTwo = function(n) {
-    return ((n & (n-1)) == 0) && (n > 0) ? true : false
+    return ((n & (n-1)) === 0) && (n > 0) ? true : false
 };
