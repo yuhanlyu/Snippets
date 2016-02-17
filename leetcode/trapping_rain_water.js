@@ -9,7 +9,7 @@
  * @return {number}
  */
 var trap = function(height) {
-    result = 0
+    var result = 0
     for (var h = 0, left = 0, right = height.length - 1; left <= right; ) {
         h = Math.max(h, Math.min(height[left], height[right]))
         if (height[left] < height[right]) {
