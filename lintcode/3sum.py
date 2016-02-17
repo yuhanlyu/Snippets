@@ -7,8 +7,8 @@ class Solution:
         result = []
         numbers.sort()
         for index in xrange(len(numbers) - 2):
-            left, right = index + 1, len(numbers) - 1
             if index == 0 or numbers[index] != numbers[index-1]:
+                left, right = index + 1, len(numbers) - 1
                 while left < right:
                     if numbers[index] + numbers[left] + numbers[right] == 0:
                         result.append([numbers[index], numbers[left], numbers[right]])
