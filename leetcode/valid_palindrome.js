@@ -14,7 +14,7 @@ var isPalindrome = function(s) {
             ++left
         while (left < right && !/^[a-z0-9]+$/i.test(s[right]))
             --right
-        if (s[left].toLowerCase() != s[right].toLowerCase())
+        if (s[left].toLowerCase() !== s[right].toLowerCase())
             return false
     }    
     return true
