@@ -16,7 +16,7 @@
 var uniquePaths = function(m, n) {
     var t = n
     n = Math.min(m - 1, n - 1)
-    m = m + t - 2 
+    m = m + t - 2
     for (var result = 1, d = 1; d < n + 1; ++d) {
         result = Math.floor((result * m) / d)
         --m;
