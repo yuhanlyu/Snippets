@@ -10,7 +10,7 @@
  */
 var maxSubArray = function(nums) {
     var result = nums[0], cur = 0           
-    for (var i = 0; i < nums.length; ++i) {
+    for (var x of nums) {
         cur += nums[i]
         result = Math.max(result, cur)
         if (cur < 0)
