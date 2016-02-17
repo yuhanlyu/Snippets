@@ -14,8 +14,8 @@
  */
 var search = function(nums, target) {
     for (var left = 0, right = nums.length - 1; left <= right; ) {
-        mid = left + Math.floor((right - left) / 2)
-        if (nums[mid] == target)
+        var mid = left + Math.floor((right - left) / 2)
+        if (nums[mid] === target)
             return mid
         if ((nums[mid] <= nums[right] && nums[mid] < target 
                                                   && target <= nums[right]) 
