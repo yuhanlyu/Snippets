@@ -12,7 +12,7 @@
  */
 var plusOne = function(digits) {
     for (var i = digits.length - 1; i >= 0; digits[i--] = 0) {
-        if (digits[i] != 9) {
+        if (digits[i] !== 9) {
             ++digits[i]
             return digits
         }
