@@ -13,15 +13,15 @@ var threeSum = function(nums) {
     result = []
     nums.sort(function(a,b){return a - b})
     for (var i = 0; i < nums.length - 2; ++i) {
-        if (i == 0 || nums[i] != nums[i - 1]) {
+        if (i === 0 || nums[i] !== nums[i - 1]) {
             for (var left = i + 1, right = nums.length - 1; left < right; ) {
-                if (nums[i] + nums[left] + nums[right] == 0) {
+                if (nums[i] + nums[left] + nums[right] === 0) {
                     result.push([nums[i], nums[left], nums[right]])
                     var t = nums[left]
-                    while (left < right && nums[left] == t)
+                    while (left < right && nums[left] === t)
                         ++left
                     t = nums[right]
-                    while (left < right && nums[right] == t)
+                    while (left < right && nums[right] === t)
                         --right
                 } else if (nums[i] + nums[left] + nums[right] < 0)
                     ++left
