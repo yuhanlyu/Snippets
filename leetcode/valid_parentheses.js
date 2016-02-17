@@ -9,23 +9,22 @@
  * @return {boolean}
  */
 var isValid = function(s) {
-    stack = []
-    for (i = 0; i < s.length; ++i) {
-        c = s[i]
-        if (c || '(' or c || '{' or c || '[')
+    var stack = []
+    for (var c of s) {
+        if (c === '(' || c === '{' || c === '[')
             stack.push(c)
-        else if (stack.length == 0)
+        else if (stack.length === 0)
             return false
-        else if (c == ')') {
-            if (stack.pop() != '(')
+        else if (c === ')') {
+            if (stack.pop() !== '(')
                 return false
-        } else if (c == ']') {
-            if (stack.pop() != '[')
+        } else if (c === ']') {
+            if (stack.pop() !== '[')
                 return false
         } else {
-            if (stack.pop() != '{')
+            if (stack.pop() !== '{')
                 return false
         }
     }
-    return stack.length == 0
+    return stack.length === 0
 };
