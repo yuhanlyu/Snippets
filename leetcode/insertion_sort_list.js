@@ -15,11 +15,9 @@
  * @return {ListNode}
  */
 var insertionSortList = function(head) {
-    dummy = new ListNode(0)
+    var dummy = new ListNode(0)
     dummy.next = head
-    pre = dummy
-    cur = head
-    while (cur) {
+    for (var pre = dummy, cur = head; cur; ) {
         if (cur.next && cur.next.val < cur.val) {
             while (pre.next && pre.next.val < cur.next.val)
                 pre = pre.next
@@ -32,5 +30,5 @@ var insertionSortList = function(head) {
             cur = cur.next
         }
     }
-    return dummy.next
+    return dummy.next    
 };
