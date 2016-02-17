@@ -10,10 +10,9 @@
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
-    elements = {}
-    for (var i = 0; i < nums.length; ++i)
+    for (var elements = {}, i = 0; i < nums.length; ++i)
         elements[nums[i]] = i
-    for (var i = 0; i < nums.length; ++i)
-        if (target - nums[i] in elements && i != elements[target - nums[i]])
+    for (i = 0; i < nums.length; ++i)
+        if (target - nums[i] in elements && i !== elements[target - nums[i]])
             return [i, elements[target - nums[i]]]
 };
