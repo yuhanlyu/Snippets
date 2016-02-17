@@ -8,8 +8,7 @@
  * @return {number}
  */
 var mySqrt = function(x) {
-    var n = 1, nn = 3           
-    while (Math.abs(n - nn) > 1) {
+    for (var n = 1, nn = 3; Math.abs(n - nn) > 1; ) {
         nn = n
         n = Math.floor((n + Math.floor(x / n)) / 2)
     }
