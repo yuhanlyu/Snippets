@@ -10,7 +10,7 @@
  * @return {number[]}
  */
 var grayCode = function(n) {
-    result = []
+    var result = []
     for (var x = 0; x < Math.pow(2, n); ++x)
         result.push((x >> 1) ^ x)
     return result
