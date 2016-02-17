@@ -16,7 +16,7 @@
  */
 var postorderTraversal = function(root) {
     function reverse(begin, end) {
-        for (cur = begin, next = begin.right; cur != end; ) {
+        for (cur = begin, next = begin.right; cur !== end; ) {
             temp = next.right
             next.right = cur
             cur = next
@@ -29,7 +29,7 @@ var postorderTraversal = function(root) {
     node = dummy
     while (node) {
         if (node.left){
-            for (pre = node.left; pre.right && pre.right != node; )
+            for (pre = node.left; pre.right && pre.right !== node; )
                 pre = pre.right
             if (pre.right) {
                 reverse(node.left, pre)
