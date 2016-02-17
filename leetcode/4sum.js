@@ -16,7 +16,7 @@ var fourSum = function(nums, target) {
             var k = nums[i] + nums[j]
             for (var left = j + 1, right = nums.length - 1; left < right; ) {
                 s = k + nums[left] + nums[right]
-                if (s == target) {
+                if (s === target) {
                     unique[[nums[i], nums[j], nums[left], nums[right]]] = true
                     ++left
                     --right
