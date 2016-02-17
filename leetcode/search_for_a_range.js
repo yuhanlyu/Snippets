@@ -14,7 +14,7 @@
 var searchRange = function(nums, target) {
     function bsearch(nums, target) {
         for (var left = 0, right = nums.length - 1; left <= right; ) {
-            mid = left + Math.floor((right - left) / 2)
+            var mid = left + Math.floor((right - left) / 2)
             if (nums[mid] < target)
                 left = mid + 1
             else
@@ -22,8 +22,8 @@ var searchRange = function(nums, target) {
         }
         return left
     }
-    lower = bsearch(nums, target)
-    if (lower == nums.length || nums[lower] != target)
+    var lower = bsearch(nums, target)
+    if (lower === nums.length || nums[lower] !== target)
         return [-1, -1]
     return [lower, bsearch(nums, target + 1) - 1]
 };
