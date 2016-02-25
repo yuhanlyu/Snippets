@@ -22,8 +22,6 @@ var Trie = function() {
  */
 Trie.prototype.insert = function(word) {
     var node = this.root;
-    if (!node)
-        return false;
     for (var c of word) {
         if (!(c in node.map))
             node.map[c] = new TrieNode();
