@@ -6,7 +6,7 @@ class Solution:
         def helper(row, col, visited, word, level):
             if row < 0 or row >= len(board) or col < 0 \
             or col >= len(board[row]) or visited[row][col] \
-            or level >= len(word) or board[row][col] != word[level]:  
+            or board[row][col] != word[level]:  
                 return False
             if level == len(word) - 1: return True
             visited[row][col] = True
