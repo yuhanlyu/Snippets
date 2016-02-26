@@ -4,9 +4,9 @@ class Solution:
     # @return a boolean
     def exist(self, board, word):
         def helper(row, col, visited, word, level):
-            if row < 0 or row >= len(board) or col < 0 \
-            or col >= len(board[row]) or visited[row][col] \
-            or board[row][col] != word[level]:  
+            if not (0 <= row < len(board))     \
+            or not (0 <= col < len(board[row])) \
+            or visited[row][col] or board[row][col] != word[level]:  
                 return False
             if level == len(word) - 1: return True
             visited[row][col] = True
