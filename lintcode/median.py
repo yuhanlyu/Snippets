@@ -5,7 +5,6 @@ class Solution:
     """
     def median(self, nums):
         def search(k, left, right):
-            print nums[left:right + 1], k, left, right
             pivot, begin, end = nums[right], left, right
             while True:
                 while nums[left] < pivot and left < right:
