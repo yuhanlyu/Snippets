@@ -19,6 +19,5 @@ class Solution:
             else:
                 node = stack.pop()
                 if prev and prev.val >= node.val: return False
-                prev = node
-                node = node.right
+                prev, node = node, node.right
         return True
