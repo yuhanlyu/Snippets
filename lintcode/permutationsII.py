@@ -15,7 +15,6 @@ class Solution:
             while nums[i] >= nums[j]:
                 j -= 1
             nums[i], nums[j] = nums[j], nums[i]
-            left, right = i + 1, len(nums) - 1
             nums[i + 1:] = nums[-1:i:-1]
             result.append(list(nums))
         return result
