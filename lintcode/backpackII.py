@@ -10,9 +10,8 @@ class Solution:
                 if w + weight > m:
                     break
                 temp.add((w + weight, value - v))
-            temp = sorted(temp)
-            solution = [temp[0]]
-            for i in xrange(1, len(temp)):
-                if temp[i][1] < solution[-1][1]:
-                    solution.append(temp[i])
+            solution = []
+            for item in sorted(temp):
+                if not solution or item[1] < solution[-1][1]:
+                    solution.append(item)
         return max((-v for w, v in solution))
