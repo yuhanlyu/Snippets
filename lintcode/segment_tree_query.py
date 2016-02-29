@@ -14,8 +14,4 @@ class Solution:
         if not root or root.start > end or root.end < start: return -2 ** 31
         if start <= root.start and root.end <= end: return root.max
         left, right = -2 ** 31, -2 ** 31
-        if root.left.start <= end:
-            left = self.query(root.left, start, end)
-        if root.right.end >= start:
-            right = self.query(root.right, start, end)
-        return max(left, right)
+        return max(self.query(root.left, start, end), self.query(root.right, start, end))
