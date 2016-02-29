@@ -9,7 +9,6 @@ class Solution:
         if index < len(str) and (str[index] == '+' or str[index] == '-'):
             sign = 1 if str[index] == '+' else -1
             index += 1
-        if index == len(str) or not str[index].isdigit(): return 0
         while index < len(str) and str[index].isdigit():
             c = str[index]
             if result > THRESHOLD or (result == THRESHOLD and int(c) > 7):
