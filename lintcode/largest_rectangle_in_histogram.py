@@ -4,7 +4,7 @@ class Solution:
     @return: The area of largest rectangle in the histogram
     """
     def largestRectangleArea(self, height):
-        stack, result = [], 0
+        result = 0
         height.append(0)
         for i in xrange(len(height)):
             j = i - 1
