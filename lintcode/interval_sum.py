@@ -14,10 +14,9 @@ class Solution:
     @return: The result list
     """
     def intervalSum(self, A, queries):
-        pre, cur, result = [0] * (len(A) + 1), 0, []
-        for i, num in enumerate(A):
-            cur += num
-            pre[i + 1] = cur
+        pre, result = [0], []
+        for num in A:
+            pre.append(pre[-1] + num)
         for query in queries:
             result.append(pre[query.end + 1] - pre[query.start])
         return result
