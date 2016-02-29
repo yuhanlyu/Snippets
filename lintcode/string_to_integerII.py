@@ -3,7 +3,7 @@ class Solution:
     # @return an integer
     def atoi(self, str):
         INT_MAX, INT_MIN, THRESHOLD = 2147483647, -2147483648, 214748364
-        start, sign, result, index = False, 1, 0, 0
+        sign, result, index = 1, 0, 0
         while index < len(str) and str[index] == ' ':
             index += 1
         if index < len(str) and (str[index] == '+' or str[index] == '-'):
