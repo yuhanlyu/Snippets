@@ -16,16 +16,16 @@ var combinationSum2 = function(candidates, target) {
         DP.push([]);
     for (var candidate of candidates) {
         if (candidate <= target) {
-            if (!(candidate in cnt)) {
-                cnt[candidate] = 0;
+            if (!cnt.has(candidate)) {
+                cnt.set(candidate, 0);
                 temp.push(candidate);
             }
-            ++cnt[candidate];
+            cnt.set(candidate, cnt.get(candidate) + 1);
         }
     }
     temp.sort(function(a, b) { return a - b; });
     for (candidate of temp) {
-        for (var t = 1; t <= cnt[candidate]; ++t) {
+        for (var t = 1; t <= cnt.get(candidate); ++t) {
             if (t * candidate > target)
                 break;
             var list = new Array(t);
@@ -33,7 +33,7 @@ var combinationSum2 = function(candidates, target) {
             DP[t * candidate].push(list);
             for (i = target; i >= t * candidate; --i) {
                 for (var p of DP[i - t * candidate]) {
-                    if (p[p.length - 1] != candidate) {
+                    if (p[p.length - 1] !== candidate) {
                         DP[i].push(p.concat(list));
                     }
                 }
