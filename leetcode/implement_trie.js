@@ -23,11 +23,11 @@ var Trie = function() {
 Trie.prototype.insert = function(word) {
     var node = this.root;
     for (var c of word) {
-        if (!(c in node.map))
-            node.map[c] = new TrieNode();
-        node = node.map[c];
+        if (!node.map.has(c))
+            node.map.set(c, new TrieNode());
+        node = node.map.get(c);
     }
-    node.map[null] = null;
+    node.map.set(null, null);
 };
 
 /**
@@ -38,12 +38,12 @@ Trie.prototype.insert = function(word) {
 Trie.prototype.search = function(word) {
     var node = this.root;
     for (var c of word) {
-        if (c in node.map)
-            node = node.map[c];
+        if (node.map.has(c))
+            node = node.map.get(c);
         else
             return false;
     }
-    return null in node.map;
+    return node.map.has(null);
 };
 
 /**
@@ -55,8 +55,8 @@ Trie.prototype.search = function(word) {
 Trie.prototype.startsWith = function(prefix) {
     var node = this.root;
     for (var c of prefix) {
-        if (c in node.map)
-            node = node.map[c];
+        if (node.map.has(c))
+            node = node.map.get(c);
         else
             return false;
     }
