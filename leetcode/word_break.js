@@ -17,11 +17,11 @@ var wordBreak = function(s, wordDict) {
         var node = trie;
         for (var i = word.length - 1; i >= 0; --i) {
             var c = word.charAt(i);
-            if (!(c in node))
-                node[c] = new Map();
-            node = node[c];
+            if (!node.has(c))
+                node.set(c, new Map());
+            node = node.get(c);
         }
-        node[null] = null;
+        node.set(null, null);
     }
     var F = new Array(s.length + 1);
     F.fill(false);
@@ -29,10 +29,10 @@ var wordBreak = function(s, wordDict) {
     for (i = 0; i < s.length; ++i) {
         node = trie;
         for (var j = i; !F[i + 1] || j >= 0; --j) {
-            if (!(s.charAt(j)in node))
+            if (!node.has(s.charAt(j)))
                 break;
-            node = node[s.charAt(j)];
-            if (F[j] && null in node)
+            node = node.get(s.charAt(j));
+            if (F[j] && node.has(null))
                 F[i + 1] = true;
         }
     }
