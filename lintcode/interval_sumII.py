@@ -2,11 +2,10 @@ class Solution:
     
     # @param A: An integer list
     def __init__(self, A):
-        self.A = list(A)
-        self.B = [0] * len(A)
+        self.nums, self.tree = [0] * len(A), [0] * len(A)
         for i, num in enumerate(A):
-            self.increase(i, num)
-    
+            self.modify(i, num)
+
     # @param start, end: Indices
     # @return: The sum from start to end
     def query(self, start, end):
@@ -14,18 +13,14 @@ class Solution:
 
     # @param index, value: modify A[index] to value.
     def modify(self, index, value):
-        self.increase(index, value - self.A[index])
-        self.A[index] = value
-            
-    def increase(self, index, value):
-        while index < len(self.B):
-            self.B[index] += value
+        d, self.nums[index] = value - self.nums[index], value
+        while index < len(self.nums):
+            self.tree[index] += d
             index |= index + 1
             
     def sum(self, index):
-        sum = 0
+        ans = 0
         while index >= 0:
-            sum += self.B[index]
-            index &= index + 1
-            index -= 1
-        return sum
+            ans += self.tree[index]
+            index = (index & (index + 1)) - 1
+        return ans
