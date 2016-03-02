@@ -3,7 +3,7 @@ File.open(ARGV[0]).each_line do |line|
     gap = arr.size
     loop do
         gap, flag = [(gap / 1.25).floor, 1].max, false
-        (0...(arr.size - gap)).each { |i|
+        (arr.size - gap).times { |i|
             if arr[i] > arr[i + gap]
                 flag = true
                 arr[i], arr[i + gap] = arr[i + gap], arr[i]
