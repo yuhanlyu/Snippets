@@ -9,25 +9,48 @@ class Solution:
     def maxSubArray(self, nums, k):
         if sum([1 for num in nums if num > 0]) <= k:
             return sum(heapq.nlargest(k, nums))
-        prices = [0]
-        for num in nums:
-            prices.append(prices[-1] + num)
-        result, low, high, stack, profits = 0, 0, 0, [], []
-        while high + 1 < len(prices):
-            low = high
-            while low < len(prices) - 1 and prices[low] >= prices[low + 1]:
-                low += 1
-            high = low
-            while high < len(prices) - 1 and prices[high] < prices[high + 1]:
-                high += 1
-            while stack and prices[low] < prices[stack[-1][0]]:
-                profits.append(prices[stack[-1][1]] - prices[stack[-1][0]])
-                stack.pop()
-            while stack and prices[high] >= prices[stack[-1][1]]:
-                profits.append(prices[stack[-1][1]] - prices[low])
-                (low, _) = stack.pop()
-            stack.append((low, high))
+
+        P, stack, profits = self.normalize(nums), [], []
+        for i in xrange(0, len(P) / 2):
+            l, h = P[2 * i], P[2 * i + 1]
+            while stack and stack[-1][0] >= l:
+                lt, ht = stack.pop()
+                profits.append(ht - lt)
+            while stack and stack[-1][1] <= h:
+                if stack[-1][1] - l > 0:
+                    profits.append(stack[-1][1] - l)
+                (l, _) = stack.pop()
+            stack.append((l, h))
         while stack:
-            profits.append(prices[stack[-1][1]] - prices[stack[-1][0]])
-            stack.pop();
-        return sum(heapq.nlargest(k, profits) if k < len(profits) else profits)
+            profits.append(stack[-1][1] - stack[-1][0])
+            stack.pop()
+        return sum(heapq.nlargest(k, profits))
+
+    def normalize(self, nums):
+        nums = [num for num in nums if num != 0]
+        for i in xrange(len(nums)):
+            if nums[i] > 0:
+                nums = nums[i:]
+                break
+        for i in xrange(len(nums), 0, -1):
+            if nums[i - 1] > 0:
+                nums = nums[:i]
+                break
+        P, end = [0], 0
+        while True:
+            cur = 0
+            while end < len(nums) and nums[end] > 0:
+                cur += nums[end]
+                end += 1
+            P.append(P[-1] + cur)
+            if end == len(nums):
+                break
+            cur = 0
+            while nums[end] < 0:
+                cur += nums[end]
+                end += 1
+            P.append(P[-1] + cur)
+        return P
+
+solution = Solution()
+print solution.maxSubArray([-1,4,-2,3,-2,3], 2)
