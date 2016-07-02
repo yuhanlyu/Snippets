@@ -111,6 +111,34 @@ This problem can be solved in $O(n)$ time~\cite{Frederickson1982,Frederickson198
 \end{remark}
 \end{Answer}
 
+\begin{Exercise}[title=Intersection of two sorted arrays]
+Given two sorted arrays $A$ and $B$, where $\abs{A} = n$ > m =$\abs{B} = m$ and the elements in individual array are distinct, design an algorithm to find the intersection of these two arrays.
+\end{Exercise}
+
+\begin{Answer}
+Use an idea similar to merge two arrays, the intersection can be found in $O(n + m)$ time. 
+However, when $n \gg m$, this algorithm is slow. 
+In the case of $n \gg m$, using binary search to find the occurrence of each element of $B$ in $A$ is more efficient, whose time complexity is $O(m \lg n)$.
+
+\subparagraph{A better solution}
+One key observation is as follows:
+Let $f(i)$ be the index of $A$ satisfying $A[j] \leq B[i] < A[j + 1]$.
+For each index $i$, we know that $B[i']$, $i' < i$, cannot be equal to any element $A[j]$, where $j' > f(i)$.
+Moreover, the value of $f(i)$ can be computed in $O(\lg n)$ time by using a binary search.
+
+Thus, we can use the median, $B[i]$, of $B$ to subdivide $B$ into two subarrays, and subdivide $A$ into two subarrays at the location $A[f(i)]$.
+Then, recursively solve these two independent problems.
+
+\subparagraph{Complexity analysis} 
+The time complexity is $O(m \lg \frac{n}{m})$.
+
+\begin{remark}
+This solution is discussed in Baeza-Yates's and Salinger's paper~\cite{Baeza-Yates2010}.
+Demaine \textit{et al.} proposed a different approach based on exponential search~\cite{Demaine2000}.
+The unsorted version appears on \href{http://www.lintcode.com/en/problem/intersection-of-two-arrays/}{LintCode} and \href{https://leetcode.com/problems/intersection-of-two-arrays/}{LeetCode}.
+\end{remark}
+\end{Answer}
+
 \subsection{Other problems}
 Here are some other problems:
 \begin{enumerate}
@@ -155,7 +183,7 @@ All candidates that cannot be the answer can be pruned by using a saddle back se
 Since the saddleback search also takes $O(n)$ time, each iteration takes $O(n)$ time as well. 
 Because at least a quarter of candidates are eliminated in each iteration, the time complexity is $O(n \lg n)$.
 \begin{remark}
-This solution is from the paper of Khanna \emph{et al.}~\cite{Khanna1997}. This problem can be solved in linear time~\cite{Frederickson1991}. This problem appears on \href{http://www.lintcode.com/en/problem/copy-books/}{LintCode}.
+This solution is from the paper of Khanna \textit{et al.}~\cite{Khanna1997}. This problem can be solved in linear time~\cite{Frederickson1991}. This problem appears on \href{http://www.lintcode.com/en/problem/copy-books/}{LintCode}.
 \end{remark}
 \end{Answer}
 
@@ -269,7 +297,10 @@ Since the desired result is $S + M + P$, the algorithm recursively interchanges 
 \subparagraph{Complexity analysis} The algorithms uses $n - \text{gcd}(\abs{P} + \abs{M}, \abs{M} + \abs{S})$ swaps.
 \begin{remark}
 This solution is from Mohammed and Subi's paper~\cite{Mohammed1987}. 
-One special case, right shift circularly, appears on \href{https://leetcode.com/problems/rotate-array/}{LeetCode}.
+For the special case of rotating an array circularly, Bentley proposed a juggling algorithm~\cite{Bentley1999}.
+Shene analyzed the time complexity and the lower bound for several algorithms~\cite{Shene1997}.
+Benchmark of these algorithms can be found on~\href{http://www.drdobbs.com/parallel/benchmarking-block-swapping-algorithms/232900395}{Dr.Dobb's}.
+The problem of rotating an array circularly appears on \href{https://leetcode.com/problems/rotate-array/}{LeetCode}.
 \end{remark}
 \end{Answer}
 
