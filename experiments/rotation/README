@@ -1,0 +1,2 @@
+I compared different algorithms of rotating an array.
+Gries-Mills's method is faster than other methods, which confirms the result on Dr.Dobb's (http://www.drdobbs.com/parallel/benchmarking-block-swapping-algorithms/232900395).
