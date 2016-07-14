@@ -1,10 +1,8 @@
 I compared different algorithms of rotating an array.
 Gries-Mills's method is faster than other methods, which confirms the result on Dr.Dobb's (http://www.drdobbs.com/parallel/benchmarking-block-swapping-algorithms/232900395).
 
-Benchmark                   Time           CPU Iterations
----------------------------------------------------------
-BM_JugglingBentley   11449103 ns   11413151 ns         53
-BM_JugglingShene     12153646 ns   12111356 ns         59
-BM_RotateReverse      1833888 ns    1826834 ns        362
-BM_BlockSwapShene     2116012 ns    2107325 ns        326
-BM_BlockSwapGries     1264687 ns    1263202 ns        521
+BM_JugglingBentley   11954216 ns   11878846 ns         52
+BM_JugglingShene     12126450 ns   12058774 ns         53
+BM_RotateReverse      1970268 ns    1956781 ns        361
+BM_BlockSwapShene     2122026 ns    2116205 ns        303
+BM_BlockSwapGries     1304538 ns    1301151 ns        516
