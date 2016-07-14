@@ -1,2 +1,22 @@
-Tumble method is always faster than the naive iterative method.
-When n is large, qmatrix method is faster than tumble method.
+The difference between these methods are very small, 
+although iterative and tumble methods seem faster than doubling 
+and qmatrix methods.
+
+Benchmark                Time           CPU Iterations
+------------------------------------------------------
+BM_Iterative/44         19 ns         19 ns   35424384
+BM_Iterative/45         21 ns         21 ns   32635706
+BM_Iterative/46         22 ns         22 ns   32471147
+BM_Iterative/47         23 ns         23 ns   30216697
+BM_Doubling/44          24 ns         24 ns   30547010
+BM_Doubling/45          23 ns         23 ns   29118863
+BM_Doubling/46          23 ns         23 ns   31397033
+BM_Doubling/47          24 ns         24 ns   27613085
+BM_Tumble/44            21 ns         21 ns   33947788
+BM_Tumble/45            22 ns         22 ns   32163944
+BM_Tumble/46            21 ns         21 ns   32189384
+BM_Tumble/47            23 ns         23 ns   31993126
+BM_QMatrix/44           26 ns         25 ns   27117594
+BM_QMatrix/45           22 ns         22 ns   32375631
+BM_QMatrix/46           26 ns         26 ns   26893081
+BM_QMatrix/47           23 ns         23 ns   30158245
