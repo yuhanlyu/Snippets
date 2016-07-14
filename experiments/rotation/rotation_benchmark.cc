@@ -1,5 +1,4 @@
 #include "rotation.h"
-#include <iostream>
 
 #include "benchmark/benchmark_api.h"
 
