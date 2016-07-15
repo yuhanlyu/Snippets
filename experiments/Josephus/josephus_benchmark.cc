@@ -4,8 +4,8 @@
 
 namespace {
 
-const int n = 2000000;
-const int m = 100000;
+static constexpr int n = 2000000;
+static constexpr int m = 100000;
 
 static void BM_ShamsBaragh(benchmark::State& state) {
     while (state.KeepRunning()) {
