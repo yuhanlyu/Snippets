@@ -4,9 +4,9 @@
 
 namespace {
 
-const unsigned range = 1000000U;
-unsigned temp[range];
-unsigned shift = range / 17;
+const int32_t range = 1000000U;
+int32_t temp[range];
+int32_t shift = range / 17;
 
 static void BM_JugglingBentley(benchmark::State& state) {
     while (state.KeepRunning()) {

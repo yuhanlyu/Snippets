@@ -1,15 +1,15 @@
 #include "rotation.h"
 
-static inline unsigned gcd(unsigned a, unsigned b);
-static inline unsigned gcd(unsigned a, unsigned b) {
+static inline int32_t gcd(int32_t a, int32_t b);
+static inline int32_t gcd(int32_t a, int32_t b) {
     while ((a %= b) && (b %= a))
         ;
     return a + b;
 }
 
-void juggling_bentley(unsigned A[], unsigned n, unsigned k) {
-    for (unsigned i = 0, bound = gcd(n, k); i < bound; ++i) {
-        unsigned to = i, from = (i + k) % n, temp = A[i];
+void juggling_bentley(int32_t A[], int32_t n, int32_t k) {
+    for (int32_t i = 0, bound = gcd(n, k); i < bound; ++i) {
+        int32_t to = i, from = (i + k) % n, temp = A[i];
         do {
             A[to] = A[from];
             to = from;
@@ -19,9 +19,9 @@ void juggling_bentley(unsigned A[], unsigned n, unsigned k) {
     }
 }
 
-void juggling_shene(unsigned A[], unsigned n, unsigned k) {
-    for (unsigned i = 0, bound = n; i < bound; ++i) {
-        unsigned to = i, from = (i + k) % n, temp = A[i];
+void juggling_shene(int32_t A[], int32_t n, int32_t k) {
+    for (int32_t i = 0, bound = n; i < bound; ++i) {
+        int32_t to = i, from = (i + k) % n, temp = A[i];
         do {
             A[to] = A[from];
             to = from;
@@ -33,24 +33,24 @@ void juggling_shene(unsigned A[], unsigned n, unsigned k) {
     }
 }
 
-static inline void reverse(unsigned A[], unsigned l, unsigned r);
-static inline void reverse(unsigned A[], unsigned l, unsigned r) {
+static inline void reverse(int32_t A[], int32_t l, int32_t r);
+static inline void reverse(int32_t A[], int32_t l, int32_t r) {
     while (l < r) {
-        unsigned temp = A[l];
+        int32_t temp = A[l];
         A[l++] = A[r];
         A[r--] = temp;
     }
 }
 
-void rotate_reverse(unsigned A[], unsigned n, unsigned k) {
+void rotate_reverse(int32_t A[], int32_t n, int32_t k) {
     reverse(A, 0, k - 1);
     reverse(A, k, n - 1);
     reverse(A, 0, n - 1);
 }
 
-void block_swap_shene(unsigned A[], unsigned n, unsigned k) {
-    for (unsigned left = 0, right = k, middle = k; ;) {
-        unsigned temp = A[left];
+void block_swap_shene(int32_t A[], int32_t n, int32_t k) {
+    for (int32_t left = 0, right = k, middle = k; ;) {
+        int32_t temp = A[left];
         A[left++] = A[right];
         A[right++] = temp;
         if (left == middle) {
@@ -62,20 +62,18 @@ void block_swap_shene(unsigned A[], unsigned n, unsigned k) {
     }
 }
 
-static inline void swap_section(unsigned A[], unsigned i, 
-                                unsigned j, unsigned k);
-static inline void swap_section(unsigned A[], unsigned i, 
-                                unsigned j, unsigned k) {
+static inline void swap_section(int32_t A[], int32_t i, int32_t j, int32_t k);
+static inline void swap_section(int32_t A[], int32_t i, int32_t j, int32_t k) {
     while (k-- > 0) {
-        unsigned temp = A[i];
+        int32_t temp = A[i];
         A[i++] = A[j];
         A[j++] = temp;
     }
 }
 
-void block_swap_gries(unsigned A[], unsigned n, unsigned k) {
-    unsigned i = k;
-    for (unsigned j = n - k; i != j; ) {
+void block_swap_gries(int32_t A[], int32_t n, int32_t k) {
+    int32_t i = k;
+    for (int32_t j = n - k; i != j; ) {
         if (i > j) {
             swap_section(A, k - i, k, j);
             i -= j;
