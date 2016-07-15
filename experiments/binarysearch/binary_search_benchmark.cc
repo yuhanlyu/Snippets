@@ -6,9 +6,6 @@
 #include "benchmark/benchmark_api.h"
 
 namespace {
-const int32_t size  = 100000000;
-const int32_t prime = 100001177;
-const int32_t m = 2000000000 / size;
 
 class SearchBenchmark : public benchmark::Fixture {
   public:
@@ -17,6 +14,9 @@ class SearchBenchmark : public benchmark::Fixture {
             test[i] = i * m;
         }
     }
+    static constexpr int32_t size  = 100000000;
+    static constexpr int32_t prime = 100001177;
+    static constexpr int32_t m = 2000000000 / size;
     int32_t test[size];
 };
 
