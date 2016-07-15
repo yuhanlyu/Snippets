@@ -4,16 +4,15 @@
 
 namespace {
 
-static constexpr int32_t max = 92;
-int64_t ans[max + 1];
-
 class FibonacciTest : public ::testing::Test {
   protected:
-    static void SetUpTestCase() {
+    virtual void SetUp() override {
         for (int i = 1; i <= max; ++i) {
             ans[i] = iterative(i);
         }
     }
+    static constexpr int32_t max = 92;
+    int64_t ans[max + 1];
 };
 
 TEST_F(FibonacciTest, ValidateDoubling) {
