@@ -1,2 +1,11 @@
-This is a comparions of three methods of solving Josephus problem.
+This is a comparions of different methods of solving Josephus problem.
 The most efficient method is my space efficient verison of Gelgi's method.
+
+Benchmark                Time           CPU Iterations
+------------------------------------------------------
+BM_ShamsBaragh    31458475 ns   31335182 ns         22
+BM_Woodhousea     17680011 ns   17645895 ns         38
+BM_Gelgi          14748350 ns   14657064 ns         47
+BM_GelgiImprove   10760092 ns   10747306 ns         62
+BM_TAOCP          25895066 ns   25865370 ns         27
+BM_TAOCPK         27533119 ns   27498308 ns         26
