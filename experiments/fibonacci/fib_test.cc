@@ -4,7 +4,7 @@
 
 namespace {
 
-const int max = 92;
+static constexpr int_t max = 92;
 int64_t ans[max + 1];
 
 class FibonacciTest : public ::testing::Test {

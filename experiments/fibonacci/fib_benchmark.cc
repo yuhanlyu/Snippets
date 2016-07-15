@@ -4,34 +4,36 @@
 
 namespace {
 
+constexpr int32_t n = 92;
+
 static void BM_Iterative(benchmark::State& state) {
     while (state.KeepRunning()) {
-       benchmark::DoNotOptimize(iterative(92));
+       benchmark::DoNotOptimize(iterative(n));
     }
 }
 BENCHMARK(BM_Iterative);
 
 static void BM_Doubling(benchmark::State& state) {
     while (state.KeepRunning()) {
-        benchmark::DoNotOptimize(doubling(92));
+        benchmark::DoNotOptimize(doubling(n));
     }
 }
 BENCHMARK(BM_Doubling);
 
 static void BM_Tumble(benchmark::State& state) {
     while (state.KeepRunning()) {
-        benchmark::DoNotOptimize(tumble(92));
+        benchmark::DoNotOptimize(tumble(n));
     }
 }
 BENCHMARK(BM_Tumble);
 
 static void BM_QMatrix(benchmark::State& state) {
     while (state.KeepRunning()) {
-        benchmark::DoNotOptimize(qmatrix(92));
+        benchmark::DoNotOptimize(qmatrix(n));
     }
 }
 BENCHMARK(BM_QMatrix);
 
 }
 
-BENCHMARK_MAIN()
+BENCHMARK_MAIN();

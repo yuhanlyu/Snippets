@@ -1,12 +1,12 @@
 #include "fib.h"
 
-int64_t doubling(int n) {
+int64_t doubling(int32_t n) {
     if (n == 0) return 0;
     if (n == 1) return 1;
-    int j, nn = n;
+    int32_t j, nn = n;
     for (j = 0; nn > 0; nn >>= 1, ++j) ;
     int64_t s1 = 0, s2 = 1;
-    for (int k = j - 2; k >= 0; --k) {
+    for (int32_t k = j - 2; k >= 0; --k) {
         int64_t t = s2 * s2, s2k = s1 * s1 + t, s2k1 = t + ((s1 * s2) << 1);
         if ((n >> k) & 1) {
             s1 = s2k1;
@@ -19,9 +19,9 @@ int64_t doubling(int n) {
     return s2;
 }
 
-int64_t tumble(int n) {
+int64_t tumble(int32_t n) {
     int64_t even = 0, odd = 1;
-    int i;
+    int32_t i;
 
     // even is the i-th fibonacci number
     // odd is the (i+1)-th fibonacci number
@@ -32,7 +32,7 @@ int64_t tumble(int n) {
     return i == n ? even : odd;
 }
 
-int64_t iterative(int n) {
+int64_t iterative(int32_t n) {
     int64_t first = 0, second = 1;
     while (n-- > 0) {
         int64_t t = first + second;
@@ -42,7 +42,7 @@ int64_t iterative(int n) {
     return first;
 }
 
-int64_t qmatrix(int n) {
+int64_t qmatrix(int32_t n) {
     int64_t a = 1, b = 0, c = 0, d = 1;
     for (--n; n > 0; n >>= 1) {
         if (n & 1) {
