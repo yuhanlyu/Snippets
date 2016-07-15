@@ -6,31 +6,31 @@ namespace {
 
 static void BM_Iterative(benchmark::State& state) {
     while (state.KeepRunning()) {
-       benchmark::DoNotOptimize(iterative(state.range_x()));
+       benchmark::DoNotOptimize(iterative(92));
     }
 }
-BENCHMARK(BM_Iterative)->Arg(44)->Arg(45)->Arg(46)->Arg(47);
+BENCHMARK(BM_Iterative);
 
 static void BM_Doubling(benchmark::State& state) {
     while (state.KeepRunning()) {
-        benchmark::DoNotOptimize(doubling(state.range_x()));
+        benchmark::DoNotOptimize(doubling(92));
     }
 }
-BENCHMARK(BM_Doubling)->Arg(44)->Arg(45)->Arg(46)->Arg(47);
+BENCHMARK(BM_Doubling);
 
 static void BM_Tumble(benchmark::State& state) {
     while (state.KeepRunning()) {
-        benchmark::DoNotOptimize(tumble(state.range_x()));
+        benchmark::DoNotOptimize(tumble(92));
     }
 }
-BENCHMARK(BM_Tumble)->Arg(44)->Arg(45)->Arg(46)->Arg(47);
+BENCHMARK(BM_Tumble);
 
 static void BM_QMatrix(benchmark::State& state) {
     while (state.KeepRunning()) {
-        benchmark::DoNotOptimize(qmatrix(state.range_x()));
+        benchmark::DoNotOptimize(qmatrix(92));
     }
 }
-BENCHMARK(BM_QMatrix)->Arg(44)->Arg(45)->Arg(46)->Arg(47);
+BENCHMARK(BM_QMatrix);
 
 }
 
