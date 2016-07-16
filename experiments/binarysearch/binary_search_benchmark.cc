@@ -1,7 +1,7 @@
 #include "binary_search.h"
 
 #include <algorithm>
-#include <stdlib.h>
+#include <cstdlib>
 
 #include "benchmark/benchmark_api.h"
 
