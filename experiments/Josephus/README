@@ -1,11 +1,37 @@
 This is a comparions of different methods of solving Josephus problem.
 The most efficient method is my space efficient verison of Gelgi's method.
+Note that the performance of Woodhousea method is very stable, 
+and is faster than Gelgi's method in one case.
 
 Benchmark                Time           CPU Iterations
 ------------------------------------------------------
-BM_ShamsBaragh    31458475 ns   31335182 ns         22
-BM_Woodhousea     17680011 ns   17645895 ns         38
-BM_Gelgi          14748350 ns   14657064 ns         47
-BM_GelgiImprove   10760092 ns   10747306 ns         62
-BM_TAOCP          25895066 ns   25865370 ns         27
-BM_TAOCPK         27533119 ns   27498308 ns         26
+BM_ShamsBaragh/2                401 ns        400 ns    1769504
+BM_ShamsBaragh/97             28859 ns      28730 ns      23524
+BM_ShamsBaragh/9.18848k     2875035 ns    2869846 ns        241
+BM_ShamsBaragh/891.282k   286954165 ns  286283500 ns          2
+BM_ShamsBaragh/1.90735M   631123066 ns  625700000 ns          1
+BM_Woodhousea/2            17419872 ns   17371500 ns         38
+BM_Woodhousea/97           17947829 ns   17916350 ns         40
+BM_Woodhousea/9.18848k     17977543 ns   17945846 ns         39
+BM_Woodhousea/891.282k     18080014 ns   18052564 ns         39
+BM_Woodhousea/1.90735M     17604274 ns   17576200 ns         40
+BM_Gelgi/2                      944 ns        940 ns     744198
+BM_Gelgi/97                   35921 ns      35871 ns      18197
+BM_Gelgi/9.18848k           1986249 ns    1982724 ns        348
+BM_Gelgi/891.282k          47549269 ns   47159909 ns         11
+BM_Gelgi/1.90735M          18812321 ns   18723838 ns         37
+BM_GelgiImprove/2               746 ns        745 ns     921028
+BM_GelgiImprove/97            30157 ns      30120 ns      23455
+BM_GelgiImprove/9.18848k    1616563 ns    1614232 ns        449
+BM_GelgiImprove/891.282k   36935254 ns   36875842 ns         19
+BM_GelgiImprove/1.90735M   17976397 ns   17941400 ns         40
+BM_TAOCP/2                      356 ns        355 ns    2012992
+BM_TAOCP/97                   25367 ns      25316 ns      26749
+BM_TAOCP/9.18848k           2448370 ns    2444158 ns        291
+BM_TAOCP/891.282k         249129852 ns  246967667 ns          3
+BM_TAOCP/1.90735M         533857822 ns  526263000 ns          1
+BM_TAOCPK/2                     345 ns        344 ns    1868820
+BM_TAOCPK/97                  26191 ns      26156 ns      26184
+BM_TAOCPK/9.18848k          2544419 ns    2536710 ns        262
+BM_TAOCPK/891.282k        256086588 ns  255039333 ns          3
+BM_TAOCPK/1.90735M        559193850 ns  551489000 ns          1
