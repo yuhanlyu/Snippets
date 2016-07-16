@@ -1,7 +1,6 @@
 #include "josephus.h"
 
 #include <stack>
-#include <cmath>
 
 int32_t shams_baragh(int64_t n, int32_t m) {
     int64_t d = 1;
@@ -49,22 +48,21 @@ int32_t gelgi(int32_t n, int32_t m) {
 }
 
 int32_t gelgi_improve(int32_t n, int32_t m) {
-    const int32_t size = ceil(log2(n)) + 1;
-    int32_t stack[size];
     int32_t nn = n, ans = 0, iterations = 1, top = 0;
+    std::stack<int32_t> mark;
 
     for (iterations = 1; nn > m; ++iterations) {
         int p = nn;
         nn -= nn / m;
         if (nn + nn / (m - 1) - p == 1)
-            stack[top++] = iterations;
+            mark.emplace(iterations);
     }
     for (int32_t i = 2; i <= nn; ++i)
         ans = (ans + m) % i;
     for (++ans, --iterations; nn != n; --iterations) {
         nn += nn / (m - 1);
-        if (top > 0 && stack[top - 1] == iterations) {
-            --top;
+        if (!mark.empty() && mark.top() == iterations) {
+            mark.pop();
             --nn;
         }
         if (ans <= nn % m)

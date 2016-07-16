@@ -3,36 +3,35 @@ The most efficient method is my space efficient verison of Gelgi's method.
 Note that the performance of Woodhousea method is very stable, 
 and is faster than Gelgi's method in one case.
 
-Benchmark                Time           CPU Iterations
-------------------------------------------------------
-BM_ShamsBaragh/2                405 ns        404 ns    1731987
-BM_ShamsBaragh/97             29069 ns      29017 ns      25760
-BM_ShamsBaragh/9.18848k     2906282 ns    2897604 ns        240
-BM_ShamsBaragh/891.282k   305112004 ns  302460000 ns          2
-BM_ShamsBaragh/1.90735M   643187761 ns  636071000 ns          1
-BM_Woodhousea/2            18424704 ns   18353514 ns         37
-BM_Woodhousea/97           17742704 ns   17716171 ns         41
-BM_Woodhousea/9.18848k     18001231 ns   17962927 ns         41
-BM_Woodhousea/891.282k     17875140 ns   17841538 ns         39
-BM_Woodhousea/1.90735M     17717533 ns   17688256 ns         39
-BM_Gelgi/2                      876 ns        873 ns     794615
-BM_Gelgi/97                   38313 ns      38190 ns      19466
-BM_Gelgi/9.18848k           2097213 ns    2093116 ns        344
-BM_Gelgi/891.282k          45146783 ns   45064000 ns         15
-BM_Gelgi/1.90735M          18306297 ns   18278175 ns         40
-BM_GelgiImprove/2               596 ns        595 ns    1196949
-BM_GelgiImprove/97            30163 ns      30114 ns      22681
-BM_GelgiImprove/9.18848k    1617832 ns    1615522 ns        404
-BM_GelgiImprove/891.282k   36718055 ns   36623368 ns         19
-BM_GelgiImprove/1.90735M   17736253 ns   17700947 ns         38
-BM_TAOCP/2                      362 ns        361 ns    1924504
-BM_TAOCP/97                   26165 ns      26114 ns      28004
-BM_TAOCP/9.18848k           2606359 ns    2600570 ns        277
-BM_TAOCP/891.282k         243758519 ns  243216333 ns          3
-BM_TAOCP/1.90735M         543792725 ns  537919000 ns          1
-BM_TAOCPK/2                     367 ns        365 ns    2025785
-BM_TAOCPK/97                  26302 ns      26264 ns      25326
-BM_TAOCPK/9.18848k          2690261 ns    2665180 ns        266
-BM_TAOCPK/891.282k        261969328 ns  260695667 ns          3
-BM_TAOCPK/1.90735M        556678534 ns  551430000 ns          1
-
+Benchmark                         Time           CPU Iterations
+---------------------------------------------------------------
+BM_ShamsBaragh/2                396 ns        395 ns   34762598
+BM_ShamsBaragh/97             28836 ns      28769 ns     488656
+BM_ShamsBaragh/9.18848k     2862726 ns    2853400 ns       4856
+BM_ShamsBaragh/891.282k   288771050 ns  288130265 ns         49
+BM_ShamsBaragh/1.90735M   626710046 ns  625754909 ns         22
+BM_Woodhousea/2            17729910 ns   17693816 ns        790
+BM_Woodhousea/97           17499061 ns   17469363 ns        793
+BM_Woodhousea/9.18848k     17782519 ns   17748915 ns        799
+BM_Woodhousea/891.282k     17686853 ns   17651903 ns        791
+BM_Woodhousea/1.90735M     17789540 ns   17758129 ns        789
+BM_Gelgi/2                      852 ns        851 ns   15892934
+BM_Gelgi/97                   36817 ns      36748 ns     381537
+BM_Gelgi/9.18848k           2045444 ns    2040813 ns       6941
+BM_Gelgi/891.282k          45672639 ns   45570552 ns        306
+BM_Gelgi/1.90735M          17724567 ns   17685466 ns        809
+BM_GelgiImprove/2               726 ns        725 ns   18996141
+BM_GelgiImprove/97            29904 ns      29842 ns     457994
+BM_GelgiImprove/9.18848k    1654570 ns    1651600 ns       8668
+BM_GelgiImprove/891.282k   35648636 ns   35589078 ns        386
+BM_GelgiImprove/1.90735M   17785958 ns   17756878 ns        796
+BM_TAOCP/2                      346 ns        345 ns   39659113
+BM_TAOCP/97                   25396 ns      25359 ns     556431
+BM_TAOCP/9.18848k           2454170 ns    2449937 ns       5627
+BM_TAOCP/891.282k         242355470 ns  241870224 ns         58
+BM_TAOCP/1.90735M         520367040 ns  519787037 ns         27
+BM_TAOCPK/2                     358 ns        358 ns   39065388
+BM_TAOCPK/97                  26079 ns      26031 ns     536770
+BM_TAOCPK/9.18848k          2560485 ns    2555612 ns       5493
+BM_TAOCPK/891.282k        244711102 ns  244330228 ns         57
+BM_TAOCPK/1.90735M        540979413 ns  540304115 ns         26
