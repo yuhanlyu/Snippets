@@ -7,23 +7,24 @@ namespace {
 class RotationTest : public ::testing::Test {
   protected:
     static void SetUpTestCase() {
-        srand(time(NULL));
-        for (int32_t i = 0; i < cases; ++i) {
-            shift[i] = rand() % size;
+        for (int32_t i = 1; i < cases; ++i) {
+            shift[i] = shift[i - 1] * m;
         }
     }
+
     virtual void SetUp() override {
         for (int32_t i = 0; i < size; ++i) {
             test[i] = i;
         }
     }
-    static constexpr int32_t size = 1000000;
-    static constexpr int32_t cases = 10;
+    static constexpr int32_t size = 2000000;
+    static constexpr int32_t m = 7;
+    static constexpr int32_t cases = 8;
     static int32_t shift[cases];
     int32_t test[size];
 };
 
-int32_t RotationTest::shift[cases];
+int32_t RotationTest::shift[cases] = {1};
 
 TEST_F(RotationTest, ValidateJugglingBently) {
     for (int32_t i = 0; i < cases; ++i) {

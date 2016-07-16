@@ -49,10 +49,12 @@ void rotate_reverse(int32_t A[], int32_t n, int32_t k) {
 }
 
 void block_swap_shene(int32_t A[], int32_t n, int32_t k) {
+    int32_t count = 0;
     for (int32_t left = 0, right = k, middle = k; ;) {
         int32_t temp = A[left];
         A[left++] = A[right];
         A[right++] = temp;
+        ++count;
         if (left == middle) {
             if (right == n)
                 return;

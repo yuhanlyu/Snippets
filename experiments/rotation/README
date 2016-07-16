@@ -1,10 +1,22 @@
 I compared different algorithms of rotating an array.
 Gries-Mills's method is faster than other methods, which confirms the result on Dr.Dobb's (http://www.drdobbs.com/parallel/benchmarking-block-swapping-algorithms/232900395).
 
+However, I also found that Gries-Mill's method is slower when rotate for a very small or large amount, but is faster when rotate a moderately large amount.
+
 Benchmark                                  Time           CPU Iterations
 ------------------------------------------------------------------------
-RotationBenchmark/JugglingBentley   13333703 ns   13185453 ns         53
-RotationBenchmark/JugglingShene     13850334 ns   13773830 ns         47
-RotationBenchmark/RotateReverse      1976739 ns    1954402 ns        361
-RotationBenchmark/BlockSwapShene     2393058 ns    2386399 ns        281
-RotationBenchmark/BlockSwapGries      976578 ns     973449 ns        644
+Rotation/JugglingBentley/1          10811484 ns   10647681 ns         69
+Rotation/JugglingBentley/6.40723k   15021218 ns   14900822 ns         45
+Rotation/JugglingBentley/976.562k   10853592 ns   10759953 ns         64
+Rotation/JugglingShene/1            11239685 ns   11133109 ns         64
+Rotation/JugglingShene/6.40723k     16456407 ns   16397975 ns         40
+Rotation/JugglingShene/976.562k     11186484 ns   11149844 ns         64
+Rotation/RotateReverse/1             1995101 ns    1984747 ns        356
+Rotation/RotateReverse/6.40723k      1943764 ns    1937006 ns        344
+Rotation/RotateReverse/976.562k      1865612 ns    1859129 ns        357
+Rotation/BlockSwapShene/1            2348309 ns    2339235 ns        298
+Rotation/BlockSwapShene/6.40723k     2423143 ns    2414760 ns        288
+Rotation/BlockSwapShene/976.562k     2425769 ns    2416850 ns        280
+Rotation/BlockSwapGries/1            5931312 ns    5911579 ns        121
+Rotation/BlockSwapGries/6.40723k      865949 ns     861731 ns        732
+Rotation/BlockSwapGries/976.562k    11187113 ns   11065000 ns         59
