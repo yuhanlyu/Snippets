@@ -1,7 +1,7 @@
 #ifndef JOSEPHUS_H_
 #define JOSEPHUS_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 // Armin Shams-Baragh's method
 int32_t shams_baragh(int64_t n, int32_t m);
