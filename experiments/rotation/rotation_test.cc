@@ -1,5 +1,7 @@
 #include "rotation.h"
 
+#include <algorithm>
+
 #include "gtest/gtest.h"
 
 namespace {
@@ -29,7 +31,7 @@ int32_t RotationTest::shift[cases] = {1};
 TEST_F(RotationTest, ValidateJugglingBently) {
     for (int32_t i = 0; i < cases; ++i) {
         int32_t temp[size];
-        memcpy(temp, test, size * sizeof(int));
+        std::copy(test, test + size, temp);
         juggling_bentley(temp, size, shift[i]);
         for (int32_t j = 0; j < size; ++j)
             ASSERT_EQ(temp[j], (j + shift[i]) % size);
@@ -39,7 +41,7 @@ TEST_F(RotationTest, ValidateJugglingBently) {
 TEST_F(RotationTest, ValidateJugglingShene) {
     for (int32_t i = 0; i < cases; ++i) {
         int32_t temp[size];
-        memcpy(temp, test, size * sizeof(int));
+        std::copy(test, test + size, temp);
         juggling_shene(temp, size, shift[i]);
         for (int32_t j = 0; j < size; ++j)
             ASSERT_EQ(temp[j], (j + shift[i]) % size);
@@ -49,7 +51,7 @@ TEST_F(RotationTest, ValidateJugglingShene) {
 TEST_F(RotationTest, ValidateRotateReverse) {
     for (int32_t i = 0; i < cases; ++i) {
         int32_t temp[size];
-        memcpy(temp, test, size * sizeof(int));
+        std::copy(test, test + size, temp);
         rotate_reverse(temp, size, shift[i]);
         for (int32_t j = 0; j < size; ++j) {
             ASSERT_EQ(temp[j], (j + shift[i]) % size);
@@ -60,7 +62,7 @@ TEST_F(RotationTest, ValidateRotateReverse) {
 TEST_F(RotationTest, ValidateBlockSwapShene) {
     for (int32_t i = 0; i < cases; ++i) {
         int32_t temp[size];
-        memcpy(temp, test, size * sizeof(int));
+        std::copy(test, test + size, temp);
         block_swap_shene(temp, size, shift[i]);
         for (int32_t j = 0; j < size; ++j)
             ASSERT_EQ(temp[j], (j + shift[i]) % size);
@@ -70,7 +72,7 @@ TEST_F(RotationTest, ValidateBlockSwapShene) {
 TEST_F(RotationTest, ValidateBlockSwapGries) {
     for (int32_t i = 0; i < cases; ++i) {
         int32_t temp[size];
-        memcpy(temp, test, size * sizeof(int));
+        std::copy(test, test + size, temp);
         block_swap_gries(temp, size, shift[i]);
         for (int32_t j = 0; j < size; ++j)
             ASSERT_EQ(temp[j], (j + shift[i]) % size);
