@@ -21,8 +21,7 @@ class SearchBenchmark : public benchmark::Fixture {
     static constexpr int32_t size  = 1000000;
     static constexpr int32_t max = INT32_MAX;
     static constexpr int32_t m = max / size;
-    std::uniform_int_distribution<int32_t> distribution =
-        std::uniform_int_distribution<int32_t>(0, max);
+    std::uniform_int_distribution<int32_t> distribution{0, max};
     std::default_random_engine generator;
     int32_t test[size];
 };
