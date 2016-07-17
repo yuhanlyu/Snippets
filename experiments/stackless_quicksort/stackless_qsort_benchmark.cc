@@ -2,7 +2,8 @@
 
 #include <algorithm>
 #include <cstdlib>
-#include <limits>
+#include <cstdint>
+#include <random>
 
 #include "benchmark/benchmark_api.h"
 
@@ -11,17 +12,17 @@ namespace {
 class QSortBenchmark : public benchmark::Fixture {
   public:
     void SetUp(const ::benchmark::State& state) {
+        generator.seed();
         test[0] = test[1] = test[size] = 0;
-        int32_t x = 1;
         for (int32_t i = 0; i < size - 2; ++i) {
-            test[i + 2] = x;
-            x = x * 48271 % std::numeric_limits<std::int32_t>::max();
-            if (x < 0)
-                x = -x;
+            test[i + 2] = distribution(generator);
         }
     }
 
     static constexpr int32_t size = 1000000;
+    static constexpr int32_t max = INT32_MAX;
+    std::uniform_int_distribution<int32_t> distribution{0, max};
+    std::default_random_engine generator;
     int32_t test[size + 1];
 };
 

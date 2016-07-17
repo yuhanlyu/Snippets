@@ -1,2 +1,9 @@
-An experiment between different in-place sorting algorithms.
-I compared stackless quicksort with heapsort.
+This is a benchmark for comparing several sorting algorithms with a 
+stackless quicksort.
+
+Benchmark                              Time           CPU Iterations
+--------------------------------------------------------------------
+QSortBenchmark/StacklessQSort  113439972 ns  113297826 ns        121
+QSortBenchmark/STLQSort         94087383 ns   93923289 ns        152
+QSortBenchmark/STLStableQSort  109112563 ns  108981346 ns        127
+QSortBenchmark/QSort           193304737 ns  193017903 ns         72
