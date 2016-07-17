@@ -1,62 +1,69 @@
-#include <stdio.h>
+#include "sieve.h"
+
 #include <string.h>
 #include <math.h>
-#include <assert.h>
-#include <sys/time.h>
-#include <sys/resource.h>
-#define MAX 200000000
 
-void eratosthenes(char prime[], int n);
-void eratosthenes(char prime[], int n)
-{
+void sieve(int32_t n, uint8_t prime[]) {
     memset(prime, 1, n + 1);
     prime[0] = prime[1] = 0;
-    int bound = round(sqrt(n));
-    for (int i = 2; i <= bound; ++i) {
+    int32_t bound = round(sqrt(n));
+    for (int32_t i = 2; i <= bound; ++i) {
         if (prime[i]) {
-            for (int j = i * i; j <= n; j += i)
+            for (int32_t j = i * i; j <= n; j += i)
                 prime[j] = 0;
         }
     }
 }
 
-void eratosthenes2(char prime[], int n);
-void eratosthenes2(char prime[], int n)
-{
+void sieve_improve(int32_t n, uint8_t prime[]) {
     memset(prime, 1, n + 1);
     prime[0] = prime[1] = 0;
-    int bound = round(sqrt(n));
-    for (int i = 2; i <= bound; ++i) {
+    int32_t bound = round(sqrt(n));
+    for (int32_t i = 2; i <= bound; ++i) {
         if (prime[i]) {
-            for (int k = n / i, j = i * k; k >= i; --k, j -= i)
+            for (int32_t k = n / i, j = i * k; k >= i; --k, j -= i)
                 if (prime[k])
                     prime[j] = 0;
         }
     }
 }
 
-void time_used(struct timeval *t);
-void time_used(struct timeval *t)
-{
-    struct rusage ru;
-    getrusage(RUSAGE_SELF, &ru);
-    *t = ru.ru_utime;
+static inline int32_t get(uint32_t bitset[], int x) { 
+    return (bitset[x>>5] >> (x&31)) & 1;
 }
 
+static inline void reset(uint32_t bitset[], int x) { 
+    bitset[x>>5] &= ~(1 << (x&31));
+}
 
-char prime[MAX + 1], prime2[MAX + 1];
-int main(void)
-{
-    struct timeval t0, t1, t2, dt;
-    time_used(&t0);
-    eratosthenes(prime, MAX);
-    time_used(&t1);
-    timersub(&t1, &t0, &dt);
-    printf("Ordinary method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
-    eratosthenes2(prime2, MAX);
-    time_used(&t2);
-    timersub(&t2, &t1, &dt);
-    printf("Modified method used %ld.%06d seconds\n", dt.tv_sec, dt.tv_usec);
-    for (int i = 1; i <= MAX; ++i)
-        assert(prime[i] == prime2[i]);
+// Number of bytes having at least n + 1 bits
+static inline int32_t bytes(int32_t n) {
+    return (n + 1) / 8 + ((n + 1) % 8 == 0 ? 0 : 1);
+}
+
+void sieve_bit(int32_t n, uint32_t prime[]) {
+    memset(prime, 0xFF, bytes(n));
+    reset(prime, 0);
+    reset(prime, 1);
+    int32_t bound = round(sqrt(n));
+    for (int32_t i = 2; i <= bound; ++i) {
+        if (get(prime, i)) {
+            for (int32_t j = i * i; j <= n; j += i)
+                reset(prime, j);
+        }
+    }
+}
+
+void sieve_improve_bit(int32_t n, uint32_t prime[]) {
+    memset(prime, 0xFF, bytes(n));
+    reset(prime, 0);
+    reset(prime, 1);
+    int32_t bound = round(sqrt(n));
+    for (int32_t i = 2; i <= bound; ++i) {
+        if (get(prime, i)) {
+            for (int32_t k = n / i, j = i * k; k >= i; --k, j -= i)
+                if (get(prime, k))
+                    reset(prime, j);
+        }
+    }
 }
