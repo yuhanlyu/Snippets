@@ -7,52 +7,39 @@
 
 namespace {
 
-class Sieve : public benchmark::Fixture {
-  public:
-    void SetUp(const ::benchmark::State& state) {
-        std::fill(prime, prime + size + 1, false);
-    }
+static constexpr int32_t size = 1 << 28;
+static constexpr int32_t bitset_size = 1 << 30;
+static constexpr int32_t m = 16;
+uint8_t prime[size + 1];
+uint32_t prime_bit[bitset_size / 32 + 1];
 
-    static constexpr int32_t size = 100000000;
-    static constexpr int32_t bitset_size = size * 10;
-    static constexpr int32_t m = 10;
-    uint8_t prime[size + 1];
-    uint32_t prime_bit[bitset_size / 8 + 1];
-};
-
-BENCHMARK_DEFINE_F(Sieve, Ordinary)(benchmark::State& state) {
+static void Sieve(benchmark::State& state) {
     while (state.KeepRunning()) {
         sieve(state.range_x(), prime);
     }
 }
-BENCHMARK_REGISTER_F(Sieve, Ordinary)
-    ->RangeMultiplier(Sieve::m)->Range(1000, Sieve::size);
+BENCHMARK(Sieve)->RangeMultiplier(m)->Range(1024, size);
 
-BENCHMARK_DEFINE_F(Sieve, SieveImprove)(benchmark::State& state) {
+static void SieveImprove(benchmark::State& state) {
     while (state.KeepRunning()) {
         sieve_improve(state.range_x(), prime);
     }
 }
-BENCHMARK_REGISTER_F(Sieve, SieveImprove)
-    ->RangeMultiplier(Sieve::m)->Range(1000, Sieve::size);
+BENCHMARK(SieveImprove)->RangeMultiplier(m)->Range(1024, size);
 
-BENCHMARK_DEFINE_F(Sieve, SieveBitset)(benchmark::State& state) {
+static void SieveBitset(benchmark::State& state) {
     while (state.KeepRunning()) {
         sieve_bit(state.range_x(), prime_bit);
     }
 }
-BENCHMARK_REGISTER_F(Sieve, SieveBitset)
-    ->RangeMultiplier(Sieve::m)
-    ->Range(1000, Sieve::bitset_size);
+BENCHMARK(SieveBitset)->RangeMultiplier(m)->Range(1024, bitset_size);
 
-BENCHMARK_DEFINE_F(Sieve, SieveImproveBitset)(benchmark::State& state) {
+static void SieveImproveBitset(benchmark::State& state) {
     while (state.KeepRunning()) {
         sieve_improve_bit(state.range_x(), prime_bit);
     }
 }
-BENCHMARK_REGISTER_F(Sieve, SieveImproveBitset)
-    ->RangeMultiplier(Sieve::m)
-    ->Range(1000, Sieve::bitset_size);
+BENCHMARK(SieveImproveBitset)->RangeMultiplier(m)->Range(1024, bitset_size);
 }
 
 BENCHMARK_MAIN();

@@ -1,7 +1,7 @@
 #include "sieve.h"
 
-#include <string.h>
 #include <math.h>
+#include <string.h>
 
 void sieve(int32_t n, uint8_t prime[]) {
     memset(prime, 1, n + 1);
@@ -28,11 +28,11 @@ void sieve_improve(int32_t n, uint8_t prime[]) {
     }
 }
 
-static inline int32_t get(uint32_t bitset[], int x) { 
+static inline int32_t get(uint32_t bitset[], int32_t x) { 
     return (bitset[x>>5] >> (x&31)) & 1;
 }
 
-static inline void reset(uint32_t bitset[], int x) { 
+static inline void reset(uint32_t bitset[], int32_t x) { 
     bitset[x>>5] &= ~(1 << (x&31));
 }
 
@@ -48,8 +48,9 @@ void sieve_bit(int32_t n, uint32_t prime[]) {
     int32_t bound = round(sqrt(n));
     for (int32_t i = 2; i <= bound; ++i) {
         if (get(prime, i)) {
-            for (int32_t j = i * i; j <= n; j += i)
+            for (int32_t j = i * i; j <= n; j += i) {
                 reset(prime, j);
+            }
         }
     }
 }

@@ -5,31 +5,29 @@ One common improvement is to use bitset to store the result.
 The improved algorithm is faster when n is larger.
 The methods of using bitset is faster when n is larger.
 
-Benchmark                                   Time            CPU Iterations
-------------------------------------------------------------------------
-Sieve/Ordinary/1000                      1256 ns        1254 ns    5573839
-Sieve/Ordinary/9.76562k                 13444 ns       13416 ns     522031
-Sieve/Ordinary/97.6562k                201050 ns      200479 ns      34140
-Sieve/Ordinary/976.562k               3414585 ns     3405061 ns       2048
-Sieve/Ordinary/9.53674M             118931944 ns   118445847 ns         59
-Sieve/Ordinary/95.3674M            1558157110 ns  1551209600 ns          5
-Sieve/SieveImprove/1000                  3116 ns        3111 ns    2243939
-Sieve/SieveImprove/9.76562k             39570 ns       39478 ns     179449
-Sieve/SieveImprove/97.6562k            460266 ns      459504 ns      15450
-Sieve/SieveImprove/976.562k           5079491 ns     5064133 ns       1377
-Sieve/SieveImprove/9.53674M          56994684 ns    56780645 ns        121
-Sieve/SieveImprove/95.3674M         604045261 ns   602472182 ns         11
-Sieve/SieveBitset/1000                   2324 ns        2320 ns    3044430
-Sieve/SieveBitset/9.76562k              26138 ns       26056 ns     264292
-Sieve/SieveBitset/97.6562k             292629 ns      292223 ns      24030
-Sieve/SieveBitset/976.562k            3233574 ns     3227391 ns       2138
-Sieve/SieveBitset/9.53674M           42064978 ns    41932178 ns        163
-Sieve/SieveBitset/95.3674M          996332100 ns   993467857 ns          7
-Sieve/SieveBitset/953.674M        12856558084 ns 12774893000 ns          1
-Sieve/SieveImproveBitset/1000            3685 ns        3677 ns    1911482
-Sieve/SieveImproveBitset/9.76562k       45312 ns       45234 ns     156923
-Sieve/SieveImproveBitset/97.6562k      518536 ns      517697 ns      12732
-Sieve/SieveImproveBitset/976.562k     5710500 ns     5698789 ns       1203
-Sieve/SieveImproveBitset/9.53674M    62292211 ns    62057162 ns        111
-Sieve/SieveImproveBitset/95.3674M   898010015 ns   895724125 ns          8
-Sieve/SieveImproveBitset/953.674M 10147685289 ns 10120022000 ns          1
+Benchmark                          Time            CPU Iterations
+-----------------------------------------------------------------
+Sieve/1024                      1257 ns        1254 ns   11009777
+Sieve/4k                        5242 ns        5235 ns    2657024
+Sieve/64k                     119683 ns      119531 ns     115057
+Sieve/1024k                  3577713 ns     3570443 ns       3888
+Sieve/16M                  215999372 ns   215373431 ns         65
+Sieve/256M                4497749249 ns  4486488000 ns          3
+SieveImprove/1024               3059 ns        3055 ns    4524763
+SieveImprove/4k                14007 ns       13984 ns    1008787
+SieveImprove/64k              274727 ns      274363 ns      50765
+SieveImprove/1024k           4887773 ns     4881989 ns       2793
+SieveImprove/16M            89577487 ns    89356172 ns        157
+SieveImprove/256M         1536424504 ns  1532277333 ns          9
+SieveBitset/1024                2390 ns        2386 ns    5895953
+SieveBitset/4k                 10309 ns       10292 ns    1397119
+SieveBitset/64k               189455 ns      189099 ns      73767
+SieveBitset/1024k            3402943 ns     3399033 ns       3979
+SieveBitset/16M             73231588 ns    73113354 ns        192
+SieveBitset/1024M        13698468208 ns 13660804000 ns          1
+SieveImproveBitset/1024         3885 ns        3879 ns    3617079
+SieveImproveBitset/4k          17720 ns       17690 ns     791981
+SieveImproveBitset/64k        341005 ns      340516 ns      40967
+SieveImproveBitset/1024k     5962065 ns     5954038 ns       2305
+SieveImproveBitset/16M     104316986 ns   104124429 ns        133
+SieveImproveBitset/1024M 11074421167 ns 11036212000 ns          1
