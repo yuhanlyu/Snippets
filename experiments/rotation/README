@@ -5,18 +5,18 @@ However, I also found that Gries-Mill's method is slower when rotate for a very 
 
 Benchmark                                  Time           CPU Iterations
 ------------------------------------------------------------------------
-Rotation/JugglingBentley/1          10811484 ns   10647681 ns         69
-Rotation/JugglingBentley/6.40723k   15021218 ns   14900822 ns         45
-Rotation/JugglingBentley/976.562k   10853592 ns   10759953 ns         64
-Rotation/JugglingShene/1            11239685 ns   11133109 ns         64
-Rotation/JugglingShene/6.40723k     16456407 ns   16397975 ns         40
-Rotation/JugglingShene/976.562k     11186484 ns   11149844 ns         64
-Rotation/RotateReverse/1             1995101 ns    1984747 ns        356
-Rotation/RotateReverse/6.40723k      1943764 ns    1937006 ns        344
-Rotation/RotateReverse/976.562k      1865612 ns    1859129 ns        357
-Rotation/BlockSwapShene/1            2348309 ns    2339235 ns        298
-Rotation/BlockSwapShene/6.40723k     2423143 ns    2414760 ns        288
-Rotation/BlockSwapShene/976.562k     2425769 ns    2416850 ns        280
-Rotation/BlockSwapGries/1            5931312 ns    5911579 ns        121
-Rotation/BlockSwapGries/6.40723k      865949 ns     861731 ns        732
-Rotation/BlockSwapGries/976.562k    11187113 ns   11065000 ns         59
+Rotation/JugglingBentley/1          11045676 ns   10938359 ns         64
+Rotation/JugglingBentley/6.40723k   18468270 ns   18360784 ns         37
+Rotation/JugglingBentley/1024k      11535560 ns   11477814 ns         59
+Rotation/JugglingShene/1            11562335 ns   11538379 ns         58
+Rotation/JugglingShene/6.40723k     21584541 ns   21522281 ns         32
+Rotation/JugglingShene/1024k        11478547 ns   11442250 ns         64
+Rotation/RotateReverse/1             1896237 ns    1888322 ns        351
+Rotation/RotateReverse/6.40723k      1867399 ns    1863435 ns        361
+Rotation/RotateReverse/1024k         1818232 ns    1816407 ns        356
+Rotation/BlockSwapShene/1            2113432 ns    2111030 ns        332
+Rotation/BlockSwapShene/6.40723k     2370139 ns    2369028 ns        284
+Rotation/BlockSwapShene/1024k        2521763 ns    2515832 ns        285
+Rotation/BlockSwapGries/1            5972233 ns    5965063 ns        111
+Rotation/BlockSwapGries/6.40723k      897726 ns     896362 ns        726
+Rotation/BlockSwapGries/1024k       11033209 ns   11027169 ns         65

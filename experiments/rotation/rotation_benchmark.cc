@@ -10,7 +10,7 @@ class Rotation : public benchmark::Fixture {
         for (int32_t i = 0; i < range; ++i)
             temp[i] = i;
     }
-    static constexpr int32_t range = 1000000;
+    static constexpr int32_t range = 1 << 20;
     static constexpr int32_t multiplier = 6561;
     int32_t temp[range];
 };
