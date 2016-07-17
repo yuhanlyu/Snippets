@@ -19,7 +19,7 @@ TEST(SieveTest, SieveImprove) {
     }
 }
 
-static inline int32_t get(uint32_t bitset[], int x) {
+static inline int32_t get(uint32_t bitset[], int32_t x) {
     return (bitset[x>>5] >> (x&31)) & 1;
 }
 
