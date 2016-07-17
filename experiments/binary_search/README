@@ -7,10 +7,30 @@ However, if the comparison between elements is expensive, then comparison will d
 Or, if the size of element is larger, than cache miss penalty will dominate the time cost.
 Thus, biased binary search may only be useful in some limited scenarios.
 
-Benchmark                             Time           CPU Iterations
--------------------------------------------------------------------
-SearchBenchmark/Random               65 ns         65 ns   11145787
-SearchBenchmark/BinarySearch        325 ns        324 ns    2121804
-SearchBenchmark/BiasedSearch        282 ns        279 ns    2596959
-SearchBenchmark/STLSearch           321 ns        320 ns    2120069
-SearchBenchmark/BSearch             394 ns        392 ns    1816153
+Benchmark                                   Time           CPU Iterations
+-------------------------------------------------------------------------
+SearchBenchmark/Random/1024k               64 ns         64 ns  109865274
+SearchBenchmark/BinarySearch/1024         141 ns        141 ns   47740021
+SearchBenchmark/BinarySearch/4k           155 ns        155 ns   44649179
+SearchBenchmark/BinarySearch/16k          174 ns        174 ns   40172581
+SearchBenchmark/BinarySearch/64k          204 ns        203 ns   34810474
+SearchBenchmark/BinarySearch/256k         305 ns        304 ns   22751716
+SearchBenchmark/BinarySearch/1024k        517 ns        516 ns   13595401
+SearchBenchmark/BiasedSearch/1024         141 ns        141 ns   49760581
+SearchBenchmark/BiasedSearch/4k           158 ns        157 ns   45802016
+SearchBenchmark/BiasedSearch/16k          174 ns        174 ns   39960952
+SearchBenchmark/BiasedSearch/64k          187 ns        187 ns   37234617
+SearchBenchmark/BiasedSearch/256k         231 ns        231 ns   29824178
+SearchBenchmark/BiasedSearch/1024k        348 ns        347 ns   19306835
+SearchBenchmark/STLSearch/1024            130 ns        129 ns   53715007
+SearchBenchmark/STLSearch/4k              145 ns        144 ns   48343610
+SearchBenchmark/STLSearch/16k             168 ns        168 ns   41583697
+SearchBenchmark/STLSearch/64k             192 ns        192 ns   37562091
+SearchBenchmark/STLSearch/256k            298 ns        298 ns   23643489
+SearchBenchmark/STLSearch/1024k           506 ns        505 ns   13852965
+SearchBenchmark/BSearch/1024              162 ns        162 ns   42621100
+SearchBenchmark/BSearch/4k                186 ns        186 ns   38088833
+SearchBenchmark/BSearch/16k               204 ns        203 ns   34760517
+SearchBenchmark/BSearch/64k               232 ns        232 ns   30181781
+SearchBenchmark/BSearch/256k              348 ns        347 ns   20436083
+SearchBenchmark/BSearch/1024k             584 ns        582 ns   11745972
