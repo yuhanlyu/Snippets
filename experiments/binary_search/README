@@ -9,7 +9,8 @@ Thus, biased binary search may only be useful in some limited scenarios.
 
 Benchmark                             Time           CPU Iterations
 -------------------------------------------------------------------
-SearchBenchmark/BinarySearch        637 ns        635 ns   11156641
-SearchBenchmark/BiasedSearch        613 ns        611 ns   11292763
-SearchBenchmark/STLSearch           628 ns        626 ns   11152108
-SearchBenchmark/BSearch             731 ns        724 ns    9414993
+SearchBenchmark/Random               61 ns         61 ns  220175360
+SearchBenchmark/BinarySearch        362 ns        358 ns   41525135
+SearchBenchmark/BiasedSearch        330 ns        329 ns   41023754
+SearchBenchmark/STLSearch           338 ns        337 ns   40771240
+SearchBenchmark/BSearch             385 ns        384 ns   35157620
