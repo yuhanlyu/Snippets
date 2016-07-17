@@ -34,8 +34,8 @@ BENCHMARK_REGISTER_F(SearchBenchmark, Random)
     ->Arg(1 << 20);
 
 BENCHMARK_DEFINE_F(SearchBenchmark, BinarySearch)(benchmark::State& state) {
-    for (int32_t r = 0; state.KeepRunning(); ) {
-        r = distribution(generator);
+    while (state.KeepRunning()) {
+        int32_t r = distribution(generator);
         benchmark::DoNotOptimize(binary_search(test, state.range_x(), r));
     }
 }
@@ -43,8 +43,8 @@ BENCHMARK_REGISTER_F(SearchBenchmark, BinarySearch)
     ->RangeMultiplier(4)->Range(1 << 10, 1 << 20);
 
 BENCHMARK_DEFINE_F(SearchBenchmark, BiasedSearch)(benchmark::State& state) {
-    for (int32_t r = 0; state.KeepRunning(); ) {
-        r = distribution(generator);
+    while (state.KeepRunning()) {
+        int32_t r = distribution(generator);
         benchmark::DoNotOptimize(biased_search(test, state.range_x(), r));
     }
 }
@@ -52,8 +52,8 @@ BENCHMARK_REGISTER_F(SearchBenchmark, BiasedSearch)
     ->RangeMultiplier(4)->Range(1 << 10, 1 << 20);
 
 BENCHMARK_DEFINE_F(SearchBenchmark, STLSearch)(benchmark::State& state) {
-    for (int32_t r = 0; state.KeepRunning(); ) {
-        r = distribution(generator);
+    while (state.KeepRunning()) {
+        int32_t r = distribution(generator);
         benchmark::DoNotOptimize(std::lower_bound(test, 
                                                   test + state.range_x(), r));
     }
@@ -68,8 +68,8 @@ int compare(const void *p, const void *q) {
 }
 
 BENCHMARK_DEFINE_F(SearchBenchmark, BSearch)(benchmark::State& state) {
-    for (int32_t r = 0; state.KeepRunning(); ) {
-        r = distribution(generator);
+    while (state.KeepRunning()) {
+        int32_t r = distribution(generator);
         benchmark::DoNotOptimize(bsearch(&r, test, state.range_x(), 
                                          sizeof(int32_t), compare));
     }
