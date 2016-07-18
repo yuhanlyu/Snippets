@@ -7,11 +7,11 @@
 
 namespace {
 
-static constexpr int32_t size = 1 << 28;
-static constexpr int32_t bitset_size = 1 << 30;
-static constexpr int32_t m = 16;
-uint8_t prime[size + 1];
-uint32_t prime_bit[bitset_size / 32 + 1];
+static constexpr uint32_t size = 1U << 30;
+static constexpr uint32_t bitset_size = 1 << 30;
+static constexpr uint32_t m = 16;
+uint8_t prime[size / 2];
+uint32_t prime_bit[bitset_size / 64 + 1];
 
 static void Sieve(benchmark::State& state) {
     while (state.KeepRunning()) {
