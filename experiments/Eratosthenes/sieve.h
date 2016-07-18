@@ -1,7 +1,7 @@
 #ifndef SIEVE_H_
 #define SIEVE_H_
 
-#include <cstdint>
+#include <stdint.h>
 #include <stdbool.h>
 
 static inline uint32_t number_to_index(uint32_t n) {

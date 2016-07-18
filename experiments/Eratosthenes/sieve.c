@@ -5,7 +5,7 @@
 
 void sieve(uint32_t n, uint8_t prime[]) {
     memset(prime, 1, n / 2);
-    uint32_t bound = round(sqrt(n));
+    uint32_t bound = sqrt(n);
     for (uint32_t i = 3; i <= bound; i += 2) {
         if (prime[number_to_index(i)]) {
             for (uint32_t j = i * i; j <= n; j += 2 * i) {
@@ -17,7 +17,7 @@ void sieve(uint32_t n, uint8_t prime[]) {
 
 void sieve_improve(uint32_t n, uint8_t prime[]) {
     memset(prime, 1, n / 2);
-    uint32_t bound = round(sqrt(n));
+    uint32_t bound = sqrt(n);
     for (uint32_t i = 3; i <= bound; i += 2) {
         if (prime[number_to_index(i)]) {
             for (uint32_t k = n / i - ((n / i) % 2 == 0), j = i * k; 
@@ -42,7 +42,7 @@ static inline void reset(uint64_t x, uint32_t bitset[]) {
 
 void sieve_bit(uint64_t n, uint32_t prime[]) {
     memset(prime, 0xFF, bytes(n));
-    uint64_t bound = roundl(sqrtl(n));
+    uint64_t bound = sqrtl(n);
     for (uint64_t i = 3; i <= bound; i += 2) {
         if (get(i, prime)) {
             for (uint64_t j = i * i; j <= n; j += 2 * i) {
@@ -54,7 +54,7 @@ void sieve_bit(uint64_t n, uint32_t prime[]) {
 
 void sieve_improve_bit(uint64_t n, uint32_t prime[]) {
     memset(prime, 0xFF, bytes(n));
-    uint64_t bound = roundl(sqrtl(n));
+    uint64_t bound = sqrtl(n);
     for (uint64_t i = 3; i <= bound; i += 2) {
         if (get(i, prime)) {
             for (uint64_t k = n / i - ((n / i) % 2 == 0), j = i * k; 
