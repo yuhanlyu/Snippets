@@ -7,30 +7,48 @@ However, if the comparison between elements is expensive, then comparison will d
 Or, if the size of element is larger, than cache miss penalty will dominate the time cost.
 Thus, biased binary search may only be useful in some limited scenarios.
 
-Benchmark                                   Time           CPU Iterations
--------------------------------------------------------------------------
-SearchBenchmark/Random/1024k               64 ns         64 ns  109865274
-SearchBenchmark/BinarySearch/1024         141 ns        141 ns   47740021
-SearchBenchmark/BinarySearch/4k           155 ns        155 ns   44649179
-SearchBenchmark/BinarySearch/16k          174 ns        174 ns   40172581
-SearchBenchmark/BinarySearch/64k          204 ns        203 ns   34810474
-SearchBenchmark/BinarySearch/256k         305 ns        304 ns   22751716
-SearchBenchmark/BinarySearch/1024k        517 ns        516 ns   13595401
-SearchBenchmark/BiasedSearch/1024         141 ns        141 ns   49760581
-SearchBenchmark/BiasedSearch/4k           158 ns        157 ns   45802016
-SearchBenchmark/BiasedSearch/16k          174 ns        174 ns   39960952
-SearchBenchmark/BiasedSearch/64k          187 ns        187 ns   37234617
-SearchBenchmark/BiasedSearch/256k         231 ns        231 ns   29824178
-SearchBenchmark/BiasedSearch/1024k        348 ns        347 ns   19306835
-SearchBenchmark/STLSearch/1024            130 ns        129 ns   53715007
-SearchBenchmark/STLSearch/4k              145 ns        144 ns   48343610
-SearchBenchmark/STLSearch/16k             168 ns        168 ns   41583697
-SearchBenchmark/STLSearch/64k             192 ns        192 ns   37562091
-SearchBenchmark/STLSearch/256k            298 ns        298 ns   23643489
-SearchBenchmark/STLSearch/1024k           506 ns        505 ns   13852965
-SearchBenchmark/BSearch/1024              162 ns        162 ns   42621100
-SearchBenchmark/BSearch/4k                186 ns        186 ns   38088833
-SearchBenchmark/BSearch/16k               204 ns        203 ns   34760517
-SearchBenchmark/BSearch/64k               232 ns        232 ns   30181781
-SearchBenchmark/BSearch/256k              348 ns        347 ns   20436083
-SearchBenchmark/BSearch/1024k             584 ns        582 ns   11745972
+The specialized search assumes the input size is power of two.
+
+Benchmark                                        Time           CPU Iterations
+------------------------------------------------------------------------------
+SearchBenchmark/Random/1024k                    64 ns         64 ns   11061073
+SearchBenchmark/BinarySearch/1024              144 ns        144 ns    4683465
+SearchBenchmark/BinarySearch/4k                167 ns        166 ns    4291109
+SearchBenchmark/BinarySearch/16k               187 ns        186 ns    3839256
+SearchBenchmark/BinarySearch/64k               196 ns        196 ns    3535836
+SearchBenchmark/BinarySearch/256k              294 ns        292 ns    2509752
+SearchBenchmark/BinarySearch/1024k             504 ns        502 ns    1342900
+SearchBenchmark/BinarySearch/4M                949 ns        946 ns     745617
+SearchBenchmark/BinarySearch/16M              1222 ns       1221 ns     558156
+SearchBenchmark/BiasedSearch/1024              141 ns        141 ns    4970814
+SearchBenchmark/BiasedSearch/4k                160 ns        160 ns    4390366
+SearchBenchmark/BiasedSearch/16k               183 ns        182 ns    3857472
+SearchBenchmark/BiasedSearch/64k               198 ns        197 ns    3584743
+SearchBenchmark/BiasedSearch/256k              230 ns        229 ns    2954247
+SearchBenchmark/BiasedSearch/1024k             354 ns        353 ns    1944893
+SearchBenchmark/BiasedSearch/4M                597 ns        594 ns    1145907
+SearchBenchmark/BiasedSearch/16M               866 ns        864 ns     816146
+SearchBenchmark/SpecializedSearch/1024         124 ns        124 ns    5218934
+SearchBenchmark/SpecializedSearch/4k           136 ns        135 ns    5192455
+SearchBenchmark/SpecializedSearch/16k          152 ns        152 ns    4458542
+SearchBenchmark/SpecializedSearch/64k          173 ns        172 ns    4317070
+SearchBenchmark/SpecializedSearch/256k         259 ns        258 ns    2792371
+SearchBenchmark/SpecializedSearch/1024k        486 ns        485 ns    1374948
+SearchBenchmark/SpecializedSearch/4M           957 ns        954 ns     735711
+SearchBenchmark/SpecializedSearch/16M         1219 ns       1217 ns     573879
+SearchBenchmark/STLSearch/1024                 133 ns        132 ns    5251904
+SearchBenchmark/STLSearch/4k                   145 ns        145 ns    4786816
+SearchBenchmark/STLSearch/16k                  164 ns        164 ns    4045611
+SearchBenchmark/STLSearch/64k                  191 ns        190 ns    3876184
+SearchBenchmark/STLSearch/256k                 281 ns        280 ns    2554791
+SearchBenchmark/STLSearch/1024k                497 ns        496 ns    1409492
+SearchBenchmark/STLSearch/4M                   969 ns        966 ns     739919
+SearchBenchmark/STLSearch/16M                 1279 ns       1275 ns     555485
+SearchBenchmark/BSearch/1024                   169 ns        169 ns    4231653
+SearchBenchmark/BSearch/4k                     180 ns        179 ns    3810208
+SearchBenchmark/BSearch/16k                    201 ns        201 ns    3422882
+SearchBenchmark/BSearch/64k                    241 ns        241 ns    3018634
+SearchBenchmark/BSearch/256k                   346 ns        343 ns    2131365
+SearchBenchmark/BSearch/1024k                  599 ns        593 ns    1145719
+SearchBenchmark/BSearch/4M                     991 ns        988 ns     688936
+SearchBenchmark/BSearch/16M                   1237 ns       1234 ns     559208

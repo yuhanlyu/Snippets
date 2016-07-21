@@ -9,6 +9,9 @@
 
 namespace {
 
+static constexpr int32_t size  = 1 << 24;
+int32_t test[size];
+
 class SearchBenchmark : public benchmark::Fixture {
   public:
     void SetUp(const ::benchmark::State& state) {
@@ -18,11 +21,9 @@ class SearchBenchmark : public benchmark::Fixture {
         }
         std::sort(test, test + state.range_x());
     }
-    static constexpr int32_t size  = 1 << 20;
     static constexpr int32_t max = INT32_MAX;
     std::uniform_int_distribution<int32_t> distribution{0, max};
     std::default_random_engine generator;
-    int32_t test[size];
 };
 
 BENCHMARK_DEFINE_F(SearchBenchmark, Random)(benchmark::State& state) {
@@ -40,7 +41,7 @@ BENCHMARK_DEFINE_F(SearchBenchmark, BinarySearch)(benchmark::State& state) {
     }
 }
 BENCHMARK_REGISTER_F(SearchBenchmark, BinarySearch)
-    ->RangeMultiplier(4)->Range(1 << 10, 1 << 20);
+    ->RangeMultiplier(4)->Range(1 << 10, size);
 
 BENCHMARK_DEFINE_F(SearchBenchmark, BiasedSearch)(benchmark::State& state) {
     while (state.KeepRunning()) {
@@ -49,7 +50,18 @@ BENCHMARK_DEFINE_F(SearchBenchmark, BiasedSearch)(benchmark::State& state) {
     }
 }
 BENCHMARK_REGISTER_F(SearchBenchmark, BiasedSearch)
-    ->RangeMultiplier(4)->Range(1 << 10, 1 << 20);
+    ->RangeMultiplier(4)->Range(1 << 10, size);
+
+BENCHMARK_DEFINE_F(SearchBenchmark, SpecializedSearch)
+    (benchmark::State& state) {
+    while (state.KeepRunning()) {
+        int32_t r = distribution(generator);
+        benchmark::DoNotOptimize(size_specialized_search(test, 
+            state.range_x(), r));
+    }
+}
+BENCHMARK_REGISTER_F(SearchBenchmark,SpecializedSearch)
+    ->RangeMultiplier(4)->Range(1 << 10, size);
 
 BENCHMARK_DEFINE_F(SearchBenchmark, STLSearch)(benchmark::State& state) {
     while (state.KeepRunning()) {
@@ -59,7 +71,7 @@ BENCHMARK_DEFINE_F(SearchBenchmark, STLSearch)(benchmark::State& state) {
     }
 }
 BENCHMARK_REGISTER_F(SearchBenchmark, STLSearch)
-    ->RangeMultiplier(4)->Range(1 << 10, 1 << 20);
+    ->RangeMultiplier(4)->Range(1 << 10, size);
 
 int compare(const void *p, const void *q) {
     int32_t x = *(const int32_t *)p;
@@ -75,7 +87,7 @@ BENCHMARK_DEFINE_F(SearchBenchmark, BSearch)(benchmark::State& state) {
     }
 }
 BENCHMARK_REGISTER_F(SearchBenchmark, BSearch)
-    ->RangeMultiplier(4)->Range(1 << 10, 1 << 20);
+    ->RangeMultiplier(4)->Range(1 << 10, size);
 
 }
 
