@@ -28,7 +28,8 @@ int32_t size_specialized_search(const int32_t A[], int32_t n, int32_t x) {
     const int32_t* base = A;
     for (n >>= 1; n > 0; n >>= 1) {
         const int32_t* mid = base + n;
-        base = (*mid <= x) ? mid : base;
+        if (*mid <= x)
+            base = mid;
     }
     return base - A;
 }
