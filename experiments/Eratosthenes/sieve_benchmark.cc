@@ -8,9 +8,9 @@
 namespace {
 
 static constexpr uint32_t size = 1U << 30;
-static constexpr uint64_t bitset_size = 1LLU << 34;
+static constexpr uint64_t bitset_size = 1LLU << 32;
 static constexpr uint32_t bitset_size_limit = bitset_size >> 10;
-static constexpr uint32_t m = 16;
+static constexpr uint32_t m = 2;
 uint8_t prime[size / 2];
 uint32_t prime_bit[bitset_size / 64 + 1];
 
@@ -19,14 +19,28 @@ static void Sieve(benchmark::State& state) {
         sieve(state.range_x(), prime);
     }
 }
-//BENCHMARK(Sieve)->RangeMultiplier(m)->Range(1024, size);
+BENCHMARK(Sieve)->RangeMultiplier(m)->Range(1024, size);
 
-static void SieveImprove(benchmark::State& state) {
+static void ImprovedSieve(benchmark::State& state) {
     while (state.KeepRunning()) {
-        sieve_improve(state.range_x(), prime);
+        improved_sieve(state.range_x(), prime);
     }
 }
-//BENCHMARK(SieveImprove)->RangeMultiplier(m)->Range(1024, size);
+BENCHMARK(ImprovedSieve)->RangeMultiplier(m)->Range(1024, size);
+
+static void LinearSieve(benchmark::State& state) {
+    while (state.KeepRunning()) {
+        linear_sieve(state.range_x(), prime);
+    }
+}
+BENCHMARK(LinearSieve)->RangeMultiplier(m)->Range(1024, size);
+
+static void SegmentedSieve(benchmark::State& state) {
+    while (state.KeepRunning()) {
+        segmented_sieve(state.range_x(), prime);
+    }
+}
+BENCHMARK(SegmentedSieve)->RangeMultiplier(m)->Range(1024, size);
 
 static void SieveBitset(benchmark::State& state) {
     while (state.KeepRunning()) {
@@ -36,13 +50,31 @@ static void SieveBitset(benchmark::State& state) {
 }
 BENCHMARK(SieveBitset)->RangeMultiplier(m)->Range(1, bitset_size_limit);
 
-static void SieveImproveBitset(benchmark::State& state) {
+static void ImprovedSieveBitset(benchmark::State& state) {
     while (state.KeepRunning()) {
         int64_t n = state.range_x();
-        sieve_improve_bit(n << 10, prime_bit);
+        improved_sieve_bit(n << 10, prime_bit);
     }
 }
-BENCHMARK(SieveImproveBitset)->RangeMultiplier(m)->Range(1, bitset_size_limit);
+BENCHMARK(ImprovedSieveBitset)->RangeMultiplier(m)->Range(1, bitset_size_limit);
+
+static void LinearSieveBitset(benchmark::State& state) {
+    while (state.KeepRunning()) {
+        int64_t n = state.range_x();
+        linear_sieve_bit(n << 10, prime_bit);
+    }
+}
+BENCHMARK(LinearSieveBitset)->RangeMultiplier(m)
+    ->Range(1, bitset_size_limit);
+
+static void SegmentedSieveBitset(benchmark::State& state) {
+    while (state.KeepRunning()) {
+        int64_t n = state.range_x();
+        segmented_sieve_bit(n << 10, prime_bit);
+    }
+}
+BENCHMARK(SegmentedSieveBitset)->RangeMultiplier(m)
+    ->Range(1, bitset_size_limit);
 }
 
 BENCHMARK_MAIN();
