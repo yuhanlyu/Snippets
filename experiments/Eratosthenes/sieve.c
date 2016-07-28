@@ -106,7 +106,7 @@ void bit_reset(uint64_t x, uint32_t bitset[]) {
 void sieve_bit(uint64_t n, uint32_t prime[]) {
     memset(prime, 0xFF, bytes(n));
     uint64_t bound = sqrtl(n);
-    uint64_t max_index = number_to_index(n);
+    uint64_t max_index = number_to_bit_index(n);
     for (uint64_t i = 3, index = 0; i <= bound; i += 2, ++index) {
         if (bit_get(index, prime)) {
             for (uint64_t j_index = number_to_bit_index(i * i);
@@ -159,57 +159,130 @@ void segmented_sieve_bit(uint64_t n, uint32_t prime[]) {
         if (bit_get(index, prime))
             primes[number_of_primes++] = i;
     uint64_t next[number_of_primes], s = 0;
-    uint64_t segment_size = l1d_cache_size << 8;
+    uint64_t segment_size = l1d_cache_size << 7;
     for (uint64_t low = bound + 1, 
                   high = low + segment_size > n ? n : low + segment_size;
          low <= n; low += segment_size) {
+        uint64_t high_index = number_to_bit_index(high);
         for (uint64_t h = 0; h < number_of_primes; ++h) {
-            uint64_t i = primes[h], j;
+            uint64_t i = primes[h], j_index;
             if (i * i > high)
                 break;
             if (h < s) {
-                j = next[h];
+                j_index = next[h];
             } else {
-                j = ((low + (i - 1)) / i) * i;
+                uint64_t j = ((low + (i - 1)) / i) * i;
                 j += i * ((j & 1) == 0);
+                j_index = number_to_bit_index(j);
                 ++s;
             }
-            for (uint64_t j_index = number_to_bit_index(j); 
-                 j <= high; j += (i << 1), j_index += i) {
+            for (; j_index <= high_index; j_index += i) {
                 bit_reset(j_index, prime);
             }
-            next[h] = j;
+            next[h] = j_index;
         }
         high = (high + segment_size > n) ? n : high + segment_size;
     }
 }
 
-static const uint64_t steps[] = {6, 4, 2, 4, 2, 4, 6, 2};
-static const int32_t number_of_coprimes = 8;
+static const uint8_t steps[] = {6, 4, 2, 4, 2, 4, 6, 2};
+static const uint8_t number_of_coprimes = 8;
 
-static inline uint64_t next_step_index(uint64_t index) {
+static inline uint8_t next_step_index(uint8_t index) {
     return ++index & 7;
 }
 
 void wheel_bit(uint64_t n, uint32_t prime[]) {
-    memset(prime, 0xFF, bytes(n));
     uint64_t bound = sqrtl(n);
     uint64_t max_index = wheel_index(n);
+    memset(prime, 0xFF, (max_index >> 3) + 1);
 
-    for (uint64_t i = steps[0] + 1, index = 1, step_index = 1;
-         i <= bound; ++index) {
+    uint8_t step_index = 1;
+    for (uint64_t i = steps[0] + 1, index = 1; i <= bound; ++index) {
         if (!bit_get(index, prime))
             continue;
-        uint64_t m = i, m_step_index = step_index;
-        for (uint32_t c = 0; c < number_of_coprimes; ++c) {
-            for (uint64_t j_index = wheel_index(i * m);
-                 j_index <= max_index; j_index += i * number_of_coprimes) {
-                bit_reset(j_index, prime);
-            }
+        uint64_t m = i;
+        uint64_t j_index = wheel_index(i * m), k_index = j_index;
+        uint64_t increment[number_of_coprimes];
+        uint8_t m_step_index = step_index;
+        for (uint8_t c = 0; c < number_of_coprimes; ++c) {
             m += steps[m_step_index];
+            uint64_t temp = wheel_index(i * m);
+            increment[m_step_index] = temp - k_index;
+            m_step_index = next_step_index(m_step_index);
+            k_index = temp;
+        }
+        for (m_step_index = step_index; j_index <= max_index; ) {
+            bit_reset(j_index, prime);
+            j_index += increment[m_step_index];
             m_step_index = next_step_index(m_step_index);
         }
         i += steps[step_index];
         step_index = next_step_index(step_index);
+    }
+}
+
+static const uint8_t coprime_index[] = {
+    8, 0, 8, 8, 8, 8, 8, 1, 8, 8, 
+    8, 2, 8, 3, 8, 8, 8, 4, 8, 5, 
+    8, 8, 8, 6, 8, 8, 8, 8, 8, 7};
+
+void segmented_wheel_bit(uint64_t n, uint32_t prime[]) {
+    uint64_t bound = sqrtl(n);
+    uint64_t max_index = wheel_index(n);
+    memset(prime, 0xFF, (max_index >> 3) + 1);
+
+    wheel_bit(bound, prime);
+    uint32_t primes[upper_bound_of_pi(bound)], number_of_primes = 0;
+    uint8_t step_index = 1;
+    for (uint32_t i = 7, index = 1; index <= wheel_index(bound); ++index)  {
+        if (bit_get(index, prime)) {
+            primes[number_of_primes++] = i;
+        }
+        i += steps[step_index];
+        step_index = next_step_index(step_index);
+    }    
+    uint64_t next[number_of_primes], s = 0;
+    uint8_t next_step[number_of_primes];
+    uint64_t increments[number_of_primes][number_of_coprimes];
+    uint64_t segment_size = l1d_cache_size << 7;
+    for (uint64_t low = bound + 1, 
+                  high = low + segment_size > n ? n : low + segment_size;
+         low <= n; low += segment_size) {
+        uint64_t high_index = number_to_bit_index(high);
+        for (uint32_t h = 0; h < number_of_primes; ++h) {
+            uint64_t i = primes[h], j_index;
+            if (i * i > high)
+                break;
+            if (h < s) {
+                j_index = next[h];
+                step_index = next_step[h];
+            } else {
+                uint64_t m = ((low + (i - 1)) / i), j = m * i;
+                for (; coprime_index[j % 30] > 7; ++m) {
+                    j += i;
+                }
+                step_index = coprime_index[m % 30];
+                j_index = wheel_index(j);
+                uint8_t m_step_index = step_index;
+                uint64_t k_index = wheel_index(j);
+                for (uint8_t c = 0; c < number_of_coprimes; ++c) {
+                    m += steps[m_step_index];
+                    uint64_t temp = wheel_index(i * m);
+                    increments[h][m_step_index] = temp - k_index;
+                    m_step_index = next_step_index(m_step_index);
+                    k_index = temp;
+                }
+                ++s;
+            }
+            while (j_index <= high_index) {
+                bit_reset(j_index, prime);
+                j_index += increments[h][step_index];
+                step_index = next_step_index(step_index);
+            }
+            next[h] = j_index;
+            next_step[h] = step_index;
+        }
+        high = (high + segment_size > n) ? n : high + segment_size;
     }
 }

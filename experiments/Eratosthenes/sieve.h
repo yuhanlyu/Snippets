@@ -63,4 +63,6 @@ static inline bool is_prime_wheel(uint64_t n, const uint32_t bitset[]) {
 }
 
 void wheel_bit(uint64_t n, uint32_t prime[]);
+
+void segmented_wheel_bit(uint64_t n, uint32_t prime[]);
 #endif
