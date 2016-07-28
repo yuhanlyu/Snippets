@@ -35,13 +35,13 @@ static inline uint64_t number_to_bit_index(uint64_t n) {
     return (n - 2) >> 1;
 }
 
-static inline bool get(uint64_t x, const uint32_t bitset[]) {
-    x = number_to_bit_index(x);
+static inline bool bit_get(uint64_t x, const uint32_t bitset[]) {
     return (bitset[x>>5] & (1 << (x&31))) != 0;
 }
 
 static inline bool is_prime_bit(uint64_t n, const uint32_t bitset[]) {
-    return (n & 1) == 0 ? (n == 2) : (get(n, bitset) != 0);
+    return (n & 1) == 0 ? (n == 2) : 
+           (bit_get(number_to_bit_index(n), bitset) != 0);
 }
 
 void sieve_bit(uint64_t n, uint32_t prime[]);
@@ -51,4 +51,16 @@ void improved_sieve_bit(uint64_t n, uint32_t prime[]);
 void linear_sieve_bit(uint64_t n, uint32_t prime[]);
 
 void segmented_sieve_bit(uint64_t n, uint32_t prime[]);
+
+static inline uint64_t wheel_index(uint64_t n) {
+    return (n << 2) / 15;
+}
+
+static inline bool is_prime_wheel(uint64_t n, const uint32_t bitset[]) {
+    if (n % 2 == 0 || n % 3 == 0 || n % 5 == 0)
+        return n == 2 || n == 3 || n == 5;
+    return bit_get(wheel_index(n), bitset);
+}
+
+void wheel_bit(uint64_t n, uint32_t prime[]);
 #endif

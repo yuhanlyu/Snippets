@@ -10,7 +10,7 @@ namespace {
 static constexpr uint32_t size = 1U << 30;
 static constexpr uint64_t bitset_size = 1LLU << 32;
 static constexpr uint32_t bitset_size_limit = bitset_size >> 10;
-static constexpr uint32_t m = 2;
+static constexpr uint32_t m = 4;
 uint8_t prime[size / 2];
 uint32_t prime_bit[bitset_size / 64 + 1];
 
@@ -74,6 +74,15 @@ static void SegmentedSieveBitset(benchmark::State& state) {
     }
 }
 BENCHMARK(SegmentedSieveBitset)->RangeMultiplier(m)
+    ->Range(1, bitset_size_limit);
+
+static void WheelBitset(benchmark::State& state) {
+    while (state.KeepRunning()) {
+        int64_t n = state.range_x();
+        wheel_bit(n << 10, prime_bit);
+    }
+}
+BENCHMARK(WheelBitset)->RangeMultiplier(m)
     ->Range(1, bitset_size_limit);
 }
 
