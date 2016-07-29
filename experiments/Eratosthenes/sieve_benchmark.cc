@@ -8,7 +8,7 @@
 namespace {
 
 static constexpr uint32_t size = 1U << 30;
-static constexpr uint64_t bitset_size = 1LLU << 33;
+static constexpr uint64_t bitset_size = 1LLU << 32;
 static constexpr uint32_t bitset_size_limit = bitset_size >> 10;
 static constexpr uint32_t m = 4;
 uint8_t prime[size / 2];
@@ -48,7 +48,7 @@ static void SieveBitset(benchmark::State& state) {
         sieve_bit(n << 10, prime_bit);
     }
 }
-//BENCHMARK(SieveBitset)->RangeMultiplier(m)->Range(1, bitset_size_limit);
+BENCHMARK(SieveBitset)->RangeMultiplier(m)->Range(1, bitset_size_limit);
 
 static void ImprovedSieveBitset(benchmark::State& state) {
     while (state.KeepRunning()) {
@@ -72,7 +72,8 @@ static void SegmentedSieveBitset(benchmark::State& state) {
         segmented_sieve_bit(n << 10, prime_bit);
     }
 }
-//BENCHMARK(SegmentedSieveBitset)->RangeMultiplier(m)->Range(1, bitset_size_limit);
+BENCHMARK(SegmentedSieveBitset)
+    ->RangeMultiplier(m)->Range(1, bitset_size_limit);
 
 static void WheelBitset(benchmark::State& state) {
     while (state.KeepRunning()) {
@@ -80,8 +81,8 @@ static void WheelBitset(benchmark::State& state) {
         wheel_bit(n << 10, prime_bit);
     }
 }
-//BENCHMARK(WheelBitset)->RangeMultiplier(m)
-//    ->Range(1, bitset_size_limit);
+BENCHMARK(WheelBitset)->RangeMultiplier(m)
+    ->Range(1, bitset_size_limit);
 
 static void SegmentedWheelBitset(benchmark::State& state) {
     while (state.KeepRunning()) {
