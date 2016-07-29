@@ -34,15 +34,6 @@ void improved_sieve(uint32_t n, uint8_t prime[]) {
     }
 }
 
-// The upper bound of the number of primes at most n.
-// This formula is from the following paper:
-// Pierre Dusart, 
-// The $k^{th}$ prime is greater than $k(\ln k +\ln\ln k -1)$ for $k\geq 2$,
-// Mathematics of Computation, 8(225): 411-415 (1999)
-uint32_t upper_bound_of_pi(uint32_t n) {
-    return (n / log(n)) * (1 + 1.2762 / log(n));
-}
-
 void linear_sieve(uint32_t n, uint8_t prime[]) {
     memset(prime, 1, n >> 1);
     uint32_t bound = sqrt(n);

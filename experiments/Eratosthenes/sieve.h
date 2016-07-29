@@ -62,7 +62,22 @@ static inline bool is_prime_wheel(uint64_t n, const uint32_t bitset[]) {
     return bit_get(wheel_index(n), bitset);
 }
 
+// Wheel sieve.
+// More details can be found in the following paper:
+// Paul Pritchard
+// Explaining the wheel sieve
+// Acta Informatica October 1982, Volume 17, Issue 4, pp 477 - 485
 void wheel_bit(uint64_t n, uint32_t prime[]);
 
+// Segmented wheel sieve
 void segmented_wheel_bit(uint64_t n, uint32_t prime[]);
+
+// The upper bound of the number of primes at most n.
+// This formula is from the following paper:
+// Pierre Dusart,
+// The $k^{th}$ prime is greater than $k(\ln k +\ln\ln k -1)$ for $k\geq 2$,
+// Mathematics of Computation, 8(225): 411-415 (1999)
+uint32_t upper_bound_of_pi(uint32_t n) {
+    return (n / log(n)) * (1 + 1.2762 / log(n));
+}
 #endif
