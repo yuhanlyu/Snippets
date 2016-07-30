@@ -8,7 +8,7 @@
 namespace {
 
 static constexpr uint32_t size = 1U << 30;
-static constexpr uint64_t bitset_size = 1LLU << 32;
+static constexpr uint64_t bitset_size = 1LLU << 30;
 static constexpr uint32_t bitset_size_limit = bitset_size >> 10;
 static constexpr uint32_t m = 4;
 uint8_t prime[size / 2];

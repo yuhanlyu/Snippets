@@ -169,7 +169,7 @@ static const uint64_t coprime_indices[] = {
     2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 
     6, 6, 6, 6, 7, 7, 7, 7, 7, 7};
 
-static const uint64_t steps[] =  {6, 4,  2,  4,  2,  4,  6,  2};
+static const uint64_t steps[] =  {6, 4, 2, 4, 2, 4, 6, 2};
 static const uint64_t number_of_coprimes = 8;
 static const uint64_t base_increment[number_of_coprimes] = {
     48, 32, 16, 32, 16, 32, 48, 16};
@@ -184,7 +184,7 @@ static const uint64_t increments[number_of_coprimes][number_of_coprimes] = {
     {47, 31, 15, 31, 15, 31, 47, 15}};
 
 static inline uint32_t next_step_index(uint32_t index) {
-    return ++index & 7;
+    return ++index % number_of_coprimes;
 }
 
 /* This function is used for computing the tables.
