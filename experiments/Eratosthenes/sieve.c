@@ -210,15 +210,18 @@ void wheel_bit(uint64_t n, uint32_t prime[]) {
 
     uint32_t step_index = 1;
     for (uint64_t i = steps[0] + 1, index = 1; i <= bound; ++index) {
-        if (!bit_get(index, prime))
-            continue;
-        uint64_t quo = i / primorial, mod = i % primorial;
-        for (uint64_t j_index = wheel_index(i * i), m_step_index = step_index;
-             j_index <= max_index; ) {
-            bit_reset(j_index, prime);
-            j_index += increments[coprime_indices[mod]][m_step_index] +
-                       quo * base_increment[m_step_index];
-            m_step_index = next_step_index(m_step_index);
+        if (bit_get(index, prime)) {
+            uint64_t quo = i / primorial, mod = i % primorial;
+            uint32_t inc[number_of_coprimes], m_step_index = step_index;
+            for (uint32_t j = 0; j < number_of_coprimes; ++j) {
+                inc[j] = increments[coprime_indices[mod]][j] + 
+                         quo * base_increment[j];
+            }
+            for (uint64_t j_index = wheel_index(i * i); j_index <= max_index;) {
+                bit_reset(j_index, prime);
+                j_index += inc[m_step_index];
+                m_step_index = next_step_index(m_step_index);
+            }
         }
         i += steps[step_index];
         step_index = next_step_index(step_index);
