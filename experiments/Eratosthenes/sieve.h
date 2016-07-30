@@ -1,8 +1,23 @@
 #ifndef SIEVE_H_
 #define SIEVE_H_
 
+#include <math.h>
 #include <stdint.h>
 #include <stdbool.h>
+
+// The upper bound of the number of primes at most n.
+// This formula is from the following paper:
+// Pierre Dusart,
+// The $k^{th}$ prime is greater than $k(\ln k +\ln\ln k -1)$ for $k\geq 2$,
+// Mathematics of Computation, 8(225): 411-415 (1999)
+static inline uint32_t upper_bound_of_pi(uint32_t n) {
+    return (n / log(n)) * (1 + 1.2762 / log(n));
+}
+
+// Number of bytes having at least n + 1 bits
+static inline uint64_t bytes(uint64_t n) {
+    return (n >> 4) + (((n >> 1) & 7) != 0);
+}
 
 static inline uint32_t number_to_index(uint32_t n) {
     return (n - 2) >> 1;
@@ -39,6 +54,10 @@ static inline bool bit_get(uint64_t x, const uint32_t bitset[]) {
     return (bitset[x>>5] & (1 << (x&31))) != 0;
 }
 
+static inline void bit_reset(uint64_t x, uint32_t bitset[]) {
+    bitset[x>>5] &= ~(1 << (x&31));
+}
+
 static inline bool is_prime_bit(uint64_t n, const uint32_t bitset[]) {
     return (n & 1) == 0 ? (n == 2) : 
            (bit_get(number_to_bit_index(n), bitset) != 0);
@@ -72,12 +91,4 @@ void wheel_bit(uint64_t n, uint32_t prime[]);
 // Segmented wheel sieve
 void segmented_wheel_bit(uint64_t n, uint32_t prime[]);
 
-// The upper bound of the number of primes at most n.
-// This formula is from the following paper:
-// Pierre Dusart,
-// The $k^{th}$ prime is greater than $k(\ln k +\ln\ln k -1)$ for $k\geq 2$,
-// Mathematics of Computation, 8(225): 411-415 (1999)
-uint32_t upper_bound_of_pi(uint32_t n) {
-    return (n / log(n)) * (1 + 1.2762 / log(n));
-}
 #endif

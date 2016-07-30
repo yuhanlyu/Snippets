@@ -1,9 +1,6 @@
 #include "sieve.h"
 
-#include <math.h>
 #include <string.h>
-
-#include <iostream>
 
 static const uint32_t l1d_cache_size = 1 << 15;
 
@@ -82,16 +79,6 @@ void segmented_sieve(uint32_t n, uint8_t prime[]) {
         }
         high = (high + segment_size > n) ? n : high + segment_size;
     }
-}
-
-// Number of bytes having at least n + 1 bits
-static inline uint64_t bytes(uint64_t n) {
-    return (n >> 4) + (((n >> 1) & 7) != 0);
-}
-
-static inline void bit_reset(uint64_t x, uint32_t bitset[]);
-void bit_reset(uint64_t x, uint32_t bitset[]) { 
-    bitset[x>>5] &= ~(1 << (x&31));
 }
 
 void sieve_bit(uint64_t n, uint32_t prime[]) {
@@ -177,16 +164,16 @@ void segmented_sieve_bit(uint64_t n, uint32_t prime[]) {
 }
 
 static const uint64_t primorial = 30;
-static const uint8_t coprime_indices[] = {
+static const uint64_t coprime_indices[] = {
     0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 
     2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 
     6, 6, 6, 6, 7, 7, 7, 7, 7, 7};
 
-static const uint8_t steps[] =  {6, 4,  2,  4,  2,  4,  6,  2};
+static const uint64_t steps[] =  {6, 4,  2,  4,  2,  4,  6,  2};
 static const uint64_t number_of_coprimes = 8;
-static const uint8_t base_increment[number_of_coprimes] = {
+static const uint64_t base_increment[number_of_coprimes] = {
     48, 32, 16, 32, 16, 32, 48, 16};
-static const uint8_t increments[number_of_coprimes][number_of_coprimes] = {
+static const uint64_t increments[number_of_coprimes][number_of_coprimes] = {
     {1, 1, 1, 1, 1, 1, 1, 1 },
     {12, 7, 4, 7, 4, 7, 12, 3}, 
     {18, 12, 6, 11, 6, 12, 18, 5}, 
@@ -196,13 +183,13 @@ static const uint8_t increments[number_of_coprimes][number_of_coprimes] = {
     {36, 25, 12, 25, 12, 25, 36, 13}, 
     {47, 31, 15, 31, 15, 31, 47, 15}};
 
-static inline uint8_t next_step_index(uint8_t index) {
+static inline uint32_t next_step_index(uint32_t index) {
     return ++index & 7;
 }
 
 /* This function is used for computing the tables.
 static void pre_compute() {
-    static const uint8_t coprimes[] = {1, 7, 11, 13, 17, 19, 23, 29};
+    static const uint32_t coprimes[] = {1, 7, 11, 13, 17, 19, 23, 29};
     for (uint64_t i = 0; i < number_of_coprimes; ++i) {
         uint64_t base = wheel_index(coprimes[i]), acc = 1;
         for (uint64_t j = 0; j < number_of_coprimes; ++j) {
@@ -221,7 +208,7 @@ void wheel_bit(uint64_t n, uint32_t prime[]) {
     uint64_t max_index = wheel_index(n);
     memset(prime, 0xFF, (max_index >> 3) + 1);
 
-    uint8_t step_index = 1;
+    uint32_t step_index = 1;
     for (uint64_t i = steps[0] + 1, index = 1; i <= bound; ++index) {
         if (!bit_get(index, prime))
             continue;
@@ -238,7 +225,7 @@ void wheel_bit(uint64_t n, uint32_t prime[]) {
     }
 }
 
-static const uint8_t need[] = {
+static const uint32_t need[] = {
     1, 0, 5, 4, 3, 2, 1, 0, 3, 2, 
     1, 0, 1, 0, 3, 2, 1, 0, 1, 0, 
     3, 2, 1, 0, 5, 4, 3, 2, 1, 0};
@@ -250,8 +237,9 @@ void segmented_wheel_bit(uint64_t n, uint32_t prime[]) {
 
     wheel_bit(bound, prime);
     uint32_t primes[upper_bound_of_pi(bound)], number_of_primes = 0;
-    uint8_t step_index = 1;
-    for (uint32_t i = 7, index = 1; index <= wheel_index(bound); ++index)  {
+    uint32_t step_index = 1;
+    for (uint32_t i = steps[0] + 1, index = 1; 
+         index <= wheel_index(bound); ++index)  {
         if (bit_get(index, prime)) {
             primes[number_of_primes++] = i;
         }
@@ -259,12 +247,12 @@ void segmented_wheel_bit(uint64_t n, uint32_t prime[]) {
         step_index = next_step_index(step_index);
     }    
     uint64_t next[number_of_primes];
-    uint8_t next_step[number_of_primes];
+    uint32_t next_step[number_of_primes];
     uint64_t segment_size = l1d_cache_size << 6;
     for (uint64_t low = bound + 1, s = 0,
                   high = low + segment_size > n ? n : low + segment_size;
          low <= n; low += segment_size) {
-        uint64_t high_index = number_to_bit_index(high);
+        uint64_t high_index = wheel_index(high);
         for (uint32_t h = 0; h < number_of_primes; ++h) {
             uint64_t i = primes[h], j_index;
             if (i * i > high)
@@ -274,13 +262,13 @@ void segmented_wheel_bit(uint64_t n, uint32_t prime[]) {
                 step_index = next_step[h];
             } else {
                 uint64_t m = ((low + (i - 1)) / i);
-                m += need[m % 30];
-                step_index = coprime_indices[m % 30];
+                m += need[m % primorial];
+                step_index = coprime_indices[m % primorial];
                 j_index = wheel_index(m * i);
                 ++s;
             }
             if (j_index <= high_index) {
-                uint64_t quo = i / 30, mod = i % 30;
+                uint64_t quo = i / primorial, mod = i % primorial;
                 while (j_index <= high_index) {
                     bit_reset(j_index, prime);
                     j_index += increments[coprime_indices[mod]][step_index] +
