@@ -9,8 +9,8 @@ namespace {
 static constexpr uint32_t size = 1 << 20;
 
 TEST(SieveTest, ImprovedSieve) {
-    uint8_t prime1[size / 2];
-    uint8_t prime2[size / 2];
+    bool prime1[size / 2];
+    bool prime2[size / 2];
 
     sieve(size, prime1);
     improved_sieve(size, prime2);
@@ -20,8 +20,8 @@ TEST(SieveTest, ImprovedSieve) {
 }
 
 TEST(SieveTest, LinearSieve) {
-    uint8_t prime1[size / 2];
-    uint8_t prime2[size / 2];
+    bool prime1[size / 2];
+    bool prime2[size / 2];
 
     sieve(size, prime1);
     linear_sieve(size, prime2);
@@ -31,8 +31,8 @@ TEST(SieveTest, LinearSieve) {
 }
 
 TEST(SieveTest, SegmentedSieve) {
-    uint8_t prime1[size / 2];
-    uint8_t prime2[size / 2];
+    bool prime1[size / 2];
+    bool prime2[size / 2];
 
     sieve(size, prime1);
     segmented_sieve(size, prime2);
@@ -42,7 +42,7 @@ TEST(SieveTest, SegmentedSieve) {
 }
 
 TEST(SieveTest, SieveBitset) {
-    uint8_t prime1[size / 2];
+    bool prime1[size / 2];
     uint32_t prime2[size / 64 + 1];
 
     sieve(size, prime1);
@@ -53,7 +53,7 @@ TEST(SieveTest, SieveBitset) {
 }
 
 TEST(SieveTest, ImprovedSieveBitset) {
-    uint8_t prime1[size / 2];
+    bool prime1[size / 2];
     uint32_t prime2[size / 64 + 1];
 
     sieve(size, prime1);
@@ -64,7 +64,7 @@ TEST(SieveTest, ImprovedSieveBitset) {
 }
 
 TEST(SieveTest, LinearSieveBitset) {
-    uint8_t prime1[size / 2];
+    bool prime1[size / 2];
     uint32_t prime2[size / 64 + 1];
 
     sieve(size, prime1);
@@ -75,7 +75,7 @@ TEST(SieveTest, LinearSieveBitset) {
 }
 
 TEST(SieveTest, SegmentedSieveBitset) {
-    uint8_t prime1[size / 2];
+    bool prime1[size / 2];
     uint32_t prime2[size / 64 + 1];
 
     sieve(size, prime1);
@@ -86,7 +86,7 @@ TEST(SieveTest, SegmentedSieveBitset) {
 }
 
 TEST(SieveTest, WheelBitset) {
-    uint8_t prime1[size / 2];
+    bool prime1[size / 2];
     uint32_t prime2[size / 64 + 1];
 
     sieve(size, prime1);
@@ -97,7 +97,7 @@ TEST(SieveTest, WheelBitset) {
 }
 
 TEST(SieveTest, SegmentedWheelBitset) {
-    uint8_t prime1[size / 2];
+    bool prime1[size / 2];
     uint32_t prime2[size / 64 + 1];
 
     sieve(size, prime1);

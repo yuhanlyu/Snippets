@@ -1,10 +1,34 @@
 #include "sieve.h"
 
+#include <math.h>
 #include <string.h>
+
+// The upper bound of the number of primes at most n.
+// This formula is from the following paper:
+// Pierre Dusart,
+// The $k^{th}$ prime is greater than $k(\ln k +\ln\ln k -1)$ for $k\geq 2$,
+// Mathematics of Computation, 8(225): 411-415 (1999)
+static inline uint32_t upper_bound_of_pi(uint32_t n) {
+    return (n / log(n)) * (1 + 1.2762 / log(n));
+}
+
+// Number of bytes having at least n + 1 bits.
+static inline uint64_t bytes(uint64_t n) {
+    return (n >> 4) + (((n >> 1) & 7) != 0);
+}
+
+// Mapping from the number to the index in the byte array.
+static inline uint32_t number_to_index(uint32_t n) {
+    return (n - 2) >> 1;
+}
+
+bool is_prime(uint32_t n, const bool prime[]) {
+    return (n & 1) == 0 ? (n == 2) : (prime[number_to_index(n)] != 0);
+}
 
 static const uint32_t l1d_cache_size = 1 << 15;
 
-void sieve(uint32_t n, uint8_t prime[]) {
+void sieve(uint32_t n, bool prime[]) {
     memset(prime, 1, n >> 1);
     uint32_t bound = sqrt(n);
     for (uint32_t i = 3; i <= bound; i += 2) {
@@ -16,7 +40,7 @@ void sieve(uint32_t n, uint8_t prime[]) {
     }
 }
 
-void improved_sieve(uint32_t n, uint8_t prime[]) {
+void improved_sieve(uint32_t n, bool prime[]) {
     memset(prime, 1, n >> 1);
     uint32_t bound = sqrt(n);
     for (uint32_t i = 3; i <= bound; i += 2) {
@@ -31,7 +55,7 @@ void improved_sieve(uint32_t n, uint8_t prime[]) {
     }
 }
 
-void linear_sieve(uint32_t n, uint8_t prime[]) {
+void linear_sieve(uint32_t n, bool prime[]) {
     memset(prime, 1, n >> 1);
     uint32_t bound = sqrt(n);
     sieve(bound, prime);
@@ -48,7 +72,7 @@ void linear_sieve(uint32_t n, uint8_t prime[]) {
     }
 }
 
-void segmented_sieve(uint32_t n, uint8_t prime[]) {
+void segmented_sieve(uint32_t n, bool prime[]) {
     memset(prime, 1, n >> 1);
     uint32_t bound = sqrt(n);
     sieve(bound, prime);
@@ -79,6 +103,26 @@ void segmented_sieve(uint32_t n, uint8_t prime[]) {
         }
         high = (high + segment_size > n) ? n : high + segment_size;
     }
+}
+
+// Mapping from the number to the bit index
+static inline uint64_t number_to_bit_index(uint64_t n) {
+    return (n - 2) >> 1;
+}
+
+// Get the x-th bit in the bitset
+static inline bool bit_get(uint64_t x, const uint32_t bitset[]) {
+    return (bitset[x>>5] & (1 << (x&31))) != 0;
+}
+
+// Clear the x-th bit in the bitset
+static inline void bit_reset(uint64_t x, uint32_t bitset[]) {
+    bitset[x>>5] &= ~(1 << (x&31));
+}
+
+bool is_prime_bit(uint64_t n, const uint32_t bitset[]) {
+    return (n & 1) == 0 ? (n == 2) :
+               (bit_get(number_to_bit_index(n), bitset) != 0);
 }
 
 void sieve_bit(uint64_t n, uint32_t prime[]) {
@@ -163,6 +207,7 @@ void segmented_sieve_bit(uint64_t n, uint32_t prime[]) {
     }
 }
 
+/* These constants are used for 30-wheel.
 static const uint64_t primorial = 30;
 static const uint64_t coprime_indices[] = {
     0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 
@@ -182,28 +227,103 @@ static const uint64_t increments[number_of_coprimes][number_of_coprimes] = {
     {30, 20, 10, 21, 10, 20, 30, 11}, 
     {36, 25, 12, 25, 12, 25, 36, 13}, 
     {47, 31, 15, 31, 15, 31, 47, 15}};
+static const uint64_t need[] = {
+    1, 0, 5, 4, 3, 2, 1, 0, 3, 2, 
+    1, 0, 1, 0, 3, 2, 1, 0, 1, 0, 
+    3, 2, 1, 0, 5, 4, 3, 2, 1, 0};
+*/
 
+// These variables are used for wheel factorization.
+// Wheel factorization removes all integers that are not relatively prime
+// to the given wheel_primes.
+// For example, if the wheel_primes[] = {2}, then all even numbers will be
+// ignores.
+// For each integer x that are relatively prime to the given wheel_primes,
+// wheel_index(x) will be the index of the integer in the bitset.
+// For example, if wheel_primes[] = {2}, then wheel_index(x) = (x - 2) / 2.
+// For a given integer x, the smallest integer that are greater than x and
+// is relatively prime to wheel_primes will have index of wheel_index(x) + 1.
+// During the process of sieve, we need to find the integer corresponding
+// to the index of wheel_index(x) + 1.
+// Let number_of_coprimes be the number of integers that are relatively prime
+//     to all wheel_primes.
+// The integer corresponding to the index of wheel_index(x) + 1 will be
+//    x + steps[next_step_index(wheel_index(x) % number_of_coprimes)];
+// For example, if wheel_primes[] = {2, 3}, then steps[] = {4, 2}, since
+// only 6n± are considered.
+// Since computing wheel_index(x) % number_of_coprimes, we usually use 
+// separated variables to keep track wheel_index(x) and 
+//                                   wheel_index(x) % number_of_coprimes.
+// During the process of sieve, we also need the following operation:
+//    Given the index of integer j * k,
+//        where both j and k are relatively prime to wheel_primes
+//    find the index of j * h, where h has index = wheel_index(k) + 1.
+// Let the primorial be the product of all wheel_primes.
+// Let coprime_indices be the array of length primorial, where
+//    coprime_indices[i] is the number of integers < x that are relatively
+//    prime to wheel_primes.
+// For example, if wheel_primes[] = {2, 3}, then
+//    coprime_indices[] = {0, 0, 1, 1, 1, 1}.
+// Let x = j * k, then the index of j * h will be
+//    (x / primorial) * base_increment[wheel_index(x) % number_of_coprimes] +
+//        increments[coprime_indices[j]][wheel_index(x) % number_of_coprimes]
+// The tables of base_increment and increments can be generated by precompute.
+// The idea of computing base_increment and increments is as follows:
+// Let j = primorial * q_j + m_j, k = primorial * q_k + m_k.
+// Since h - k = steps[m_k], 
+//     j * (h - k) = primorial * q_j * steps[m_k] + m_j * steps[m_k].
+// Thus, we use base_increment[i] = wheel_index(primorial * steps[i]).
+// Let coprimes be the array of all integers that are smaller than primorial
+//    and relatively prime to wheel_primes.
+// We use increments[coprime_indices[a]][coprime_indices[b]] = 
+//     the increment of index from a * b to a * (b + steps[b]), for all
+//     a and b in coprimes.
+static void precompute(const uint64_t primes[], uint64_t n);
+
+// Primes used for wheel.
+static const uint64_t wheel_primes[] = {2, 3, 5, 7};
+// The product of all primes used for wheel.
+static uint64_t primorial = 210;
+// The number of integers from 1 to primorial that are relative prime to 
+// all wheel_primes.
+static uint64_t number_of_coprimes = 48;
+// The next number corresponding to the next wheel_index.
+static uint64_t steps[48];
+// Mapping from all integers from 0 to primorial to the index of the next
+// coprimes.
+static uint64_t coprime_indices[210];
+// The difference from the integer to the next coprimes.
+static uint64_t need[210];
+// The amount of increments of index from j * k to j * (k + 1).
+static uint64_t base_increment[48];
+static uint64_t increments[48][48];
+
+#include <iostream>
+
+// Mapping from the number to the index.
+static inline uint64_t wheel_index(uint64_t n) {
+    //return (n << 2) / 15;
+    return (n / primorial) * number_of_coprimes + coprime_indices[n % primorial];
+} 
+
+// Find the next index step
 static inline uint32_t next_step_index(uint32_t index) {
     return ++index % number_of_coprimes;
 }
 
-/* This function is used for computing the tables.
-static void pre_compute() {
-    static const uint32_t coprimes[] = {1, 7, 11, 13, 17, 19, 23, 29};
-    for (uint64_t i = 0; i < number_of_coprimes; ++i) {
-        uint64_t base = wheel_index(coprimes[i]), acc = 1;
-        for (uint64_t j = 0; j < number_of_coprimes; ++j) {
-            uint64_t temp = wheel_index(coprimes[i] * (acc + steps[j]));
-            increments[i][j] = temp - base;
-            base = temp;
-            acc += steps[j];
-        }
-        base_increment[i] = wheel_index(steps[i] * primorial);
+bool is_prime_wheel(uint64_t n, const uint32_t bitset[]) {
+    for (uint64_t i = 0; i < sizeof(wheel_primes) / sizeof(wheel_primes[1]);
+        ++i) {
+        if (n % wheel_primes[i] == 0)
+            return n == wheel_primes[i];
     }
+    //if (n % 2 == 0 || n % 3 == 0 || n % 5 == 0 || n % 7 == 0)
+    //            return n == 2 || n == 3 || n == 5 || n == 7;
+    return bit_get(wheel_index(n), bitset);
 }
-*/
 
 void wheel_bit(uint64_t n, uint32_t prime[]) {
+    precompute(wheel_primes, sizeof(wheel_primes) / sizeof(wheel_primes[0]));
     uint64_t bound = sqrtl(n);
     uint64_t max_index = wheel_index(n);
     memset(prime, 0xFF, (max_index >> 3) + 1);
@@ -227,11 +347,6 @@ void wheel_bit(uint64_t n, uint32_t prime[]) {
         step_index = next_step_index(step_index);
     }
 }
-
-static const uint32_t need[] = {
-    1, 0, 5, 4, 3, 2, 1, 0, 3, 2, 
-    1, 0, 1, 0, 3, 2, 1, 0, 1, 0, 
-    3, 2, 1, 0, 5, 4, 3, 2, 1, 0};
 
 void segmented_wheel_bit(uint64_t n, uint32_t prime[]) {
     uint64_t bound = sqrtl(n);
@@ -285,3 +400,80 @@ void segmented_wheel_bit(uint64_t n, uint32_t prime[]) {
         high = (high + segment_size > n) ? n : high + segment_size;
     }
 }
+
+// This is the function that can produce the values of all required values
+// for a given list of wheel_primes.
+static void precompute(const uint64_t primes[], uint64_t n) {
+    primorial = 1;
+    for (uint32_t i = 0; i < n; ++i) {
+        primorial *= primes[i];
+    }
+    bool is_coprime[primorial + 1];
+    is_coprime[0] = is_coprime[1] = false;
+    number_of_coprimes = 0;
+    for (uint32_t i = 1; i < primorial; ++i) {
+        bool divisible = false;
+        for (uint32_t j = 0; j < n; ++j)
+            if (i % primes[j] == 0)
+                divisible = true;
+        is_coprime[i] = !divisible;
+        if (is_coprime[i])
+            ++number_of_coprimes;
+    }
+    uint32_t coprimes[number_of_coprimes], s = 0;
+    coprime_indices[0] = 0;
+    for (uint32_t i = 1; i < primorial; ++i) {
+        coprime_indices[i] = s;
+        if(is_coprime[i]) {
+            coprimes[s++] = i;
+        }
+    }
+    for (uint32_t i = 0; i < s - 1; ++i)
+        steps[i] = coprimes[i + 1] - coprimes[i];
+    steps[s - 1] = primorial - coprimes[s - 1] + coprimes[0];
+    for (uint64_t i = 0; i < number_of_coprimes; ++i) {
+        uint64_t base = wheel_index(coprimes[i]), acc = 1;
+        for (uint64_t j = 0; j < number_of_coprimes; ++j) {
+            uint64_t temp = wheel_index(coprimes[i] * (acc + steps[j]));
+            increments[i][j] = temp - base;
+            base = temp;
+            acc += steps[j];
+        }
+        base_increment[i] = wheel_index(steps[i] * primorial);
+    }
+    uint32_t next = 0;
+    for (uint32_t i = 0; i < primorial; ++i) {
+        need[i] = coprimes[next] - i;
+        if (need[i] == 0)
+            ++next;
+    }
+    /*
+    std::cout << "primorial: " << primorial << '\n';
+    std::cout << "number_of_coprimes: " << number_of_coprimes << '\n';
+    for (uint32_t i = 0; i < number_of_coprimes; ++i)
+        std::cout << coprimes[i] << ", ";
+    std::cout << "\ncoprime_indices:";
+    for (uint32_t i = 0; i < primorial; ++i)
+        std::cout << coprime_indices[i] << ", ";
+    std::cout << "\nsteps:";
+    for (uint32_t i = 0; i < number_of_coprimes; ++i)
+        std::cout << steps[i] << ", ";
+    std::cout << "\nbase_increment:";
+    for (uint32_t i = 0; i < number_of_coprimes; ++i)
+        std::cout << base_increment[i] << ", ";
+    std::cout << "\nincrement:";
+    for (uint32_t i = 0; i < number_of_coprimes; ++i) {
+        for (uint32_t j = 0; j < number_of_coprimes; ++j)
+            std::cout << increments[i][j] << ", ";
+        std::cout << '\n';
+    }
+    std::cout << "need: ";
+    for (uint32_t i = 0; i < primorial; ++i)
+        std::cout << need[i] << ", ";
+    std::cout << '\n';
+    for (uint32_t i = 0; i < number_of_coprimes; ++i)
+        std::cout << wheel_index(coprimes[i]) << ' ';
+    std::cout << '\n';
+    */
+}
+
