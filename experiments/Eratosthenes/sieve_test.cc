@@ -103,7 +103,7 @@ TEST(SieveTest, SegmentedWheelBitset) {
     sieve(size, prime1);
     segmented_wheel_bit(size, prime2);
     for (uint32_t i = 2; i <= size; ++i) {
-        EXPECT_EQ(is_prime(i, prime1), is_prime_wheel(i, prime2)) << i;
+        EXPECT_EQ(is_prime(i, prime1), is_prime_wheel(i, prime2));
     }
 }
 

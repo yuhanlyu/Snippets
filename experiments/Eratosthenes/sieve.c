@@ -292,6 +292,27 @@ void segmented_sieve_bit(uint64_t n, uint32_t prime[]) {
 // static uint64_t base_increment[48];
 // static uint64_t increments[48][48];
 
+// The following is for 210-wheel.
+// static const uint64_t wheel_primes[] = {2, 3, 5, 7};
+// static const uint64_t primorial = 210;
+// static const uint64_t number_of_coprimes = 48;
+// static uint64_t steps[48];
+// static uint64_t coprime_indices[210];
+// static uint64_t need[210];
+// static uint64_t base_increment[48];
+// static uint64_t increments[48][48];
+
+// The following is for 6-wheel.
+// static const uint64_t wheel_primes[] = {2, 3};
+// static const uint64_t primorial = 6;
+// static const uint64_t number_of_coprimes = 2;
+// static const uint64_t steps[2] = {4, 2};
+// static const uint64_t coprime_indices[6] = {0, 0, 1, 1, 1, 1};
+// static const uint64_t need[6] = {1, 0, 3, 2, 1, 0};
+// static const uint64_t base_increment[2] = {8, 4};
+// static const uint64_t increments[2][2] = {{1, 1}, {7, 3}};
+
+// The following is for 30-wheel
 static const uint64_t primorial = 30;
 static const uint64_t coprime_indices[] = {
     0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 
@@ -320,9 +341,11 @@ static const uint64_t need[] = {
 static inline uint64_t wheel_index(uint64_t n) {
     // This is for 30-wheel only.
     return (n << 2) / 15;
+    // This is for 6-wheel only.
+    //return (n << 1) / 6;
     // General case.
-    // return (n / primorial) * number_of_coprimes + 
-    //       coprime_indices[n % primorial];
+    //return (n / primorial) * number_of_coprimes + 
+    //      coprime_indices[n % primorial];
 } 
 
 // Find the next index step
@@ -337,12 +360,12 @@ bool is_prime_wheel(uint64_t n, const uint32_t bitset[]) {
     return bit_get(wheel_index(n), bitset);
 
     // General case.
-    // for (uint64_t i = 0; i < sizeof(wheel_primes) / sizeof(wheel_primes[1]);
-    //     ++i) {
-    //     if (n % wheel_primes[i] == 0)
-    //          return n == wheel_primes[i];
+    // for (uint64_t i = 0; i < sizeof(wheel_primes) / sizeof(wheel_primes[0]);
+    //    ++i) {
+    //    if (n % wheel_primes[i] == 0)
+    //         return n == wheel_primes[i];
     // }
-    //  return bit_get(wheel_index(n), bitset);
+    // return bit_get(wheel_index(n), bitset);
 }
 
 void wheel_bit(uint64_t n, uint32_t prime[]) {

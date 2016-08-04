@@ -55,7 +55,7 @@ SegmentedWheelBitset is faster than WheelBitset when n > 2^27.
 When n = 2^34, the running time of the SegmentedWheelBitset is only 35% 
 of the running time of the WheelBitset.
 
-30-wheel v.s. 210-wheel
+6-wheel v.s. 30-wheel v.s. 210-wheel
 30-wheel is faster.
 
 
@@ -296,7 +296,59 @@ SegmentedWheelBitset/4M      6161790371 ns   6055111500 ns          2
 SegmentedWheelBitset/8M     12574176311 ns  12332265000 ns          1
 SegmentedWheelBitset/16M    26035703421 ns  25722373000 ns          1
 
-210-Wheel
+6-wheel
+WheelBitset/1                     645 ns        630 ns   22221584
+WheelBitset/2                    1344 ns       1324 ns    9978447
+WheelBitset/4                    3515 ns       3447 ns    3922858
+WheelBitset/8                    6472 ns       6368 ns    2173970
+WheelBitset/16                  12743 ns      12552 ns    1092419
+WheelBitset/32                  25930 ns      25456 ns     546712
+WheelBitset/64                  53770 ns      53061 ns     265083
+WheelBitset/128                113812 ns     112183 ns     128928
+WheelBitset/256                245954 ns     238908 ns      60379
+WheelBitset/512                498925 ns     491026 ns      27644
+WheelBitset/1024              1048341 ns    1032149 ns      12671
+WheelBitset/2k                2227763 ns    2192846 ns       6346
+WheelBitset/4k                4658840 ns    4582644 ns       3079
+WheelBitset/8k               10310766 ns   10154958 ns       1369
+WheelBitset/16k              23373742 ns   22995461 ns        607
+WheelBitset/32k              51271429 ns   49840130 ns        276
+WheelBitset/64k             120678250 ns  118055417 ns        120
+WheelBitset/128k            477219228 ns  467105241 ns         29
+WheelBitset/256k           1079928756 ns 1057446833 ns         12
+WheelBitset/512k           2342787345 ns 2300819833 ns          6
+WheelBitset/1024k          5004967451 ns 4908618667 ns          3
+WheelBitset/2M             10734063148 ns 10565462000 ns          1
+WheelBitset/4M             23189821482 ns 22612719000 ns          1
+WheelBitset/8M             48275969267 ns 47243540000 ns          1
+WheelBitset/16M            102681757450 ns 100493723000 ns          1
+SegmentedWheelBitset/1           1251 ns       1225 ns   11516994
+SegmentedWheelBitset/2           2317 ns       2266 ns    6012480
+SegmentedWheelBitset/4           4395 ns       4317 ns    3155087
+SegmentedWheelBitset/8           8878 ns       8768 ns    1585843
+SegmentedWheelBitset/16         18454 ns      18076 ns     778132
+SegmentedWheelBitset/32         39339 ns      38528 ns     375040
+SegmentedWheelBitset/64         77155 ns      76074 ns     178362
+SegmentedWheelBitset/128       169645 ns     166379 ns      88017
+SegmentedWheelBitset/256       351636 ns     345567 ns      39997
+SegmentedWheelBitset/512       750984 ns     730250 ns      19599
+SegmentedWheelBitset/1024     1582541 ns    1555674 ns       9076
+SegmentedWheelBitset/2k       3272211 ns    3193615 ns       4471
+SegmentedWheelBitset/4k       6742867 ns    6532936 ns       2128
+SegmentedWheelBitset/8k      13560600 ns   13374568 ns        980
+SegmentedWheelBitset/16k     28439183 ns   27869295 ns        512
+SegmentedWheelBitset/32k     56531390 ns   55846933 ns        253
+SegmentedWheelBitset/64k    120841043 ns  118176974 ns        117
+SegmentedWheelBitset/128k   238989236 ns  236137574 ns         61
+SegmentedWheelBitset/256k   508474699 ns  493724500 ns         28
+SegmentedWheelBitset/512k  1030168962 ns 1013624300 ns         10
+SegmentedWheelBitset/1024k 2064277479 ns 2034939000 ns          7
+SegmentedWheelBitset/2M    4217997154 ns 4145719667 ns          3
+SegmentedWheelBitset/4M    8398871660 ns 8294450500 ns          2
+SegmentedWheelBitset/8M    17468126774 ns 17257500000 ns          1
+SegmentedWheelBitset/16M   35854734421 ns 35296733000 ns          1
+
+210-wheel
 WheelBitset/1                       793 ns          782 ns   18248277
 WheelBitset/2                      1405 ns         1383 ns    9529631
 WheelBitset/4                      2698 ns         2656 ns    5244728
