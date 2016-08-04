@@ -207,32 +207,6 @@ void segmented_sieve_bit(uint64_t n, uint32_t prime[]) {
     }
 }
 
-/* These constants are used for 30-wheel.
-static const uint64_t primorial = 30;
-static const uint64_t coprime_indices[] = {
-    0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 
-    2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 
-    6, 6, 6, 6, 7, 7, 7, 7, 7, 7};
-
-static const uint64_t steps[] =  {6, 4, 2, 4, 2, 4, 6, 2};
-static const uint64_t number_of_coprimes = 8;
-static const uint64_t base_increment[number_of_coprimes] = {
-    48, 32, 16, 32, 16, 32, 48, 16};
-static const uint64_t increments[number_of_coprimes][number_of_coprimes] = {
-    {1, 1, 1, 1, 1, 1, 1, 1 },
-    {12, 7, 4, 7, 4, 7, 12, 3}, 
-    {18, 12, 6, 11, 6, 12, 18, 5}, 
-    {21, 14, 7, 13, 7, 14, 21, 7}, 
-    {27, 18, 9, 19, 9, 18, 27, 9}, 
-    {30, 20, 10, 21, 10, 20, 30, 11}, 
-    {36, 25, 12, 25, 12, 25, 36, 13}, 
-    {47, 31, 15, 31, 15, 31, 47, 15}};
-static const uint64_t need[] = {
-    1, 0, 5, 4, 3, 2, 1, 0, 3, 2, 
-    1, 0, 1, 0, 3, 2, 1, 0, 1, 0, 
-    3, 2, 1, 0, 5, 4, 3, 2, 1, 0};
-*/
-
 // These variables are used for wheel factorization.
 // Wheel factorization removes all integers that are not relatively prime
 // to the given wheel_primes.
@@ -290,34 +264,65 @@ static const uint64_t need[] = {
 //     the increment of index from a * b to a * (b + steps[b]), for all
 //     a and b in coprimes.
 
-// This is a producing the values of all required values for a given list of 
-// wheel_primes.
-static void precompute(const uint64_t primes[], uint64_t n);
-
+// The following variables can be computed by using precompute method.
+// However, programs will be more efficient if primorial and number_of_coprimes 
+// are fixed as constants.
+// 
 // Primes used for wheel.
-static const uint64_t wheel_primes[] = {2, 3, 5, 7};
+// static const uint64_t wheel_primes[] = {2, 3, 5, 7};
+//
 // The product of all primes used for wheel.
-static uint64_t primorial = 210;
+// static const uint64_t primorial = 210;
+//
 // The number of integers from 1 to primorial that are relative prime to 
 // all wheel_primes.
-static uint64_t number_of_coprimes = 48;
+// static const uint64_t number_of_coprimes = 48;
+//
 // The next number corresponding to the next wheel_index.
-static uint64_t steps[48];
+// static uint64_t steps[48];
+//
 // Mapping from all integers from 0 to primorial to the index of the next
 // coprimes.
-static uint64_t coprime_indices[210];
+// static uint64_t coprime_indices[210];
+//
 // The difference from the integer to the next coprimes.
-static uint64_t need[210];
+// static uint64_t need[210];
+//
 // The amount of increments of index from j * k to j * (k + 1).
-static uint64_t base_increment[48];
-static uint64_t increments[48][48];
+// static uint64_t base_increment[48];
+// static uint64_t increments[48][48];
 
-#include <iostream>
+static const uint64_t primorial = 30;
+static const uint64_t coprime_indices[] = {
+    0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 
+    2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 
+    6, 6, 6, 6, 7, 7, 7, 7, 7, 7};
+
+static const uint64_t steps[] =  {6, 4, 2, 4, 2, 4, 6, 2};
+static const uint64_t number_of_coprimes = 8;
+static const uint64_t base_increment[] = {
+    48, 32, 16, 32, 16, 32, 48, 16};
+static const uint64_t increments[][8] = {
+    {1, 1, 1, 1, 1, 1, 1, 1 },
+    {12, 7, 4, 7, 4, 7, 12, 3}, 
+    {18, 12, 6, 11, 6, 12, 18, 5}, 
+    {21, 14, 7, 13, 7, 14, 21, 7}, 
+    {27, 18, 9, 19, 9, 18, 27, 9}, 
+    {30, 20, 10, 21, 10, 20, 30, 11}, 
+    {36, 25, 12, 25, 12, 25, 36, 13}, 
+    {47, 31, 15, 31, 15, 31, 47, 15}};
+static const uint64_t need[] = {
+    1, 0, 5, 4, 3, 2, 1, 0, 3, 2, 
+    1, 0, 1, 0, 3, 2, 1, 0, 1, 0, 
+    3, 2, 1, 0, 5, 4, 3, 2, 1, 0};
 
 // Mapping from the number to the index.
 static inline uint64_t wheel_index(uint64_t n) {
-    //return (n << 2) / 15;
-    return (n / primorial) * number_of_coprimes + coprime_indices[n % primorial];
+    // This is for 30-wheel only.
+    return (n << 2) / 15;
+    // General case.
+    // return (n / primorial) * number_of_coprimes + 
+    //       coprime_indices[n % primorial];
 } 
 
 // Find the next index step
@@ -326,18 +331,21 @@ static inline uint32_t next_step_index(uint32_t index) {
 }
 
 bool is_prime_wheel(uint64_t n, const uint32_t bitset[]) {
-    for (uint64_t i = 0; i < sizeof(wheel_primes) / sizeof(wheel_primes[1]);
-        ++i) {
-        if (n % wheel_primes[i] == 0)
-            return n == wheel_primes[i];
-    }
-    //if (n % 2 == 0 || n % 3 == 0 || n % 5 == 0 || n % 7 == 0)
-    //            return n == 2 || n == 3 || n == 5 || n == 7;
+    // This is for 30-wheel only
+    if (n % 2 == 0 || n % 3 == 0 || n % 5 == 0 || n % 7 == 0)
+        return n == 2 || n == 3 || n == 5 || n == 7;
     return bit_get(wheel_index(n), bitset);
+
+    // General case.
+    // for (uint64_t i = 0; i < sizeof(wheel_primes) / sizeof(wheel_primes[1]);
+    //     ++i) {
+    //     if (n % wheel_primes[i] == 0)
+    //          return n == wheel_primes[i];
+    // }
+    //  return bit_get(wheel_index(n), bitset);
 }
 
 void wheel_bit(uint64_t n, uint32_t prime[]) {
-    precompute(wheel_primes, sizeof(wheel_primes) / sizeof(wheel_primes[0]));
     uint64_t bound = sqrtl(n);
     uint64_t max_index = wheel_index(n);
     memset(prime, 0xFF, (max_index >> 3) + 1);
@@ -415,7 +423,8 @@ void segmented_wheel_bit(uint64_t n, uint32_t prime[]) {
     }
 }
 
-static void precompute(const uint64_t primes[], uint64_t n) {
+/*
+void precompute(const uint64_t primes[], uint64_t n) {
     primorial = 1;
     for (uint32_t i = 0; i < n; ++i) {
         primorial *= primes[i];
@@ -459,7 +468,6 @@ static void precompute(const uint64_t primes[], uint64_t n) {
         if (need[i] == 0)
             ++next;
     }
-    /*
     std::cout << "primorial: " << primorial << '\n';
     std::cout << "number_of_coprimes: " << number_of_coprimes << '\n';
     for (uint32_t i = 0; i < number_of_coprimes; ++i)
@@ -486,6 +494,5 @@ static void precompute(const uint64_t primes[], uint64_t n) {
     for (uint32_t i = 0; i < number_of_coprimes; ++i)
         std::cout << wheel_index(coprimes[i]) << ' ';
     std::cout << '\n';
-    */
 }
-
+*/

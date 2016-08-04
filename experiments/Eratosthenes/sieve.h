@@ -47,4 +47,9 @@ void wheel_bit(uint64_t n, uint32_t prime[]);
 // Segmented wheel sieve
 void segmented_wheel_bit(uint64_t n, uint32_t prime[]);
 
+
+// This is a producing the values of all required values for a given list of
+// wheel_primes.
+void precompute(const uint64_t primes[], uint64_t n);
+
 #endif

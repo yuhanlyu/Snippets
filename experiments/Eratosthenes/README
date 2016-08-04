@@ -1,33 +1,350 @@
 This benchmark compares different version of sieve of Eratosthenes methods.
-The improved algorithm is from Chapter 13 in Algorithms Unplugged.
-One common improvement is to use bitset to store the result.
+Sieve is ordinary sieve of Eratosthenes methods.
+ImprovedSieve is a variant from Chapter 13 in Algorithms Unplugged.
+LinearSieve is linear time sieve.
+SegmentedSieve is a cache-friendly variant.
 
-The improved algorithm is faster when n is larger.
-The methods of using bitset is faster when n is larger.
+SieveBitset, ImprovedSieveBitset, LinearSieveBitset, and SegmentedSieveBitset
+are variants using bitset.
 
-Benchmark                          Time            CPU Iterations
------------------------------------------------------------------
-Sieve/1024                      1257 ns        1254 ns   11009777
-Sieve/4k                        5242 ns        5235 ns    2657024
-Sieve/64k                     119683 ns      119531 ns     115057
-Sieve/1024k                  3577713 ns     3570443 ns       3888
-Sieve/16M                  215999372 ns   215373431 ns         65
-Sieve/256M                4497749249 ns  4486488000 ns          3
-SieveImprove/1024               3059 ns        3055 ns    4524763
-SieveImprove/4k                14007 ns       13984 ns    1008787
-SieveImprove/64k              274727 ns      274363 ns      50765
-SieveImprove/1024k           4887773 ns     4881989 ns       2793
-SieveImprove/16M            89577487 ns    89356172 ns        157
-SieveImprove/256M         1536424504 ns  1532277333 ns          9
-SieveBitset/1024                2390 ns        2386 ns    5895953
-SieveBitset/4k                 10309 ns       10292 ns    1397119
-SieveBitset/64k               189455 ns      189099 ns      73767
-SieveBitset/1024k            3402943 ns     3399033 ns       3979
-SieveBitset/16M             73231588 ns    73113354 ns        192
-SieveBitset/1024M        13698468208 ns 13660804000 ns          1
-SieveImproveBitset/1024         3885 ns        3879 ns    3617079
-SieveImproveBitset/4k          17720 ns       17690 ns     791981
-SieveImproveBitset/64k        341005 ns      340516 ns      40967
-SieveImproveBitset/1024k     5962065 ns     5954038 ns       2305
-SieveImproveBitset/16M     104316986 ns   104124429 ns        133
-SieveImproveBitset/1024M 11074421167 ns 11036212000 ns          1
+WheelBitset and SegmentedWheelBitset use 30-wheel with bites.
+
+For bites versions, the unit is K. That is, 1 means 1K.
+
+Result
+When n <= 2^26, WheelBitset is fastest.
+When n > 2^26, SegmentedWheelBitset is fastest.
+
+Bitset v.s. non-bitset
+SieveBitset is faster than ordinary when n > 2^20.
+When n = 2^30, the computation time of the bitset version is only 63% 
+of the computation time of the ordinary version.
+ImprovedSieveBitset is slower than ImprovedSieve for all test cases.
+LinearSieveBitset is slower than LinearSieve for all test cases.
+SegmentedSieveBit is slower than SegmentedSieve for all teat cases.
+But bitset versions can solve problems with larger n, since bites versions
+use less memory.
+
+Improved v.s. ordinary
+Improved version is faster than ordinary when n > 2^21.
+When n = 2^30, the running time of the improved version is only 40% of
+the running time of the ordinary version.
+After using bitset, improved version is faster than ordinary when n > 2^29.
+When n = 2^34, the running time of the improved version is only 87% of
+the running time of the ordinary version.
+
+Linear v.s. ordinary
+Linear sieve is faster than ordinary when n > 2^23.
+When n = 2^30, the running time of the linear sieve is only 87% of
+the running time of the ordinary version.
+When using bitset, the linear sieve is slower than the ordinary version.
+
+Segmented v.s. ordinary
+Segmented sieve is faster than ordinary when n > 2^17.
+When n = 2^30, the running time of the segmented sieve is only 17% of
+the running time of the ordinary version.
+When using bitset, Segmented sieve is faster than ordinary when n > 2^22.
+When n = 2^34, the running time of the segmented sieve is only 25% of
+the running time of the ordinary version.
+
+Wheel v.s. ordinary
+WheelBitset is faster than ordinary with bitset.
+When n = 2^34, the running time of the WheelBitset is only 54% of
+the running time of the ordinary version.
+SegmentedWheelBitset is faster than WheelBitset when n > 2^27.
+When n = 2^34, the running time of the SegmentedWheelBitset is only 35% 
+of the running time of the WheelBitset.
+
+30-wheel v.s. 210-wheel
+30-wheel is faster.
+
+
+Benchmark                             Time             CPU Iterations
+----------------------------------------------------------------------
+Sieve/1024                          657 ns          648 ns   21687461
+Sieve/2k                           1322 ns         1310 ns   11219486
+Sieve/4k                           2942 ns         2907 ns    4898231
+Sieve/8k                           6171 ns         6092 ns    2246423
+Sieve/16k                         13000 ns        12839 ns    1053849
+Sieve/32k                         27175 ns        26819 ns     525493
+Sieve/64k                         58741 ns        57244 ns     238259
+Sieve/128k                       138980 ns       137174 ns     101911
+Sieve/256k                       306856 ns       303646 ns      46211
+Sieve/512k                       656062 ns       650596 ns      21463
+Sieve/1024k                     1755456 ns      1714889 ns       8067
+Sieve/2M                        3862108 ns      3810025 ns       3618
+Sieve/4M                        8248360 ns      8164788 ns       1692
+Sieve/8M                       35117491 ns     34621988 ns        403
+Sieve/16M                     102387242 ns    100826530 ns        100
+Sieve/32M                     232905411 ns    228137328 ns         61
+Sieve/64M                     500151345 ns    492387250 ns         28
+Sieve/128M                   1069380393 ns   1053276538 ns         13
+Sieve/256M                   2274428169 ns   2226026000 ns          6
+Sieve/512M                   4785376231 ns   4724962000 ns          3
+Sieve/1024M                 10605806589 ns  10328617000 ns          1
+ImprovedSieve/1024                 1041 ns         1029 ns   10000000
+ImprovedSieve/2k                   2709 ns         2672 ns    5415230
+ImprovedSieve/4k                   6228 ns         6191 ns    2224305
+ImprovedSieve/8k                  14555 ns        14447 ns     965174
+ImprovedSieve/16k                 33382 ns        33067 ns     424246
+ImprovedSieve/32k                 71298 ns        70462 ns     197141
+ImprovedSieve/64k                151132 ns       149732 ns      91647
+ImprovedSieve/128k               317734 ns       314883 ns      43784
+ImprovedSieve/256k               715058 ns       686119 ns      21202
+ImprovedSieve/512k              1404626 ns      1387364 ns      10223
+ImprovedSieve/1024k             2963866 ns      2899472 ns       4920
+ImprovedSieve/2M                6151310 ns      6057764 ns       2322
+ImprovedSieve/4M               12690414 ns     12506494 ns       1155
+ImprovedSieve/8M               27425368 ns     26734662 ns        520
+ImprovedSieve/16M              56037359 ns     55258828 ns        250
+ImprovedSieve/32M             116750307 ns    114640661 ns        121
+ImprovedSieve/64M             243531664 ns    237042833 ns         60
+ImprovedSieve/128M            503360551 ns    488739414 ns         29
+ImprovedSieve/256M            995005778 ns    982912143 ns         14
+ImprovedSieve/512M           2022133555 ns   2001463571 ns          7
+ImprovedSieve/1024M          4322363138 ns   4263300667 ns          3
+LinearSieve/1024                   2962 ns         2938 ns    4764092
+LinearSieve/2k                     6036 ns         5986 ns    2298461
+LinearSieve/4k                    12604 ns        12474 ns    1090443
+LinearSieve/8k                    25758 ns        25246 ns     558833
+LinearSieve/16k                   51115 ns        50554 ns     274103
+LinearSieve/32k                  101353 ns       100498 ns     139268
+LinearSieve/64k                  205265 ns       203363 ns      69599
+LinearSieve/128k                 421885 ns       413677 ns      33357
+LinearSieve/256k                 851668 ns       837739 ns      16877
+LinearSieve/512k                1708781 ns      1687221 ns       8117
+LinearSieve/1024k               3452436 ns      3426229 ns       4147
+LinearSieve/2M                  6866921 ns      6807863 ns       2035
+LinearSieve/4M                 13994078 ns     13900103 ns        981
+LinearSieve/8M                 30089476 ns     29723126 ns        468
+LinearSieve/16M                69527324 ns     68645792 ns        202
+LinearSieve/32M               148576630 ns    146888146 ns         96
+LinearSieve/64M               313522301 ns    310921023 ns         44
+LinearSieve/128M              649538571 ns    643513727 ns         22
+LinearSieve/256M             1322452521 ns   1310856000 ns         10
+LinearSieve/512M             2848679447 ns   2800796800 ns          5
+LinearSieve/1024M            6804899096 ns   6561360000 ns          2
+SegmentedSieve/1024                 892 ns          878 ns   16038612
+SegmentedSieve/2k                  1587 ns         1569 ns    8829571
+SegmentedSieve/4k                  3322 ns         3290 ns    4408655
+SegmentedSieve/8k                  6704 ns         6659 ns    2069893
+SegmentedSieve/16k                14220 ns        14114 ns    1027405
+SegmentedSieve/32k                29395 ns        29033 ns     477005
+SegmentedSieve/64k                60236 ns        58883 ns     235845
+SegmentedSieve/128k              118764 ns       117873 ns     111150
+SegmentedSieve/256k              244090 ns       242278 ns      57062
+SegmentedSieve/512k              511929 ns       507416 ns      28089
+SegmentedSieve/1024k            1036085 ns      1026368 ns      10000
+SegmentedSieve/2M               2244953 ns      2198060 ns       6685
+SegmentedSieve/4M               4432480 ns      4397790 ns       3074
+SegmentedSieve/8M               9913328 ns      9792141 ns       1423
+SegmentedSieve/16M             20709089 ns     20439631 ns        731
+SegmentedSieve/32M             42703935 ns     42097437 ns        334
+SegmentedSieve/64M             85776839 ns     85192693 ns        166
+SegmentedSieve/128M           179673898 ns    178222104 ns         77
+SegmentedSieve/256M           385319672 ns    380813737 ns         38
+SegmentedSieve/512M           811505079 ns    802076647 ns         17
+SegmentedSieve/1024M         1840668142 ns   1800398875 ns          8
+SieveBitset/1                       897 ns          887 ns   14377301
+SieveBitset/2                      1846 ns         1826 ns    7179782
+SieveBitset/4                      3825 ns         3791 ns    3681022
+SieveBitset/8                      8044 ns         7980 ns    1749874
+SieveBitset/16                    16115 ns        16015 ns     899569
+SieveBitset/32                    34974 ns        34687 ns     407391
+SieveBitset/64                    72869 ns        72281 ns     192543
+SieveBitset/128                  153751 ns       152595 ns      91874
+SieveBitset/256                  318746 ns       315149 ns      44472
+SieveBitset/512                  675702 ns       665596 ns      21269
+SieveBitset/1024                1385883 ns      1372113 ns      10606
+SieveBitset/2k                  2911962 ns      2880638 ns       4511
+SieveBitset/4k                  6055187 ns      6020114 ns       2272
+SieveBitset/8k                 14000845 ns     13923414 ns        951
+SieveBitset/16k                30605083 ns     30396059 ns        472
+SieveBitset/32k                64841006 ns     64360046 ns        218
+SieveBitset/64k               245509633 ns    242731382 ns         55
+SieveBitset/128k              629753373 ns    624461818 ns         22
+SieveBitset/256k             1407720971 ns   1396488800 ns         10
+SieveBitset/512k             3134333229 ns   3083342800 ns          5
+SieveBitset/1024k            6708537221 ns   6583893000 ns          2
+SieveBitset/2M              14251597404 ns  14088171000 ns          1
+SieveBitset/4M              30915564299 ns  30461318000 ns          1
+SieveBitset/8M              63737599611 ns  62792369000 ns          1
+SieveBitset/16M            135643196106 ns 133260605000 ns          1
+ImprovedSieveBitset/1              1586 ns         1550 ns    8849071
+ImprovedSieveBitset/2              3561 ns         3528 ns    3919302
+ImprovedSieveBitset/4              8444 ns         8349 ns    1697917
+ImprovedSieveBitset/8             18441 ns        18190 ns     792280
+ImprovedSieveBitset/16            40087 ns        39800 ns     349635
+ImprovedSieveBitset/32            85092 ns        84352 ns     166752
+ImprovedSieveBitset/64           180188 ns       178464 ns      80476
+ImprovedSieveBitset/128          379088 ns       375150 ns      37014
+ImprovedSieveBitset/256          788167 ns       782894 ns      17817
+ImprovedSieveBitset/512         1648582 ns      1633720 ns       8736
+ImprovedSieveBitset/1024        3384900 ns      3355915 ns       4159
+ImprovedSieveBitset/2k          7218458 ns      7100758 ns       2020
+ImprovedSieveBitset/4k         14215283 ns     14134237 ns       1013
+ImprovedSieveBitset/8k         29673588 ns     29393029 ns        484
+ImprovedSieveBitset/16k        60605020 ns     60075680 ns        222
+ImprovedSieveBitset/32k       126198697 ns    124417885 ns        113
+ImprovedSieveBitset/64k       307066384 ns    304072217 ns         46
+ImprovedSieveBitset/128k      688951367 ns    682745762 ns         21
+ImprovedSieveBitset/256k     1441927052 ns   1426367200 ns         10
+ImprovedSieveBitset/512k     3037074852 ns   3009838400 ns          5
+ImprovedSieveBitset/1024k    6257463574 ns   6194707000 ns          2
+ImprovedSieveBitset/2M      13188363552 ns  12958097000 ns          1
+ImprovedSieveBitset/4M      26622001648 ns  26341844000 ns          1
+ImprovedSieveBitset/8M      54574881077 ns  54101314000 ns          1
+ImprovedSieveBitset/16M    118188932896 ns 116730381000 ns          1
+LinearSieveBitset/1                6477 ns         6416 ns    2203775
+LinearSieveBitset/2               13120 ns        13033 ns    1070974
+LinearSieveBitset/4               27335 ns        27212 ns     523576
+LinearSieveBitset/8               55073 ns        54701 ns     257534
+LinearSieveBitset/16             114818 ns       113637 ns     128950
+LinearSieveBitset/32             229566 ns       227383 ns      62105
+LinearSieveBitset/64             459651 ns       455144 ns      30091
+LinearSieveBitset/128            928633 ns       920466 ns      15066
+LinearSieveBitset/256           1892004 ns      1863673 ns       7671
+LinearSieveBitset/512           3779984 ns      3732150 ns       3757
+LinearSieveBitset/1024          7576913 ns      7499516 ns       1903
+LinearSieveBitset/2k           15507070 ns     15187329 ns        849
+LinearSieveBitset/4k           30348022 ns     30179721 ns        455
+LinearSieveBitset/8k           61860974 ns     61513035 ns        228
+LinearSieveBitset/16k         125182740 ns    123917207 ns        116
+LinearSieveBitset/32k         253559069 ns    251666327 ns         55
+LinearSieveBitset/64k         654127609 ns    644143773 ns         22
+LinearSieveBitset/128k       1364261270 ns   1352812000 ns         10
+LinearSieveBitset/256k       2812663651 ns   2788816600 ns          5
+LinearSieveBitset/512k       5627854824 ns   5594514500 ns          2
+LinearSieveBitset/1024k     11536768675 ns  11437551000 ns          1
+LinearSieveBitset/2M        24245007753 ns  23885489000 ns          1
+LinearSieveBitset/4M        47727325201 ns  47311823000 ns          1
+LinearSieveBitset/8M        99302179575 ns  98011261000 ns          1
+LinearSieveBitset/16M      203532968760 ns 201062243000 ns          1
+SegmentedSieveBitset/1             1163 ns         1147 ns   11456703
+SegmentedSieveBitset/2             2169 ns         2139 ns    6637317
+SegmentedSieveBitset/4             4402 ns         4362 ns    3172174
+SegmentedSieveBitset/8             9033 ns         8946 ns    1550831
+SegmentedSieveBitset/16           18133 ns        17972 ns     790834
+SegmentedSieveBitset/32           38015 ns        37735 ns     379533
+SegmentedSieveBitset/64           76919 ns        76306 ns     178421
+SegmentedSieveBitset/128         162543 ns       161307 ns      87174
+SegmentedSieveBitset/256         342294 ns       336334 ns      42082
+SegmentedSieveBitset/512         694661 ns       689610 ns      20690
+SegmentedSieveBitset/1024       1479037 ns      1463669 ns       9945
+SegmentedSieveBitset/2k         3103391 ns      3082301 ns       4518
+SegmentedSieveBitset/4k         6542197 ns      6447633 ns       2171
+SegmentedSieveBitset/8k        13225473 ns     13130038 ns       1092
+SegmentedSieveBitset/16k       26896791 ns     26641665 ns        514
+SegmentedSieveBitset/32k       55066533 ns     54754217 ns        258
+SegmentedSieveBitset/64k      112404942 ns    111608519 ns        129
+SegmentedSieveBitset/128k     241046313 ns    237758790 ns         62
+SegmentedSieveBitset/256k     481787189 ns    476612333 ns         30
+SegmentedSieveBitset/512k     991740990 ns    980687733 ns         15
+SegmentedSieveBitset/1024k   1987081187 ns   1974885429 ns          7
+SegmentedSieveBitset/2M      4074094415 ns   4036249250 ns          4
+SegmentedSieveBitset/4M      8475865483 ns   8378211500 ns          2
+SegmentedSieveBitset/8M     16860706329 ns  16717521000 ns          1
+SegmentedSieveBitset/16M    34676042557 ns  34421334000 ns          1
+WheelBitset/1                       588 ns          582 ns   24540966
+WheelBitset/2                      1388 ns         1365 ns   10086150
+WheelBitset/4                      2684 ns         2650 ns    5211422
+WheelBitset/8                      3941 ns         3915 ns    3634711
+WheelBitset/16                     7642 ns         7594 ns    1844197
+WheelBitset/32                    15518 ns        15346 ns     934549
+WheelBitset/64                    35240 ns        34055 ns     405849
+WheelBitset/128                   69718 ns        69063 ns     204797
+WheelBitset/256                  152974 ns       150398 ns      98419
+WheelBitset/512                  312104 ns       307715 ns      44697
+WheelBitset/1024                 683424 ns       658466 ns      21123
+WheelBitset/2k                  1513996 ns      1452617 ns      10261
+WheelBitset/4k                  2892059 ns      2864104 ns       4756
+WheelBitset/8k                  6428602 ns      6320788 ns       2210
+WheelBitset/16k                15465406 ns     15146027 ns        978
+WheelBitset/32k                34703561 ns     33454613 ns        434
+WheelBitset/64k                72565535 ns     70960427 ns        199
+WheelBitset/128k              322361163 ns    310526804 ns         46
+WheelBitset/256k              772303694 ns    754697632 ns         19
+WheelBitset/512k             1724195629 ns   1675587375 ns          8
+WheelBitset/1024k            3635094464 ns   3543350250 ns          4
+WheelBitset/2M               7712343216 ns   7513431000 ns          2
+WheelBitset/4M              16649286270 ns  16056022000 ns          1
+WheelBitset/8M              34277444839 ns  33861613000 ns          1
+WheelBitset/16M             73605143070 ns  72097894000 ns          1
+SegmentedWheelBitset/1              854 ns          837 ns   17075397
+SegmentedWheelBitset/2             1535 ns         1513 ns    9387927
+SegmentedWheelBitset/4             3053 ns         2991 ns    4715326
+SegmentedWheelBitset/8             5807 ns         5760 ns    2364782
+SegmentedWheelBitset/16           12063 ns        11885 ns    1221568
+SegmentedWheelBitset/32           25366 ns        24889 ns     546455
+SegmentedWheelBitset/64           51301 ns        50725 ns     277722
+SegmentedWheelBitset/128         111234 ns       109965 ns     119165
+SegmentedWheelBitset/256         237920 ns       233378 ns      60362
+SegmentedWheelBitset/512         498764 ns       489475 ns      27963
+SegmentedWheelBitset/1024       1060782 ns      1042701 ns      13735
+SegmentedWheelBitset/2k         2192224 ns      2168281 ns       6204
+SegmentedWheelBitset/4k         4515736 ns      4437475 ns       3157
+SegmentedWheelBitset/8k         9318531 ns      9159995 ns       1559
+SegmentedWheelBitset/16k       19138865 ns     18873851 ns        763
+SegmentedWheelBitset/32k       39648723 ns     38872343 ns        362
+SegmentedWheelBitset/64k       80240628 ns     79382466 ns        174
+SegmentedWheelBitset/128k     173250916 ns    168595111 ns         90
+SegmentedWheelBitset/256k     340869781 ns    336795537 ns         41
+SegmentedWheelBitset/512k     695706403 ns    687107500 ns         20
+SegmentedWheelBitset/1024k   1449596190 ns   1435074200 ns         10
+SegmentedWheelBitset/2M      3035226583 ns   2972665000 ns          5
+SegmentedWheelBitset/4M      6161790371 ns   6055111500 ns          2
+SegmentedWheelBitset/8M     12574176311 ns  12332265000 ns          1
+SegmentedWheelBitset/16M    26035703421 ns  25722373000 ns          1
+
+210-Wheel
+WheelBitset/1                       793 ns          782 ns   18248277
+WheelBitset/2                      1405 ns         1383 ns    9529631
+WheelBitset/4                      2698 ns         2656 ns    5244728
+WheelBitset/8                      5419 ns         5316 ns    2618843
+WheelBitset/16                    11036 ns        10906 ns    1270022
+WheelBitset/32                    23123 ns        22667 ns     607277
+WheelBitset/64                    49686 ns        49036 ns     285273
+WheelBitset/128                  105617 ns       103128 ns     132898
+WheelBitset/256                  227457 ns       221446 ns      61233
+WheelBitset/512                  461442 ns       456143 ns      29903
+WheelBitset/1024                1010724 ns       992542 ns      14416
+WheelBitset/2k                  2137093 ns      2080923 ns       6710
+WheelBitset/4k                  4477177 ns      4403885 ns       3216
+WheelBitset/8k                  9452827 ns      9251835 ns       1567
+WheelBitset/16k                19890507 ns     19549163 ns        725
+WheelBitset/32k                43467354 ns     42386869 ns        328
+WheelBitset/64k                90145947 ns     88615627 ns        158
+WheelBitset/128k              351809607 ns    339204767 ns         43
+WheelBitset/256k              849148554 ns    830783176 ns         17
+WheelBitset/512k             1885849744 ns   1842928000 ns          8
+WheelBitset/1024k            4045135260 ns   3948405000 ns          4
+WheelBitset/2M               8651741862 ns   8438856000 ns          2
+WheelBitset/4M              18403219700 ns  18032265000 ns          1
+WheelBitset/8M              39039506435 ns  38165369000 ns          1
+WheelBitset/16M             82542905092 ns  80629565000 ns          1
+SegmentedWheelBitset/1              856 ns          842 ns   16469401
+SegmentedWheelBitset/2             1585 ns         1563 ns    8786453
+SegmentedWheelBitset/4             3105 ns         3063 ns    4540643
+SegmentedWheelBitset/8             6637 ns         6506 ns    2177108
+SegmentedWheelBitset/16           13579 ns        13340 ns    1048619
+SegmentedWheelBitset/32           28516 ns        28065 ns     486375
+SegmentedWheelBitset/64           60221 ns        59421 ns     236930
+SegmentedWheelBitset/128         129524 ns       127597 ns     110931
+SegmentedWheelBitset/256         274344 ns       269148 ns      51957
+SegmentedWheelBitset/512         562635 ns       552345 ns      24933
+SegmentedWheelBitset/1024       1192146 ns      1175552 ns      12109
+SegmentedWheelBitset/2k         2486044 ns      2455340 ns       5626
+SegmentedWheelBitset/4k         5181125 ns      5087212 ns       2761
+SegmentedWheelBitset/8k        10571505 ns     10405933 ns       1335
+SegmentedWheelBitset/16k       22581286 ns     21967943 ns        662
+SegmentedWheelBitset/32k       45768368 ns     44862934 ns        316
+SegmentedWheelBitset/64k       93882040 ns     92056126 ns        151
+SegmentedWheelBitset/128k     187782751 ns    185206722 ns         72
+SegmentedWheelBitset/256k     392669691 ns    388241667 ns         36
+SegmentedWheelBitset/512k     815564275 ns    803051833 ns         18
+SegmentedWheelBitset/1024k   1683443099 ns   1665333375 ns          8
+SegmentedWheelBitset/2M      3548358262 ns   3459496000 ns          4
+SegmentedWheelBitset/4M      7112344742 ns   7020078000 ns          2
+SegmentedWheelBitset/8M     14538531542 ns  14338993000 ns          1
+SegmentedWheelBitset/16M    30234511852 ns  29802783000 ns          1
+
