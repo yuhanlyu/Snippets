@@ -25,6 +25,18 @@ void linear_sieve(uint32_t n, bool prime[]);
 // BIT Numerical Mathematics June 1977, Volume 17, Issue 2, pp 121 - 127
 void segmented_sieve(uint32_t n, bool prime[]);
 
+bool is_prime_wheel(uint32_t n, const bool prime[]);
+
+// Wheel sieve.
+// More details can be found in the following paper:
+// Paul Pritchard
+// Explaining the wheel sieve
+// Acta Informatica October 1982, Volume 17, Issue 4, pp 477 - 485
+void wheel_sieve(uint32_t n, bool prime[]);
+
+// Segmented wheel sieve
+void segmented_wheel_sieve(uint32_t n, bool prime[]);
+
 bool is_prime_bit(uint64_t n, const uint32_t bitset[]);
 
 void sieve_bit(uint64_t n, uint32_t prime[]);
@@ -35,18 +47,11 @@ void linear_sieve_bit(uint64_t n, uint32_t prime[]);
 
 void segmented_sieve_bit(uint64_t n, uint32_t prime[]);
 
-bool is_prime_wheel(uint64_t n, const uint32_t bitset[]);
+bool is_prime_wheel_bit(uint64_t n, const uint32_t bitset[]);
 
-// Wheel sieve.
-// More details can be found in the following paper:
-// Paul Pritchard
-// Explaining the wheel sieve
-// Acta Informatica October 1982, Volume 17, Issue 4, pp 477 - 485
 void wheel_bit(uint64_t n, uint32_t prime[]);
 
-// Segmented wheel sieve
 void segmented_wheel_bit(uint64_t n, uint32_t prime[]);
-
 
 // This is a producing the values of all required values for a given list of
 // wheel_primes.

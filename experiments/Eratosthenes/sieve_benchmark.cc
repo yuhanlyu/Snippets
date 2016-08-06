@@ -75,6 +75,20 @@ static void SegmentedSieveBitset(benchmark::State& state) {
 BENCHMARK(SegmentedSieveBitset)
     ->RangeMultiplier(m)->Range(1, bitset_size_limit);
 
+static void WheelSieve(benchmark::State& state) {
+    while (state.KeepRunning()) {
+        wheel_sieve(state.range_x(), prime);
+    }
+}
+BENCHMARK(WheelSieve)->RangeMultiplier(m)->Range(1024, size);
+
+static void SegmentedWheelSieve(benchmark::State& state) {
+    while (state.KeepRunning()) {
+        segmented_wheel_sieve(state.range_x(), prime);
+    }
+}
+BENCHMARK(SegmentedWheelSieve)->RangeMultiplier(m)->Range(1024, size);
+
 static void WheelBitset(benchmark::State& state) {
     while (state.KeepRunning()) {
         int64_t n = state.range_x();

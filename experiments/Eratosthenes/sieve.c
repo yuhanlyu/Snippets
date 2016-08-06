@@ -303,14 +303,16 @@ void segmented_sieve_bit(uint64_t n, uint32_t prime[]) {
 // static uint64_t increments[48][48];
 
 // The following is for 6-wheel.
-// static const uint64_t wheel_primes[] = {2, 3};
-// static const uint64_t primorial = 6;
-// static const uint64_t number_of_coprimes = 2;
-// static const uint64_t steps[2] = {4, 2};
-// static const uint64_t coprime_indices[6] = {0, 0, 1, 1, 1, 1};
-// static const uint64_t need[6] = {1, 0, 3, 2, 1, 0};
-// static const uint64_t base_increment[2] = {8, 4};
-// static const uint64_t increments[2][2] = {{1, 1}, {7, 3}};
+/*
+static const uint64_t wheel_primes[] = {2, 3};
+static const uint64_t primorial = 6;
+static const uint64_t number_of_coprimes = 2;
+static const uint64_t steps[2] = {4, 2};
+static const uint64_t coprime_indices[6] = {0, 0, 1, 1, 1, 1};
+static const uint64_t need[6] = {1, 0, 3, 2, 1, 0};
+static const uint64_t base_increment[2] = {8, 4};
+static const uint64_t increments[2][2] = {{1, 1}, {7, 3}};
+*/
 
 // The following is for 30-wheel
 static const uint64_t primorial = 30;
@@ -342,9 +344,9 @@ static inline uint64_t wheel_index(uint64_t n) {
     // This is for 30-wheel only.
     return (n << 2) / 15;
     // This is for 6-wheel only.
-    //return (n << 1) / 6;
+    // return (n << 1) / 6;
     // General case.
-    //return (n / primorial) * number_of_coprimes + 
+    // return (n / primorial) * number_of_coprimes + 
     //      coprime_indices[n % primorial];
 } 
 
@@ -353,7 +355,22 @@ static inline uint32_t next_step_index(uint32_t index) {
     return ++index % number_of_coprimes;
 }
 
-bool is_prime_wheel(uint64_t n, const uint32_t bitset[]) {
+bool is_prime_wheel(uint32_t n, const bool prime[]) {
+    // This is for 30-wheel only
+    if (n % 2 == 0 || n % 3 == 0 || n % 5 == 0 || n % 7 == 0)
+        return n == 2 || n == 3 || n == 5 || n == 7;
+    return prime[wheel_index(n)];
+
+    // General case.
+    // for (uint64_t i = 0; i < sizeof(wheel_primes) / sizeof(wheel_primes[0]);
+    //   ++i) {
+    //   if (n % wheel_primes[i] == 0)
+    //        return n == wheel_primes[i];
+    // }
+    // return prime[wheel_index(n)];
+}
+
+bool is_prime_wheel_bit(uint64_t n, const uint32_t bitset[]) {
     // This is for 30-wheel only
     if (n % 2 == 0 || n % 3 == 0 || n % 5 == 0 || n % 7 == 0)
         return n == 2 || n == 3 || n == 5 || n == 7;
@@ -366,6 +383,84 @@ bool is_prime_wheel(uint64_t n, const uint32_t bitset[]) {
     //         return n == wheel_primes[i];
     // }
     // return bit_get(wheel_index(n), bitset);
+}
+
+void wheel_sieve(uint32_t n, bool prime[]) {
+    uint32_t bound = sqrt(n);
+    uint32_t max_index = wheel_index(n);
+    memset(prime, 1, n >> 1);
+
+    uint32_t step_index = 1;
+    for (uint32_t i = steps[0] + 1, index = 1; i <= bound; ++index) {
+        if (prime[index]) {
+            uint32_t quo = i / primorial, mod = i % primorial;
+            uint32_t inc[number_of_coprimes], m_step_index = step_index;
+            for (uint32_t j = 0; j < number_of_coprimes; ++j) {
+                inc[j] = increments[coprime_indices[mod]][j] + 
+                         quo * base_increment[j];
+            }
+            for (uint32_t j_index = wheel_index(i * i); j_index <= max_index;) {
+                prime[j_index] = false;
+                j_index += inc[m_step_index];
+                m_step_index = next_step_index(m_step_index);
+            }
+        }
+        i += steps[step_index];
+        step_index = next_step_index(step_index);
+    }
+}
+
+void segmented_wheel_sieve(uint32_t n, bool prime[]) {
+    uint32_t bound = sqrt(n);
+    uint32_t max_index = wheel_index(n);
+    memset(prime, 1, n >> 1);
+
+    wheel_sieve(bound, prime);
+    uint32_t primes[upper_bound_of_pi(bound)], number_of_primes = 0;
+    uint32_t step_index = 1, bound_index = wheel_index(bound);
+    for (uint32_t i = steps[0] + 1, index = 1; 
+         index <= bound_index; ++index)  {
+        if (prime[index]) {
+            primes[number_of_primes++] = i;
+        }
+        i += steps[step_index];
+        step_index = next_step_index(step_index);
+    }    
+    uint32_t next[number_of_primes];
+    uint32_t next_step[number_of_primes];
+    uint32_t segment_size = l1d_cache_size >> 1;
+    for (uint32_t low = bound + 1, s = 0,
+                  high = low + segment_size > n ? n : low + segment_size;
+         low <= n; low += segment_size) {
+        uint32_t high_index = wheel_index(high);
+        for (uint32_t h = 0; h < number_of_primes; ++h) {
+            uint32_t i = primes[h], j_index;
+            if (i * i > high)
+                break;
+            if (h < s) {
+                j_index = next[h];
+                step_index = next_step[h];
+            } else {
+                uint64_t m = ((low + (i - 1)) / i);
+                m += need[m % primorial];
+                step_index = coprime_indices[m % primorial];
+                j_index = wheel_index(m * i);
+                ++s;
+            }
+            if (j_index <= high_index) {
+                uint64_t quo = i / primorial, mod = i % primorial;
+                while (j_index <= high_index) {
+                    prime[j_index] = false;
+                    j_index += increments[coprime_indices[mod]][step_index] +
+                               quo * base_increment[step_index];
+                    step_index = next_step_index(step_index);
+                }
+            }
+            next[h] = j_index;
+            next_step[h] = step_index;
+        }
+        high = (high + segment_size > n) ? n : high + segment_size;
+    }
 }
 
 void wheel_bit(uint64_t n, uint32_t prime[]) {
@@ -400,9 +495,9 @@ void segmented_wheel_bit(uint64_t n, uint32_t prime[]) {
 
     wheel_bit(bound, prime);
     uint32_t primes[upper_bound_of_pi(bound)], number_of_primes = 0;
-    uint32_t step_index = 1;
+    uint32_t step_index = 1, bound_index = wheel_index(bound);
     for (uint32_t i = steps[0] + 1, index = 1; 
-         index <= wheel_index(bound); ++index)  {
+         index <= bound_index; ++index)  {
         if (bit_get(index, prime)) {
             primes[number_of_primes++] = i;
         }

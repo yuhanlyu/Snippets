@@ -85,6 +85,28 @@ TEST(SieveTest, SegmentedSieveBitset) {
     }
 }
 
+TEST(SieveTest, WheelSieve) {
+    bool prime1[size / 2];
+    bool prime2[size / 2 + 1];
+
+    sieve(size, prime1);
+    wheel_sieve(size, prime2);
+    for (uint32_t i = 2; i <= size; ++i) {
+        EXPECT_EQ(is_prime(i, prime1), is_prime_wheel(i, prime2));
+    }
+}
+
+TEST(SieveTest, SegmentedWheelSieve) {
+    bool prime1[size / 2];
+    bool prime2[size / 2 + 1];
+
+    sieve(size, prime1);
+    segmented_wheel_sieve(size, prime2);
+    for (uint32_t i = 2; i <= size; ++i) {
+        EXPECT_EQ(is_prime(i, prime1), is_prime_wheel(i, prime2));
+    }
+}
+
 TEST(SieveTest, WheelBitset) {
     bool prime1[size / 2];
     uint32_t prime2[size / 64 + 1];
@@ -92,7 +114,7 @@ TEST(SieveTest, WheelBitset) {
     sieve(size, prime1);
     wheel_bit(size, prime2);
     for (uint32_t i = 2; i <= size; ++i) {
-        EXPECT_EQ(is_prime(i, prime1), is_prime_wheel(i, prime2));
+        EXPECT_EQ(is_prime(i, prime1), is_prime_wheel_bit(i, prime2));
     }
 }
 
@@ -103,7 +125,7 @@ TEST(SieveTest, SegmentedWheelBitset) {
     sieve(size, prime1);
     segmented_wheel_bit(size, prime2);
     for (uint32_t i = 2; i <= size; ++i) {
-        EXPECT_EQ(is_prime(i, prime1), is_prime_wheel(i, prime2));
+        EXPECT_EQ(is_prime(i, prime1), is_prime_wheel_bit(i, prime2));
     }
 }
 
