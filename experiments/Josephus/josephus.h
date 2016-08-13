@@ -7,7 +7,7 @@
 int32_t shams_baragh(int64_t n, int32_t m);
 
 // O(n) algorithm
-// D. Woodhousea, "Programming the Josephus problem,"
+// D. Woodhouse, "Programming the Josephus problem,"
 // ACM SIGCSE Bulletin, Volume 10 Issue 4, December 1978 Pages 56-58
 int32_t woodhousea(int32_t n, int32_t m);
 

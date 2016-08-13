@@ -51,7 +51,7 @@ int32_t gelgi_improve(int32_t n, int32_t m) {
     int32_t nn = n, ans = 0, iterations = 1, top = 0;
     std::stack<int32_t> mark;
 
-    for (iterations = 1; nn > m; ++iterations) {
+    for (iterations = 1; nn > m << 3; ++iterations) {
         int p = nn;
         nn -= nn / m;
         if (nn + nn / (m - 1) - p == 1)
