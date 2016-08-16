@@ -2,10 +2,10 @@
 
 #include <stack>
 
-int32_t shams_baragh(int64_t n, int32_t m) {
+int32_t concrete_math(int64_t n, int32_t m) {
     int64_t d = 1;
     while (d <= (m - 1) * n)
-        d = (m * d) / (m - 1) + ((m * d) % (m - 1) != 0);
+        d = 1 + (d * m - 1) / (m - 1);
     return m * n + 1 - d;
 }
 

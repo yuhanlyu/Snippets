@@ -6,9 +6,9 @@ namespace {
 
 static constexpr int32_t n = 2000000;
 
-TEST(JosephusTest, ValidateShamsBaragh) {
+TEST(JosephusTest, ValidateConcreteMath) {
     for (int32_t m = 2; m < n; m += 100000) {
-        EXPECT_EQ(shams_baragh(n, m), taocp_k(n, m, n));
+        EXPECT_EQ(concrete_math(n, m), taocp_k(n, m, n));
     }
 }
 

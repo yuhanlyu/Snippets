@@ -7,13 +7,6 @@ namespace {
 static constexpr int n = 1 << 21;
 static constexpr int m = 3;
 
-static void BM_ShamsBaragh(benchmark::State& state) {
-    while (state.KeepRunning()) {
-        benchmark::DoNotOptimize(shams_baragh(n, state.range_x()));
-    }
-}
-BENCHMARK(BM_ShamsBaragh)->RangeMultiplier(m)->Range(2, n);
-
 static void BM_Woodhousea(benchmark::State& state) {
     while (state.KeepRunning()) {
         benchmark::DoNotOptimize(woodhousea(n, state.range_x()));
@@ -21,19 +14,12 @@ static void BM_Woodhousea(benchmark::State& state) {
 }
 BENCHMARK(BM_Woodhousea)->RangeMultiplier(m)->Range(2, n);
 
-static void BM_Gelgi(benchmark::State& state) {
+static void BM_ConcreteMath(benchmark::State& state) {
     while (state.KeepRunning()) {
-        benchmark::DoNotOptimize(gelgi(n, state.range_x()));
+        benchmark::DoNotOptimize(concrete_math(n, state.range_x()));
     }
 }
-BENCHMARK(BM_Gelgi)->RangeMultiplier(m)->Range(2, n);
-
-static void BM_GelgiImprove(benchmark::State& state) {
-    while (state.KeepRunning()) {
-        benchmark::DoNotOptimize(gelgi_improve(n, state.range_x()));
-    }
-}
-BENCHMARK(BM_GelgiImprove)->RangeMultiplier(m)->Range(2, n);
+BENCHMARK(BM_ConcreteMath)->RangeMultiplier(m)->Range(2, n);
 
 static void BM_TAOCP(benchmark::State& state) {
     while (state.KeepRunning()) {
@@ -48,6 +34,20 @@ static void BM_TAOCPK(benchmark::State& state) {
     }
 }
 BENCHMARK(BM_TAOCPK)->RangeMultiplier(m)->Range(2, n);
+
+static void BM_Gelgi(benchmark::State& state) {
+    while (state.KeepRunning()) {
+        benchmark::DoNotOptimize(gelgi(n, state.range_x()));
+    }
+}
+BENCHMARK(BM_Gelgi)->RangeMultiplier(m)->Range(2, n);
+
+static void BM_GelgiImprove(benchmark::State& state) {
+    while (state.KeepRunning()) {
+        benchmark::DoNotOptimize(gelgi_improve(n, state.range_x()));
+    }
+}
+BENCHMARK(BM_GelgiImprove)->RangeMultiplier(m)->Range(2, n);
 
 }
 BENCHMARK_MAIN();
