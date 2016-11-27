@@ -60,7 +60,7 @@ Let $T(n) = \Theta(f(n))$. Assume that $T(n)$ is a constant for sufficiently sma
 \paragraph{Problem~\ref{master:1} alternative solution} Suppose that $n = 2^k$. We have
 \begin{align*}
 T(n) &= 2T(\frac{n}{2}) + \frac{n}{\lg^2 n} \\
-\equiv \quad T(n) &= 4T(\frac{n}{4}) + \frac{n}{\lg^2 n} + \frac{n}{(\lg (n-1))^2} \\
+\equiv \quad T(n) &= 4T(\frac{n}{4}) + \frac{n}{\lg^2 n} + \frac{n}{(\lg (n)-1)^2} \\
 \equiv \quad T(n) &= 2^k T(1) + n \sum_{i=}^k i^{-2} \\
 \equiv \quad T(n) &= n + n \sum_{i=}^k i^{-2} \\
 \end{align*}
